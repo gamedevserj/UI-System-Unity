@@ -1,5 +1,7 @@
 ﻿using System;
+using UnityEngine;
 using UISystem.Common.Enums;
+using UISystem.Constants;
 
 namespace UISystem
 {
@@ -13,45 +15,42 @@ namespace UISystem
         public static event Action<float> OnSfxVolumeChanged;
         public static event Action<ControllerIconsType> OnControllerIconsChanged;
 
-        //private readonly ConfigFile _config;
+        private readonly INIParser _config;
 
-        public static float MusicVolume { get; private set; } = 1;// ConfigData.DefaultMusicVolume;
-        public static float SfxVolume { get; private set; } = 1;// ConfigData.DefaultSfxVolume;
-                                                                //public static Vector2I Resolution { get; private set; } = ConfigData.DefaultResolution;
-                                                                //public static WindowMode WindowMode { get; private set; } = ConfigData.DefaultWindowMode;
+        public static float MusicVolume { get; private set; } = ConfigData.DefaultMusicVolume;
+        public static float SfxVolume { get; private set; } = ConfigData.DefaultSfxVolume;
+        //public static Vector2I Resolution { get; private set; } = ConfigData.DefaultResolution;
+        //public static WindowMode WindowMode { get; private set; } = ConfigData.DefaultWindowMode;
         public static ControllerIconsType ControllerIconsType { get; private set; } = ControllerIconsType.Ps5;// = ConfigData.DefaultControllerIconsType;
 
 
-        //public GameSettings(ConfigFile config)
-        //{
-        //    //_config = config;
-        //    //LoadSettings();
-        //}
-        public GameSettings()
+        public GameSettings(INIParser config)
         {
-            
+            _config = config;
+            OpenConfig();
+            LoadSettings();
         }
 
         public void SetMusicVolume(float volume)
         {
             MusicVolume = volume;
-            //_config.SetValue(ConfigData.AudioSectionName, ConfigData.MusicVolumeKey, volume);
+            SaveSetting(ConfigData.AudioSectionName, ConfigData.MusicVolumeKey, volume);
             OnMusicVolumeChanged?.Invoke(volume);
         }
 
         public void SetSfxVolume(float volume)
         {
             SfxVolume = volume;
-            //_config.SetValue(ConfigData.AudioSectionName, ConfigData.SfxVolumeKey, volume);
+            SaveSetting(ConfigData.AudioSectionName, ConfigData.SfxVolumeKey, volume);
             OnSfxVolumeChanged?.Invoke(volume);
         }
 
-        //public void SetControllerIconsType(ControllerIconsType type)
-        //{
-        //    ControllerIconsType = type;
-        //    _config.SetValue(ConfigData.InterfaceSectionName, ConfigData.ControllerIconsKey, (int)type);
-        //    OnControllerIconsChanged?.Invoke(type);
-        //}
+        public void SetControllerIconsType(ControllerIconsType type)
+        {
+            ControllerIconsType = type;
+            SaveSetting(ConfigData.InterfaceSectionName, ConfigData.ControllerIconsKey, (int)type);
+            OnControllerIconsChanged?.Invoke(type);
+        }
 
         //public void SetResolution(Vector2I resolution)
         //{
@@ -88,35 +87,63 @@ namespace UISystem
         //    _config.Save(ConfigData.ConfigLocation);
         //}
 
-        //private void LoadSettings()
-        //{
-        //    bool saveNewSettings = false;
-        //    MusicVolume = (float)GetConfigValue(ConfigData.AudioSectionName, ConfigData.MusicVolumeKey, ConfigData.DefaultMusicVolume, ref saveNewSettings);
-        //    SfxVolume = (float)GetConfigValue(ConfigData.AudioSectionName, ConfigData.SfxVolumeKey, ConfigData.DefaultSfxVolume, ref saveNewSettings);
 
-        //    Resolution = (Vector2I)GetConfigValue(ConfigData.VideoSectionName, ConfigData.ResolutionKey, ConfigData.DefaultResolution, ref saveNewSettings);
-        //    WindowMode = (WindowMode)(int)GetConfigValue(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)ConfigData.DefaultWindowMode, ref saveNewSettings);
 
-        //    ControllerIconsType = (ControllerIconsType)(int)GetConfigValue(ConfigData.InterfaceSectionName, ConfigData.ControllerIconsKey, (int)ConfigData.DefaultControllerIconsType, ref saveNewSettings);
+        private void LoadSettings()
+        {
+            MusicVolume = GetConfigValue(ConfigData.AudioSectionName, ConfigData.MusicVolumeKey, ConfigData.DefaultMusicVolume);
+            SfxVolume = GetConfigValue(ConfigData.AudioSectionName, ConfigData.SfxVolumeKey, ConfigData.DefaultSfxVolume);
+            
+            //Resolution = (Vector2I)GetConfigValue(ConfigData.VideoSectionName, ConfigData.ResolutionKey, ConfigData.DefaultResolution, ref saveNewSettings);
+            //WindowMode = (WindowMode)(int)GetConfigValue(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)ConfigData.DefaultWindowMode, ref saveNewSettings);
 
-        //    LoadInputs(ref saveNewSettings);
+            //ControllerIconsType = (ControllerIconsType)(int)GetConfigValue(ConfigData.InterfaceSectionName, ConfigData.ControllerIconsKey, (int)ConfigData.DefaultControllerIconsType, ref saveNewSettings);
 
-        //    if (saveNewSettings)
-        //        Save();
-        //}
+            //LoadInputs(ref saveNewSettings);
 
-        //// if config didn't contain the key, saves and returns default value, otherwise returns saved value
-        //// is used to save newly added keys
-        //private Variant GetConfigValue(string sectionName, string keyName, Variant defaultValue, ref bool isNewSetting)
-        //{
-        //    if (!_config.HasSection(sectionName) || !_config.HasSectionKey(sectionName, keyName))
-        //        isNewSetting = true;
+            //if (saveNewSettings)
+            //    Save();
+            CloseConfig();
+        }
 
-        //    Variant value = _config.GetValue(sectionName, keyName, defaultValue);
-        //    if (isNewSetting) _config.SetValue(sectionName, keyName, value);
+        // if config didn't contain the key, saves and returns default value, otherwise returns saved value
+        // is used to save newly added keys
+        private float GetConfigValue(string sectionName, string keyName, float defaultValue)
+        {
+            bool isNewSetting = CheckIfNewSetting(sectionName, keyName);
 
-        //    return value;
-        //}
+            float value = _config.ReadValue(sectionName, keyName, defaultValue);
+            if (isNewSetting) _config.WriteValue(sectionName, keyName, value);
+
+            return value;
+        }
+
+        private bool GetConfigValue(string sectionName, string keyName, bool defaultValue, ref bool isNewSetting)
+        {
+            isNewSetting = CheckIfNewSetting(sectionName, keyName);
+
+            bool value = _config.ReadValue(sectionName, keyName, defaultValue);
+            if (isNewSetting) _config.WriteValue(sectionName, keyName, value);
+
+            return value;
+        }
+
+        private bool CheckIfNewSetting(string sectionName, string keyName)
+        {
+            if (!_config.IsSectionExists(sectionName) || !_config.IsKeyExists(sectionName, keyName))
+                return true;
+            return false;
+        }
+
+        private void SaveSetting(string sectionName, string keyName, float value)
+        {
+            OpenConfig();
+            _config.WriteValue(sectionName, keyName, value);
+            _config.Close();
+        }
+
+        private void OpenConfig() => _config.Open(Application.persistentDataPath + ConfigData.ConfigLocation);
+        private void CloseConfig() => _config.Close();
 
         //private void LoadInputs(ref bool saveNewSettings)
         //{

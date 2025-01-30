@@ -31,7 +31,6 @@ namespace UISystem
         private void Awake()
         {
             Instance ??= this;
-            Init(null);
         }
 
 

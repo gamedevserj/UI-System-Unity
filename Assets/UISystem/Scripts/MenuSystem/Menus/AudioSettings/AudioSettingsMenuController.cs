@@ -55,7 +55,7 @@ namespace UISystem.MenuSystem.Controllers
 
         private void SetupSfxSlider()
         {
-            _view.SfxSlider.value = _model.MusicVolume;
+            _view.SfxSlider.value = _model.SfxVolume;
             _view.SfxSlider.onValueChanged.AddListener(OnSfxSliderDragEnded);
             //_view.SfxSlider.SetValueNoSignal(_model.SfxVolume);
             //_view.SfxSlider.DragEnded += OnSfxSliderDragEnded;

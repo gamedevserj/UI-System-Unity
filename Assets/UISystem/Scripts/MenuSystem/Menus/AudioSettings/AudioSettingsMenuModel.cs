@@ -1,4 +1,5 @@
-﻿using UISystem.Core.MenuSystem;
+﻿using UISystem.Constants;
+using UISystem.Core.MenuSystem;
 
 namespace UISystem.MenuSystem.Models
 {
@@ -22,8 +23,8 @@ namespace UISystem.MenuSystem.Models
 
         public void ResetToDefault()
         {
-            _tempMusicVolume = 1;// ConfigData.DefaultMusicVolume;
-            _tempSfxVolume = 1;// ConfigData.DefaultSfxVolume;
+            _tempMusicVolume = ConfigData.DefaultMusicVolume;
+            _tempSfxVolume = ConfigData.DefaultSfxVolume;
             SaveSettings();
         }
 
@@ -31,7 +32,6 @@ namespace UISystem.MenuSystem.Models
         {
             _settings.SetMusicVolume(_tempMusicVolume);
             _settings.SetSfxVolume(_tempSfxVolume);
-            //_settings.Save();
         }
 
         public void DiscardChanges()
