@@ -1,7 +1,9 @@
 using System;
 using UISystem.Core.MenuSystem;
+using UISystem.Core.PopupSystem;
 using UISystem.Core.Views;
 using UISystem.MenuSystem.Views;
+using UISystem.PopupSystem;
 using UnityEngine;
 
 namespace UISystem.MenuSystem.Controllers
@@ -12,17 +14,17 @@ namespace UISystem.MenuSystem.Controllers
         public override MenuType Type => MenuType.Main;
 
         //private readonly SceneTree _sceneTree;
-        //private readonly IPopupsManager<InputEvent, PopupType, PopupResult> _popupsManager;
+        private readonly IPopupsManager<KeyCode, PopupType, PopupResult> _popupsManager;
         //private readonly MenuBackgroundController _menuBackgroundController;
         //private readonly ScreenFadeManager _screenFadeManager;
 
-        public MainMenuController(IViewCreator<MainMenuView> viewCreator, IMenuModel model, IMenusManager<KeyCode, MenuType> menusManager)
-            //SceneTree sceneTree, IPopupsManager<InputEvent, PopupType, PopupResult> popupsManager, ScreenFadeManager screenFadeManager, 
+        public MainMenuController(IViewCreator<MainMenuView> viewCreator, IMenuModel model, IMenusManager<KeyCode, MenuType> menusManager,
+             IPopupsManager<KeyCode, PopupType, PopupResult> popupsManager)//, ScreenFadeManager screenFadeManager, 
             //MenuBackgroundController menuBackgroundController)
             : base(viewCreator, model, menusManager)
         {
             
-            //_popupsManager = popupsManager;
+            _popupsManager = popupsManager;
             //_screenFadeManager = screenFadeManager;
             //_menuBackgroundController = menuBackgroundController;
         }
@@ -76,14 +78,14 @@ namespace UISystem.MenuSystem.Controllers
 
         private void ShowQuitPopup()
         {
-            //SwitchFocusAvailability(false);
-            //_popupsManager.ShowPopup(PopupType.YesNo, PopupMessages.QuitGame, (result) =>
-            //{
-            //    if (result == PopupResult.Yes)
-            //        _sceneTree.Quit();
-            //    else if (result == PopupResult.No)
-            //        SwitchFocusAvailability(true);
-            //});
+            SwitchFocusAvailability(false);
+            _popupsManager.ShowPopup(PopupType.YesNo, PopupMessages.QuitGame, (result) =>
+            {
+                if (result == PopupResult.Yes)
+                    Application.Quit();
+                else if (result == PopupResult.No)
+                    SwitchFocusAvailability(true);
+            });
         }
 
     }

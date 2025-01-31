@@ -16,11 +16,11 @@ namespace UISystem.MenuSystem.SettingsMenu
 
         protected readonly IPopupsManager<KeyCode, PopupType, PopupResult> _popupsManager;
 
-        protected SettingsMenuController(TViewCreator viewCreator, TModel model, IMenusManager<KeyCode, MenuType> menusManager)
-            //IPopupsManager<InputEvent, PopupType, PopupResult> popupsManager) 
+        protected SettingsMenuController(TViewCreator viewCreator, TModel model, IMenusManager<KeyCode, MenuType> menusManager,
+            IPopupsManager<KeyCode, PopupType, PopupResult> popupsManager) 
             : base(viewCreator, model, menusManager)
         {
-            //_popupsManager = popupsManager;
+            _popupsManager = popupsManager;
         }
 
         protected abstract void ResetViewToDefault();
@@ -33,21 +33,21 @@ namespace UISystem.MenuSystem.SettingsMenu
 
         public override void OnReturnButtonDown()
         {
-            //if (_model.HasUnappliedSettings)
-            //{
-            //    _view.SetLastSelectedElement(_view.ReturnButton);
-            //    CanReceivePhysicalInput = false;
-            //    SwitchFocusAvailability(false);
-            //    _popupsManager.ShowPopup(PopupType.YesNoCancel, PopupMessages.SaveChanges, (result) =>
-            //    {
-            //        OnReturnToPreviousMenuPopupClosed(result);
-            //        CanReceivePhysicalInput = true;
-            //    });
-            //}
-            //else
-            //{
-            //    base.OnReturnButtonDown();
-            //}
+            if (_model.HasUnappliedSettings)
+            {
+                _view.SetLastSelectedElement(_view.ReturnButton);
+                CanReceivePhysicalInput = false;
+                SwitchFocusAvailability(false);
+                _popupsManager.ShowPopup(PopupType.YesNoCancel, PopupMessages.SaveChanges, (result) =>
+                {
+                    OnReturnToPreviousMenuPopupClosed(result);
+                    CanReceivePhysicalInput = true;
+                });
+            }
+            else
+            {
+                base.OnReturnButtonDown();
+            }
         }
 
         protected void OnReturnToPreviousMenuPopupClosed(PopupResult result)
@@ -73,17 +73,17 @@ namespace UISystem.MenuSystem.SettingsMenu
 
         protected virtual void OnResetToDefaultButtonDown()
         {
-            //_view.SetLastSelectedElement(_view.ResetButton);
-            //SwitchFocusAvailability(false);
-            //_popupsManager.ShowPopup(PopupType.YesNo, PopupMessages.ResetToDefault, (result) =>
-            //{
-            //    if (result == PopupResult.Yes)
-            //    {
-            //        _model.ResetToDefault();
-            //        ResetViewToDefault();
-            //    }
-            //    SwitchFocusAvailability(true);
-            //});
+            _view.SetLastSelectedElement(_view.ResetButton);
+            SwitchFocusAvailability(false);
+            _popupsManager.ShowPopup(PopupType.YesNo, PopupMessages.ResetToDefault, (result) =>
+            {
+                if (result == PopupResult.Yes)
+                {
+                    _model.ResetToDefault();
+                    ResetViewToDefault();
+                }
+                SwitchFocusAvailability(true);
+            });
         }
     }
 }

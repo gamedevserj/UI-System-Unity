@@ -60,7 +60,7 @@ namespace UISystem.Views
             }, instant);
         }
 
-        public void DestroyView() => Destroy(this);
+        public void DestroyView() => Destroy(this.gameObject);
         public abstract void FocusElement();
         protected abstract void PopulateFocusableElements();
         protected abstract IViewTransition CreateTransition();
