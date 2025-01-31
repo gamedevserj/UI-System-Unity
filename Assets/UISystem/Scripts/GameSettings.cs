@@ -21,7 +21,7 @@ namespace UISystem
         public static float SfxVolume { get; private set; } = ConfigData.DefaultSfxVolume;
         //public static Vector2I Resolution { get; private set; } = ConfigData.DefaultResolution;
         //public static WindowMode WindowMode { get; private set; } = ConfigData.DefaultWindowMode;
-        public static ControllerIconsType ControllerIconsType { get; private set; } = ControllerIconsType.Ps5;// = ConfigData.DefaultControllerIconsType;
+        public static ControllerIconsType ControllerIconsType { get; private set; } = ConfigData.DefaultControllerIconsType;
 
 
         public GameSettings(INIParser config)
@@ -97,7 +97,7 @@ namespace UISystem
             //Resolution = (Vector2I)GetConfigValue(ConfigData.VideoSectionName, ConfigData.ResolutionKey, ConfigData.DefaultResolution, ref saveNewSettings);
             //WindowMode = (WindowMode)(int)GetConfigValue(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)ConfigData.DefaultWindowMode, ref saveNewSettings);
 
-            //ControllerIconsType = (ControllerIconsType)(int)GetConfigValue(ConfigData.InterfaceSectionName, ConfigData.ControllerIconsKey, (int)ConfigData.DefaultControllerIconsType, ref saveNewSettings);
+            ControllerIconsType = (ControllerIconsType)(int)GetConfigValue(ConfigData.InterfaceSectionName, ConfigData.ControllerIconsKey, (int)ConfigData.DefaultControllerIconsType);
 
             //LoadInputs(ref saveNewSettings);
 
