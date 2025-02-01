@@ -12,11 +12,13 @@ namespace UISystem.MenuSystem.Views
 
         [SerializeField] private TMP_Dropdown windowModeDropdown;
         [SerializeField] private TMP_Dropdown resolutionDropdown;
+        [SerializeField] private TMP_Dropdown refreshRateDropdown;
         [SerializeField] private Button saveSettingsButton;
         [SerializeField] private RectTransform panel;
 
         public TMP_Dropdown WindowModeDropdown => windowModeDropdown;
         public TMP_Dropdown ResolutionDropdown => resolutionDropdown;
+        public TMP_Dropdown RefreshRateDropdown => refreshRateDropdown;
         public Button SaveSettingsButton => saveSettingsButton;
         public RectTransform Panel => panel;
         protected override IViewTransition CreateTransition()

@@ -16,9 +16,11 @@ namespace UISystem.Constants
 
         public const string VideoSectionName = "VideoSettings";
         public const string ResolutionKey = "Resolution";
-        public static Resolution DefaultResolution => Screen.currentResolution;
+        public static Vector2Int DefaultResolution => new(Screen.currentResolution.width, Screen.currentResolution.height);
+        public const string RefreshRateKey = "RefreshRate";
+        public static int DefaultRefreshRate => Screen.currentResolution.refreshRate;
         public const string WindowModeKey = "WindowMode";
-        public const FullScreenMode Fullscreen = FullScreenMode.ExclusiveFullScreen;
+        public const FullScreenMode DefaultFullScreenMode = FullScreenMode.ExclusiveFullScreen;
 
         public const string KeysSectionName = "Keys";
 

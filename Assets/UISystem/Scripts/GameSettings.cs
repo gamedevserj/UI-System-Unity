@@ -19,8 +19,9 @@ namespace UISystem
 
         public static float MusicVolume { get; private set; } = ConfigData.DefaultMusicVolume;
         public static float SfxVolume { get; private set; } = ConfigData.DefaultSfxVolume;
-        public static Resolution Resolution { get; private set; } = ConfigData.DefaultResolution;
-        public static FullScreenMode WindowMode { get; private set; } = ConfigData.Fullscreen;
+        public static Vector2Int Resolution { get; private set; } = ConfigData.DefaultResolution;
+        public static FullScreenMode WindowMode { get; private set; } = ConfigData.DefaultFullScreenMode;
+        public static int RefreshRate { get; private set; } = ConfigData.DefaultRefreshRate;
         public static ControllerIconsType ControllerIconsType { get; private set; } = ConfigData.DefaultControllerIconsType;
 
 
@@ -52,17 +53,23 @@ namespace UISystem
             OnControllerIconsChanged?.Invoke(type);
         }
 
-        //public void SetResolution(Vector2I resolution)
-        //{
-        //    Resolution = resolution;
-        //    _config.SetValue(ConfigData.VideoSectionName, ConfigData.ResolutionKey, resolution);
-        //}
+        public void SetResolution(Vector2Int resolution)
+        {
+            Resolution = resolution;
+            SaveSetting(ConfigData.VideoSectionName, ConfigData.ResolutionKey, resolution);
+        }
 
-        //public void SetWindowMode(WindowMode windowMode)
-        //{
-        //    WindowMode = windowMode;
-        //    _config.SetValue(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)windowMode);
-        //}
+        public void SetWindowMode(FullScreenMode mode)
+        {
+            WindowMode = mode;
+            SaveSetting(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)mode);
+        }
+
+        public void SetRefreshRate(int rate)
+        {
+            RefreshRate = rate;
+            SaveSetting(ConfigData.VideoSectionName, ConfigData.RefreshRateKey, rate);
+        }
 
         //public void ResetInputMapToDefault()
         //{
@@ -94,8 +101,8 @@ namespace UISystem
             MusicVolume = GetConfigValue(ConfigData.AudioSectionName, ConfigData.MusicVolumeKey, ConfigData.DefaultMusicVolume);
             SfxVolume = GetConfigValue(ConfigData.AudioSectionName, ConfigData.SfxVolumeKey, ConfigData.DefaultSfxVolume);
             
-            //Resolution = (Vector2I)GetConfigValue(ConfigData.VideoSectionName, ConfigData.ResolutionKey, ConfigData.DefaultResolution, ref saveNewSettings);
-            //WindowMode = (WindowMode)(int)GetConfigValue(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)ConfigData.DefaultWindowMode, ref saveNewSettings);
+            Resolution = GetConfigValue(ConfigData.VideoSectionName, ConfigData.ResolutionKey, ConfigData.DefaultResolution);
+            WindowMode = (FullScreenMode)(int)GetConfigValue(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)ConfigData.DefaultFullScreenMode);
 
             ControllerIconsType = (ControllerIconsType)(int)GetConfigValue(ConfigData.InterfaceSectionName, ConfigData.ControllerIconsKey, (int)ConfigData.DefaultControllerIconsType);
 
@@ -118,12 +125,12 @@ namespace UISystem
             return value;
         }
 
-        private bool GetConfigValue(string sectionName, string keyName, bool defaultValue, ref bool isNewSetting)
+        private Vector2Int GetConfigValue(string sectionName, string keyName, Vector2Int defaultValue)
         {
-            isNewSetting = CheckIfNewSetting(sectionName, keyName);
+            bool isNewSetting = CheckIfNewSetting(sectionName, keyName);
 
-            bool value = _config.ReadValue(sectionName, keyName, defaultValue);
-            if (isNewSetting) _config.WriteValue(sectionName, keyName, value);
+            Vector2Int value = VideoSettings.ResolutionFromString(_config.ReadValue(sectionName, keyName, VideoSettings.ResolutionStringName(defaultValue)));
+            if (isNewSetting) _config.WriteValue(sectionName, keyName, VideoSettings.ResolutionStringName(value));
 
             return value;
         }
@@ -139,6 +146,14 @@ namespace UISystem
         {
             OpenConfig();
             _config.WriteValue(sectionName, keyName, value);
+            _config.Close();
+        }
+
+        private void SaveSetting(string sectionName, string keyName, Vector2Int value)
+        {
+            OpenConfig();
+            var resolutionName = ParseResolution(value);
+            _config.WriteValue(sectionName, keyName, resolutionName);
             _config.Close();
         }
 
@@ -192,5 +207,9 @@ namespace UISystem
         //    _config.SetValue(ConfigData.KeysSectionName, action, events);
         //}
 
+        private string ParseResolution(Vector2Int resolution)
+        {
+            return VideoSettings.ResolutionStringName(resolution);
+        }
     }
 }

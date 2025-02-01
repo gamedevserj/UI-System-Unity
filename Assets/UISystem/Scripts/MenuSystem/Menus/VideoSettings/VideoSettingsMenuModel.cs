@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TMPro;
+﻿using System;
 using UISystem.Constants;
 using UISystem.Core.MenuSystem;
 using UnityEngine;
@@ -9,56 +8,60 @@ namespace UISystem.MenuSystem.Models
     public class VideoSettingsMenuModel : ISettingsMenuModel
     {
 
-        private Resolution _tempResolution;
+        private Vector2Int _tempResolution;
         private FullScreenMode _tempWindowMode;
+        private int _tempRefreshRate = Screen.currentResolution.refreshRate;
         private readonly GameSettings _settings;
-        private readonly Resolution[] _availableResolutions;
 
-        public int CurrentResolutionIndex { get; private set; }
-        public int CurrenWindowModeIndex { get; private set; }
-        public bool HasUnappliedSettings => !GameSettings.Resolution.Equals(_tempResolution) || GameSettings.WindowMode != _tempWindowMode;
+        public int CurrentResolutionIndex => Array.IndexOf(AvailableResolutions, TempResolution);
+        public int CurrentRefreshRate => Array.IndexOf(AvailableRefreshRates, _tempRefreshRate);
+        public int CurrenWindowModeIndex => Array.IndexOf(VideoSettings.FullScreenModes, _tempWindowMode);
+
+        private Vector2Int TempResolution
+        {
+            get
+            {
+                // updating resolution in case player resized window manually to allow saving custom resolution in windowed mode
+                _tempResolution.x = Screen.width;
+                _tempResolution.y = Screen.height;
+                return _tempResolution;
+            }
+        }
+
+        public bool HasUnappliedSettings => !GameSettings.Resolution.Equals(TempResolution) || GameSettings.WindowMode != _tempWindowMode
+            || GameSettings.RefreshRate != _tempRefreshRate;
+
+        private static Vector2Int[] AvailableResolutions => VideoSettings.AvailableResolutions;
+        private static int[] AvailableRefreshRates => VideoSettings.AvailableRefreshRates;
 
         public VideoSettingsMenuModel(GameSettings settings)
         {
-            _availableResolutions = Screen.resolutions;
             _settings = settings;
             LoadSettings();
         }
 
         public void SelectWindowMode(int index)
         {
-            //_tempWindowMode = VideoSettings.WindowModeOptions[index];
-            SetWindowMode(_tempWindowMode);
+            _tempWindowMode = VideoSettings.FullScreenModes[index];
+            Screen.fullScreenMode = _tempWindowMode;
         }
 
         public void SelectResolution(int index)
         {
-            _tempResolution = _availableResolutions[index];
-            Screen.SetResolution(_tempResolution.width, _tempResolution.height, _tempWindowMode, _tempResolution.refreshRate);
-            //SetResolution(_tempResolution);
+            _tempResolution = AvailableResolutions[index];
+            Screen.SetResolution(_tempResolution.x, _tempResolution.y, _tempWindowMode, _tempRefreshRate);
         }
 
-        public string[] GetWindowModeOptionNames()
+        public void SelectRefreshRate(int index)
         {
-            return new string[0];
-            //return VideoSettings.WindowModeNames;
-        }
-
-        public string[] GetAvailableResolutionNames()
-        {
-            string[] resolutionNames = new string[_availableResolutions.Length];
-            for (int i = 0; i < _availableResolutions.Length; i++)
-            {
-                resolutionNames[i] = GetResolutionName(_availableResolutions[i]);
-            }
-            return resolutionNames;
+            _tempRefreshRate = AvailableRefreshRates[index];
+            Screen.SetResolution(_tempResolution.x, _tempResolution.y, _tempWindowMode, _tempRefreshRate);
         }
 
         public void SaveSettings()
         {
-            //_settings.SetResolution(_tempResolution);
-            //_settings.SetWindowMode(_tempWindowMode);
-            //_settings.Save();
+            _settings.SetResolution(_tempResolution);
+            _settings.SetWindowMode(_tempWindowMode);
         }
 
         public void DiscardChanges()
@@ -68,47 +71,18 @@ namespace UISystem.MenuSystem.Models
 
         public void ResetToDefault()
         {
-            //_tempResolution = ConfigData.DefaultResolution;
-            //_tempWindowMode = ConfigData.Fullscreen;
-            //SaveSettings();
-            //SetResolution(_tempResolution);
-            //SetWindowMode(_tempWindowMode);
-        }
-
-        private static Vector2Int[] GetAvailableResolutions()
-        {
-            return new Vector2Int[0];
-            //return VideoSettings.GetResolutionsForAspect(Aspect);
+            _tempResolution = ConfigData.DefaultResolution;
+            _tempWindowMode = ConfigData.DefaultFullScreenMode;
+            _tempRefreshRate = ConfigData.DefaultRefreshRate;
+            SaveSettings();
         }
 
         private void LoadSettings()
         {
             _tempResolution = GameSettings.Resolution;
             _tempWindowMode = GameSettings.WindowMode;
-            //SetResolution(_tempResolution);
-            //SetWindowMode(_tempWindowMode);
-        }
-
-        private void SetResolution(Resolution resolution)
-        {
-            //CurrentResolutionIndex = VideoSettings.GetResolutionIndex(resolution, GetAvailableResolutions());
-            //WindowSetSize(resolution);
-        }
-
-        private void SetWindowMode(FullScreenMode mode)
-        {
-            //CurrenWindowModeIndex = VideoSettings.GetWindwoModeIndex(mode);
-            //WindowSetMode(mode);
-
-            //// if you change resolution in fullscreen, then change window mode - window will not have the resolution that was selected
-            //// this is to prevent that
-            //if (mode == WindowMode.Windowed)
-            //    WindowSetSize(_tempResolution);
-        }
-
-        private static string GetResolutionName(Resolution resolution)
-        {
-            return resolution.width + "x" + resolution.height;
+            _tempRefreshRate = GameSettings.RefreshRate;
+            Screen.SetResolution(_tempResolution.x, _tempResolution.y, _tempWindowMode, _tempRefreshRate);
         }
     }
 }

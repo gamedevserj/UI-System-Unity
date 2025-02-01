@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using UISystem.Constants;
 using UISystem.Core.MenuSystem;
 using UISystem.Core.PopupSystem;
 using UISystem.Core.Views;
@@ -24,39 +24,29 @@ namespace UISystem.MenuSystem.Controllers
             base.SetupElements();
             SetupWindowModeDropdown();
             SetupResolutionDropdown();
+            SetupRefreshRateDropdown();
             _view.SaveSettingsButton.onClick.AddListener(_model.SaveSettings);
         }
 
         private void SetupWindowModeDropdown()
         {
-            var windowModeNames = _model.GetWindowModeOptionNames();
-            //OptionButtonItem[] items = new OptionButtonItem[windowModeNames.Length];
-            //for (int i = 0; i < items.Length; i++)
-            //{
-            //    var name = Regex.Replace(windowModeNames[i].ToString(), "([A-Z])", " $1").Trim(); // to have space in ExclusiveFullscreen
-            //    items[i] = new OptionButtonItem(name, i);
-            //}
-            //_view.WindowModeDropdown.AddMultipleItems(items);
-            //_view.WindowModeDropdown.Select(_model.CurrenWindowModeIndex);
-            //_view.WindowModeDropdown.ItemSelected += OnWindowModeDropdownSelect;
+            _view.WindowModeDropdown.AddOptions(VideoSettings.FullScreenModeNames);
+            _view.WindowModeDropdown.value = _model.CurrenWindowModeIndex;
+            _view.WindowModeDropdown.onValueChanged.AddListener(OnWindowModeDropdownSelect);
         }
 
         private void SetupResolutionDropdown()
         {
-            var resolutionNames = _model.GetAvailableResolutionNames().ToList();
-            //OptionButtonItem[] items = new OptionButtonItem[resolutionNames.Length];
-            //for (int i = 0; i < items.Length; i++)
-            //{
-            //    items[i] = new OptionButtonItem(resolutionNames[i], i);
-            //}
-
-            //_view.ResolutionDropdown.AddMultipleItems(items);
-            //_view.ResolutionDropdown.Select(_model.CurrentResolutionIndex);
-            //_view.ResolutionDropdown.ItemSelected += OnResolutionDropdownSelect;
-
-            _view.ResolutionDropdown.AddOptions(_model.GetAvailableResolutionNames().ToList());
+            _view.ResolutionDropdown.AddOptions(VideoSettings.ResolutionNames);
+            _view.ResolutionDropdown.value = _model.CurrentResolutionIndex;
             _view.ResolutionDropdown.onValueChanged.AddListener(OnResolutionDropdownSelect);
-            _view.ResolutionDropdown.value = (int)_model.CurrentResolutionIndex;
+        }
+
+        private void SetupRefreshRateDropdown()
+        {
+            _view.RefreshRateDropdown.AddOptions(VideoSettings.RefreshRateNames);
+            _view.RefreshRateDropdown.value = _model.CurrentRefreshRate;
+            _view.RefreshRateDropdown.onValueChanged.AddListener(OnRefreshRateDropdownSelect);
         }
 
         private void OnResolutionDropdownSelect(int index)
@@ -64,15 +54,20 @@ namespace UISystem.MenuSystem.Controllers
             _model.SelectResolution(index);
         }
 
-        private void OnWindowModeDropdownSelect(long index)
+        private void OnWindowModeDropdownSelect(int index)
         {
-            _model.SelectWindowMode((int)index);
+            _model.SelectWindowMode(index);
+        }
+
+        private void OnRefreshRateDropdownSelect(int index)
+        {
+            _model.SelectRefreshRate(index);
         }
 
         protected override void ResetViewToDefault()
         {
-            //_view.WindowModeDropdown.Select(_model.CurrenWindowModeIndex);
-            //_view.ResolutionDropdown.Select(_model.CurrentResolutionIndex);
+            _view.WindowModeDropdown.value = _model.CurrenWindowModeIndex;
+            _view.ResolutionDropdown.value = _model.CurrentResolutionIndex;
         }
     }
 }
