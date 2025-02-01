@@ -25,6 +25,7 @@ namespace UISystem
         [SerializeField] private ViewBase optionMenuPrefab;
         [SerializeField] private ViewBase audioSettingsMenuPrefab;
         [SerializeField] private ViewBase interfaceSettingsMenuPrefab;
+        [SerializeField] private ViewBase videoSettingsMenuPrefab;
 
         [SerializeField] private ViewBase yesPopupPrefab;
         [SerializeField] private ViewBase yesNoPopupPrefab;
@@ -70,7 +71,7 @@ namespace UISystem
             //var pauseViewCreator = new ViewCreator<PauseMenuView>(GetMenuPath(MenuType.Pause), menusParent);
             var optionsViewCreator = new ViewCreator<OptionsMenuView>(optionMenuPrefab, menusParent);
             var audioSettingsViewCreator = new ViewCreator<AudioSettingsMenuView>(audioSettingsMenuPrefab, menusParent);
-            //var videoSettingsViewCreator = new ViewCreator<VideoSettingsMenuView>(GetMenuPath(MenuType.VideoSettings), menusParent);
+            var videoSettingsViewCreator = new ViewCreator<VideoSettingsMenuView>(videoSettingsMenuPrefab, menusParent);
             //var rebindKeysViewCreator = new ViewCreator<RebindKeysMenuView>(GetMenuPath(MenuType.RebindKeys), menusParent);
             var interfaceMenuViewCreator = new ViewCreator<InterfaceSettingsMenuView>(interfaceSettingsMenuPrefab, menusParent);
             var menus = new IMenuController<KeyCode, MenuType>[]
@@ -80,7 +81,7 @@ namespace UISystem
                 //new PauseMenuController(pauseViewCreator, null, menusManager, popupsManager, screenFadeManager, backgroundController),
                 new OptionsMenuController(optionsViewCreator, null, menusManager),
                 new AudioSettingsMenuController(audioSettingsViewCreator, new AudioSettingsMenuModel(settings), menusManager, popupsManager),
-                //new VideoSettingsMenuController(videoSettingsViewCreator, new VideoSettingsMenuModel(settings), menusManager, popupsManager),
+                new VideoSettingsMenuController(videoSettingsViewCreator, new VideoSettingsMenuModel(settings), menusManager, popupsManager),
                 //new RebindKeysMenuController(rebindKeysViewCreator, new RebindKeysMenuModel(settings), menusManager, popupsManager),
                 new InterfaceSettingsMenuController(interfaceMenuViewCreator, new InterfaceSettingsMenuModel(settings), menusManager, popupsManager),
             };

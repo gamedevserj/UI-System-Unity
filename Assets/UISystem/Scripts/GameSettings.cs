@@ -19,8 +19,8 @@ namespace UISystem
 
         public static float MusicVolume { get; private set; } = ConfigData.DefaultMusicVolume;
         public static float SfxVolume { get; private set; } = ConfigData.DefaultSfxVolume;
-        //public static Vector2I Resolution { get; private set; } = ConfigData.DefaultResolution;
-        //public static WindowMode WindowMode { get; private set; } = ConfigData.DefaultWindowMode;
+        public static Resolution Resolution { get; private set; } = ConfigData.DefaultResolution;
+        public static FullScreenMode WindowMode { get; private set; } = ConfigData.Fullscreen;
         public static ControllerIconsType ControllerIconsType { get; private set; } = ConfigData.DefaultControllerIconsType;
 
 
