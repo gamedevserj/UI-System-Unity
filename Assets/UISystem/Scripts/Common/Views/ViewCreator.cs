@@ -1,4 +1,5 @@
-﻿using UISystem.Core.Views;
+﻿using System.Threading.Tasks;
+using UISystem.Core.Views;
 using UnityEngine;
 
 namespace UISystem.Views
@@ -12,8 +13,6 @@ namespace UISystem.Views
         { }
 
         public override void DestroyView() => _view.DestroyView();
-
-        public override void SwitchFocusAvailability(bool enable) => _view.SwitchFocusAvailability(enable);
 
         public override TView CreateView()
         {

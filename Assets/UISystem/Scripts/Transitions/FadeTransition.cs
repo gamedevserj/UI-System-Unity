@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using UISystem.Core.Transitions;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ namespace UISystem.Transitions
 {
     public class FadeTransition : IViewTransition
     {
+
+        private const float Duration = 0.15f;
 
         private readonly CanvasGroup _target;
 
@@ -19,12 +22,20 @@ namespace UISystem.Transitions
         {
             //if (instant)
             //{
-                //_target.Modulate = new Color(_target.Modulate, 0);
-                _target.alpha = 0;
+            //_target.Modulate = new Color(_target.Modulate, 0);
+            _target.DOFade(0, Duration).OnComplete(()=>
+            {
                 _target.interactable = false;
                 _target.blocksRaycasts = false;
                 onHidden?.Invoke();
-                return;
+            });
+
+            //if (_target == null)
+            //    return;
+
+            //_target.alpha = 0;
+            
+            //return;
             //}
             //Fader.Hide(SceneTree, _target, onHidden, instant);
         }
@@ -37,14 +48,19 @@ namespace UISystem.Transitions
             _target.interactable = false;
             _target.blocksRaycasts = false;
 
-            //if (instant)
-            //{
-                //_target.Modulate = new Color(_target.Modulate, 1);
-                _target.alpha = 1;
+            _target.DOFade(1, Duration).OnComplete(() =>
+            {
                 _target.interactable = true;
                 _target.blocksRaycasts = true;
                 onShown?.Invoke();
-                return;
+            });
+
+            //if (instant)
+            //{
+                //_target.Modulate = new Color(_target.Modulate, 1);
+                //_target.alpha = 1;
+                
+                //return;
             //}
             //Fader.Show(SceneTree, _target, onShown, instant);
             //_target.alpha = 1;

@@ -4,6 +4,7 @@ using UISystem.MenuSystem;
 using UISystem.MenuSystem.Controllers;
 using UISystem.MenuSystem.Models;
 using UISystem.MenuSystem.Views;
+using UISystem.PhysicalInput;
 using UISystem.PopupSystem;
 using UISystem.PopupSystem.Popups.Controllers;
 using UISystem.PopupSystem.Popups.Views;
@@ -32,13 +33,25 @@ namespace UISystem
         [SerializeField] private ViewBase yesNoCancelPopupPrefab;
         //[Export] private ScreenFadeManager screenFadeManager;
 
-        //IInputProcessor<InputEvent> _inputProcessor;
+        private InputProcessor _inputProcessor;
+        private UIInputActions _inputActions;
 
         private void Awake()
         {
             Instance ??= this;
+            _inputActions = new UIInputActions();
+            _inputProcessor = new InputProcessor(_inputActions);
         }
 
+        private void OnEnable()
+        {
+            _inputActions.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _inputActions.Disable();
+        }
 
         //public override void _Input(InputEvent inputEvent)
         //{

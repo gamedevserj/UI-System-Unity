@@ -28,6 +28,8 @@ namespace UISystem.Views
 
         public void SwitchFocusAvailability(bool enable)
         {
+            if (canvasGroup == null)
+                return;
             canvasGroup.interactable = canvasGroup.blocksRaycasts = enable;
             //if (_focusableElements != null)
             //{
