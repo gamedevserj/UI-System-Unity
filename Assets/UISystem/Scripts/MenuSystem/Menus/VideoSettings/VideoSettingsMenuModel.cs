@@ -60,8 +60,8 @@ namespace UISystem.MenuSystem.Models
 
         public void SaveSettings()
         {
-            _settings.SetResolution(_tempResolution);
-            _settings.SetWindowMode(_tempWindowMode);
+            _settings.SaveResolution(_tempResolution);
+            _settings.SaveWindowMode(_tempWindowMode);
         }
 
         public void DiscardChanges()

@@ -28,7 +28,7 @@ namespace UISystem.MenuSystem.Models
 
         public void SaveSettings()
         {
-            _settings.SetControllerIconsType(_tempIconsType);
+            _settings.SaveControllerIconsType(_tempIconsType);
         }
 
         public void DiscardChanges()
@@ -39,7 +39,7 @@ namespace UISystem.MenuSystem.Models
         public void ResetToDefault()
         {
             _tempIconsType = ConfigData.DefaultControllerIconsType;
-            _settings.SetControllerIconsType(_tempIconsType);
+            _settings.SaveControllerIconsType(_tempIconsType);
             SaveSettings();
         }
 

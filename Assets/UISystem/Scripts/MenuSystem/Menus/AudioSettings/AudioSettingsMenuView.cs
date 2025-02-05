@@ -14,7 +14,7 @@ namespace UISystem.MenuSystem.Views
         //[SerializeField] private RectTransform resizableControlSfx; // label container
         [SerializeField] private Slider sfxSlider;
         [SerializeField] private Button saveSettingsButton;
-        [SerializeField] private RectTransform panel;
+        [SerializeField] private RectTransform panel; 
 
         public Slider MusicSlider => musicSlider;
         public Slider SfxSlider => sfxSlider;

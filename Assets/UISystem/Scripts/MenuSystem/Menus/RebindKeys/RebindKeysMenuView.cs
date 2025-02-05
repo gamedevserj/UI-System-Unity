@@ -1,4 +1,5 @@
-﻿using UISystem.Core.Transitions;
+﻿using UISystem.Common.Elements;
+using UISystem.Core.Transitions;
 using UISystem.MenuSystem.SettingsMenu;
 using UISystem.Transitions;
 using UnityEngine;
@@ -9,20 +10,20 @@ namespace UISystem.MenuSystem.Views
     public partial class RebindKeysMenuView : SettingsMenuView
     {
 
-        [SerializeField] private Button moveLeft;
-        [SerializeField] private Button moveLeftJoystick;
-        [SerializeField] private Button moveRight;
-        [SerializeField] private Button moveRightJoystick;
-        [SerializeField] private Button jump;
-        [SerializeField] private Button jumpJoystick;
+        [SerializeField] private RebindableButtonView moveLeft;
+        [SerializeField] private RebindableButtonView moveLeftJoystick;
+        [SerializeField] private RebindableButtonView moveRight;
+        [SerializeField] private RebindableButtonView moveRightJoystick;
+        [SerializeField] private RebindableButtonView jump;
+        [SerializeField] private RebindableButtonView jumpJoystick;
         [SerializeField] private RectTransform panel;
 
-        public Button MoveLeft => moveLeft;
-        public Button MoveLeftJoystick => moveLeftJoystick;
-        public Button MoveRight => moveRight;
-        public Button MoveRightJoystick => moveRightJoystick;
-        public Button Jump => jump;
-        public Button JumpJoystick => jumpJoystick;
+        public RebindableButtonView MoveLeft => moveLeft;
+        public RebindableButtonView MoveLeftJoystick => moveLeftJoystick;
+        public RebindableButtonView MoveRight => moveRight;
+        public RebindableButtonView MoveRightJoystick => moveRightJoystick;
+        public RebindableButtonView Jump => jump;
+        public RebindableButtonView JumpJoystick => jumpJoystick;
         public RectTransform Panel => panel;
 
         protected override IViewTransition CreateTransition()

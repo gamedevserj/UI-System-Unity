@@ -27,6 +27,8 @@ namespace UISystem
         [SerializeField] private ViewBase audioSettingsMenuPrefab;
         [SerializeField] private ViewBase interfaceSettingsMenuPrefab;
         [SerializeField] private ViewBase videoSettingsMenuPrefab;
+        [SerializeField] private ViewBase rebindKeysMenuPrefab;
+        [SerializeField] private GameActions gameActions;
 
         [SerializeField] private ViewBase yesPopupPrefab;
         [SerializeField] private ViewBase yesNoPopupPrefab;
@@ -53,17 +55,8 @@ namespace UISystem
             _inputActions.Disable();
         }
 
-        //public override void _Input(InputEvent inputEvent)
-        //{
-        //    _inputProcessor?.ProcessInput(inputEvent);
-        //}
-
         public void Init(GameSettings settings)
         {
-            //SceneTree tree = GetTree();
-
-            //_inputProcessor = new InputProcessor();
-
             var popupsManager = new PopupsManager<KeyCode, PopupType, PopupResult>();
             var yesPopupViewCreator = new ViewCreator<YesPopupView>(yesPopupPrefab, popupsParent);
             var yesNoPopupViewCreator = new ViewCreator<YesNoPopupView>(yesNoPopupPrefab, popupsParent);
@@ -85,7 +78,7 @@ namespace UISystem
             var optionsViewCreator = new ViewCreator<OptionsMenuView>(optionMenuPrefab, menusParent);
             var audioSettingsViewCreator = new ViewCreator<AudioSettingsMenuView>(audioSettingsMenuPrefab, menusParent);
             var videoSettingsViewCreator = new ViewCreator<VideoSettingsMenuView>(videoSettingsMenuPrefab, menusParent);
-            //var rebindKeysViewCreator = new ViewCreator<RebindKeysMenuView>(GetMenuPath(MenuType.RebindKeys), menusParent);
+            var rebindKeysViewCreator = new ViewCreator<RebindKeysMenuView>(rebindKeysMenuPrefab, menusParent);
             var interfaceMenuViewCreator = new ViewCreator<InterfaceSettingsMenuView>(interfaceSettingsMenuPrefab, menusParent);
             var menus = new IMenuController<KeyCode, MenuType>[]
             {
@@ -95,7 +88,7 @@ namespace UISystem
                 new OptionsMenuController(optionsViewCreator, null, menusManager),
                 new AudioSettingsMenuController(audioSettingsViewCreator, new AudioSettingsMenuModel(settings), menusManager, popupsManager),
                 new VideoSettingsMenuController(videoSettingsViewCreator, new VideoSettingsMenuModel(settings), menusManager, popupsManager),
-                //new RebindKeysMenuController(rebindKeysViewCreator, new RebindKeysMenuModel(settings), menusManager, popupsManager),
+                new RebindKeysMenuController(rebindKeysViewCreator, new RebindKeysMenuModel(settings), menusManager, popupsManager),
                 new InterfaceSettingsMenuController(interfaceMenuViewCreator, new InterfaceSettingsMenuModel(settings), menusManager, popupsManager),
             };
             menusManager.Init(menus);

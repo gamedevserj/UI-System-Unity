@@ -1,4 +1,5 @@
 ﻿using UISystem.Constants;
+using UISystem.PhysicalInput;
 using UnityEngine;
 
 namespace UISystem
@@ -10,7 +11,8 @@ namespace UISystem
         {
             var config = new INIParser();
             config.Open(Application.persistentDataPath + ConfigData.ConfigLocation);
-            GameSettings settings = new(config);
+            var actions = new GameActions();
+            GameSettings settings = new(config, actions);
 
             UiInstaller.Instance.Init(settings);
         }

@@ -23,6 +23,7 @@ namespace UISystem.Constants
         public const FullScreenMode DefaultFullScreenMode = FullScreenMode.ExclusiveFullScreen;
 
         public const string KeysSectionName = "Keys";
+        public const string OverridesKey = "Overrides";
 
         public const string InterfaceSectionName = "Interface";
         public const string ControllerIconsKey = "ControllerIcons";

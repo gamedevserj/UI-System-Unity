@@ -30,8 +30,8 @@ namespace UISystem.MenuSystem.Models
 
         public void SaveSettings()
         {
-            _settings.SetMusicVolume(_tempMusicVolume);
-            _settings.SetSfxVolume(_tempSfxVolume);
+            _settings.SaveMusicVolume(_tempMusicVolume);
+            _settings.SaveSfxVolume(_tempSfxVolume);
         }
 
         public void DiscardChanges()

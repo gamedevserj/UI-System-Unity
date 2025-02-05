@@ -1,7 +1,9 @@
 ﻿using System;
-using UnityEngine;
 using UISystem.Common.Enums;
 using UISystem.Constants;
+using UISystem.PhysicalInput;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace UISystem
 {
@@ -24,42 +26,44 @@ namespace UISystem
         public static int RefreshRate { get; private set; } = ConfigData.DefaultRefreshRate;
         public static ControllerIconsType ControllerIconsType { get; private set; } = ConfigData.DefaultControllerIconsType;
 
+        public static GameActions Actions { get; private set; }
 
-        public GameSettings(INIParser config)
+        public GameSettings(INIParser config, GameActions actions)
         {
             _config = config;
+            Actions = actions;
             OpenConfig();
             LoadSettings();
         }
 
-        public void SetMusicVolume(float volume)
+        public void SaveMusicVolume(float volume)
         {
             MusicVolume = volume;
             SaveSetting(ConfigData.AudioSectionName, ConfigData.MusicVolumeKey, volume);
             OnMusicVolumeChanged?.Invoke(volume);
         }
 
-        public void SetSfxVolume(float volume)
+        public void SaveSfxVolume(float volume)
         {
             SfxVolume = volume;
             SaveSetting(ConfigData.AudioSectionName, ConfigData.SfxVolumeKey, volume);
             OnSfxVolumeChanged?.Invoke(volume);
         }
 
-        public void SetControllerIconsType(ControllerIconsType type)
+        public void SaveControllerIconsType(ControllerIconsType type)
         {
             ControllerIconsType = type;
             SaveSetting(ConfigData.InterfaceSectionName, ConfigData.ControllerIconsKey, (int)type);
             OnControllerIconsChanged?.Invoke(type);
         }
 
-        public void SetResolution(Vector2Int resolution)
+        public void SaveResolution(Vector2Int resolution)
         {
             Resolution = resolution;
             SaveSetting(ConfigData.VideoSectionName, ConfigData.ResolutionKey, resolution);
         }
 
-        public void SetWindowMode(FullScreenMode mode)
+        public void SaveWindowMode(FullScreenMode mode)
         {
             WindowMode = mode;
             SaveSetting(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)mode);
@@ -71,30 +75,16 @@ namespace UISystem
             SaveSetting(ConfigData.VideoSectionName, ConfigData.RefreshRateKey, rate);
         }
 
-        //public void ResetInputMapToDefault()
-        //{
-        //    InputMap.LoadFromProjectSettings();
-        //    SetAllInputsInConfig();
-        //    Save();
-        //}
+        public void SaveInputKeys()
+        {
+            SaveSetting(ConfigData.KeysSectionName, ConfigData.OverridesKey, Actions.asset.SaveBindingOverridesAsJson());
+        }
 
-        //public void SaveInputActionKey(string action, Godot.Collections.Array<InputEvent> events)
-        //{
-        //    InputMap.ActionEraseEvents(action);
-        //    foreach (var item in events)
-        //    {
-        //        InputMap.ActionAddEvent(action, item);
-        //    }
-        //    SetInputInConfig(action);
-        //    Save();
-        //}
-
-        //public void Save()
-        //{
-        //    _config.Save(ConfigData.ConfigLocation);
-        //}
-
-
+        public void ResetInputMapToDefault()
+        {
+            Actions.asset.RemoveAllBindingOverrides();
+            SaveInputKeys();
+        }
 
         private void LoadSettings()
         {
@@ -105,11 +95,7 @@ namespace UISystem
             WindowMode = (FullScreenMode)(int)GetConfigValue(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)ConfigData.DefaultFullScreenMode);
 
             ControllerIconsType = (ControllerIconsType)(int)GetConfigValue(ConfigData.InterfaceSectionName, ConfigData.ControllerIconsKey, (int)ConfigData.DefaultControllerIconsType);
-
-            //LoadInputs(ref saveNewSettings);
-
-            //if (saveNewSettings)
-            //    Save();
+            LoadActions();
             CloseConfig();
         }
 
@@ -144,6 +130,11 @@ namespace UISystem
 
         private void SaveSetting(string sectionName, string keyName, float value)
         {
+            SaveSetting(sectionName, keyName, value.ToString("0.00"));
+        }
+
+        private void SaveSetting(string sectionName, string keyName, string value)
+        {
             OpenConfig();
             _config.WriteValue(sectionName, keyName, value);
             _config.Close();
@@ -160,52 +151,14 @@ namespace UISystem
         private void OpenConfig() => _config.Open(Application.persistentDataPath + ConfigData.ConfigLocation);
         private void CloseConfig() => _config.Close();
 
-        //private void LoadInputs(ref bool saveNewSettings)
-        //{
-        //    if (!_config.HasSection(ConfigData.KeysSectionName))
-        //    {
-        //        InputMap.LoadFromProjectSettings();
-        //        SetAllInputsInConfig();
-        //        saveNewSettings = true;
-        //        return;
-        //    }
-
-        //    var savedKeys = _config.GetSectionKeys(ConfigData.KeysSectionName);
-        //    for (int i = 0; i < InputsData.RebindableActions.Length; i++)
-        //    {
-        //        if (!savedKeys.Contains(InputsData.RebindableActions[i]))
-        //        {
-        //            SetInputInConfig(InputsData.RebindableActions[i]);
-        //            saveNewSettings = true;
-        //        }
-        //    }
-
-        //    for (int i = 0; i < savedKeys.Length; i++)
-        //    {
-        //        var action = savedKeys[i];
-        //        Godot.Collections.Array<InputEvent> events = (Godot.Collections.Array<InputEvent>)_config.GetValue(ConfigData.KeysSectionName, action);
-
-        //        InputMap.ActionEraseEvents(action);
-        //        for (int k = 0; k < events.Count; k++)
-        //        {
-        //            InputMap.ActionAddEvent(action, events[k]);
-        //        }
-        //    }
-        //}
-
-        //private void SetAllInputsInConfig()
-        //{
-        //    for (var i = 0; i < InputsData.RebindableActions.Length; i++)
-        //    {
-        //        SetInputInConfig(InputsData.RebindableActions[i]);
-        //    }
-        //}
-
-        //private void SetInputInConfig(string action)
-        //{
-        //    var events = InputMap.ActionGetEvents(action);
-        //    _config.SetValue(ConfigData.KeysSectionName, action, events);
-        //}
+        private void LoadActions()
+        {
+            string keyOverrides = _config.ReadValue(ConfigData.KeysSectionName, ConfigData.OverridesKey, "");
+            if (!string.IsNullOrEmpty(keyOverrides))
+            {
+                Actions.asset.LoadBindingOverridesFromJson(keyOverrides);
+            }
+        }
 
         private string ParseResolution(Vector2Int resolution)
         {
