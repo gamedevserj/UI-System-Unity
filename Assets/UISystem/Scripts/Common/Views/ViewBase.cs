@@ -13,12 +13,11 @@ namespace UISystem.Views
     {
 
         [SerializeField] protected CanvasGroup canvasGroup;
-        
+
         private IViewTransition _transition;
         protected Selectable[] _focusableElements;
 
-        // is required by interface as other engines have additional checks for object not being null/being in process of destruction
-        public bool IsValid => true;
+        public CanvasGroup FadeObjectsContainer => canvasGroup;
 
         public virtual void Init()
         {

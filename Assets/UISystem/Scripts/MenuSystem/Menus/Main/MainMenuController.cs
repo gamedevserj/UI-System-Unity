@@ -57,6 +57,7 @@ namespace UISystem.MenuSystem.Controllers
         private void PressedPlay()
         {
             _view.SetLastSelectedElement(_view.PlayButton);
+            _menusManager.ShowMenu(MenuType.InGame, StackingType.Clear, instant: true);
             //_screenFadeManager.FadeOut(() =>
             //{
             //    _menusManager.ShowMenu(MenuType.InGame, StackingType.Clear, instant: true);

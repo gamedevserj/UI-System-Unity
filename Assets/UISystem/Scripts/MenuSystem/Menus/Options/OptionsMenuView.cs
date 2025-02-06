@@ -19,7 +19,6 @@ namespace UISystem.MenuSystem.Views
         public Button AudioSettingsButton => audioSettingsButton;
         public Button VideoSettingsButton => videoSettingsButton;
         public Button RebindKeysButton => rebindKeysButton;
-        public CanvasGroup FadeObjectsContainer => canvasGroup;
 
         protected override Selectable DefaultSelectedElement => InterfaceSettingsButton;
 

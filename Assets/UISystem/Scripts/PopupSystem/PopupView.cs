@@ -13,7 +13,6 @@ namespace UISystem.PopupSystem
         [SerializeField] private TextMeshProUGUI messageLabel;
         [SerializeField] protected RectTransform messageMask;
 
-        public CanvasGroup FadeObjectsContainer => canvasGroup;
         public RectTransform Panel => panel;
         public TextMeshProUGUI Message { set => messageLabel = value; }
         public RectTransform MessageMask => messageMask;

@@ -15,7 +15,6 @@ namespace UISystem.MenuSystem.Views
         public Button PlayButton => playButton;
         public Button OptionsButton => optionsButton;
         public Button QuitButton => quitButton;
-        public CanvasGroup FadeObjectsContainer => canvasGroup;
 
         protected override Selectable DefaultSelectedElement => PlayButton;
 

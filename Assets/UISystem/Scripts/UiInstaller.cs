@@ -28,6 +28,7 @@ namespace UISystem
         [SerializeField] private ViewBase interfaceSettingsMenuPrefab;
         [SerializeField] private ViewBase videoSettingsMenuPrefab;
         [SerializeField] private ViewBase rebindKeysMenuPrefab;
+        [SerializeField] private ViewBase pauseMenuPrefab;
         [SerializeField] private GameActions gameActions;
 
         [SerializeField] private ViewBase yesPopupPrefab;
@@ -74,7 +75,7 @@ namespace UISystem
             var menusManager = new MenusManager<KeyCode, MenuType>();
             var mainMenuViewCreator = new ViewCreator<MainMenuView>(mainMenuPrefab, menusParent);
             var inGameMenuViewCreator = new ViewCreator<InGameMenuView>(inGameMenuPrefab, menusParent);
-            //var pauseViewCreator = new ViewCreator<PauseMenuView>(GetMenuPath(MenuType.Pause), menusParent);
+            var pauseViewCreator = new ViewCreator<PauseMenuView>(pauseMenuPrefab, menusParent);
             var optionsViewCreator = new ViewCreator<OptionsMenuView>(optionMenuPrefab, menusParent);
             var audioSettingsViewCreator = new ViewCreator<AudioSettingsMenuView>(audioSettingsMenuPrefab, menusParent);
             var videoSettingsViewCreator = new ViewCreator<VideoSettingsMenuView>(videoSettingsMenuPrefab, menusParent);
@@ -82,9 +83,9 @@ namespace UISystem
             var interfaceMenuViewCreator = new ViewCreator<InterfaceSettingsMenuView>(interfaceSettingsMenuPrefab, menusParent);
             var menus = new IMenuController<KeyCode, MenuType>[]
             {
-                new MainMenuController(mainMenuViewCreator, null, menusManager,popupsManager),//popupsManager, screenFadeManager, backgroundController),
+                new MainMenuController(mainMenuViewCreator, null, menusManager, popupsManager),//screenFadeManager, backgroundController),
                 new InGameMenuController(inGameMenuViewCreator, new InGameMenuModel(), menusManager),
-                //new PauseMenuController(pauseViewCreator, null, menusManager, popupsManager, screenFadeManager, backgroundController),
+                new PauseMenuController(pauseViewCreator, null, menusManager, popupsManager),//, screenFadeManager, backgroundController),
                 new OptionsMenuController(optionsViewCreator, null, menusManager),
                 new AudioSettingsMenuController(audioSettingsViewCreator, new AudioSettingsMenuModel(settings), menusManager, popupsManager),
                 new VideoSettingsMenuController(videoSettingsViewCreator, new VideoSettingsMenuModel(settings), menusManager, popupsManager),
