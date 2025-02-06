@@ -40,6 +40,14 @@ namespace UISystem.MenuSystem.Controllers
         private static void UpdateButtonView(RebindableButtonView button, InputAction action, int index)
         {
             button.Label.text = action.bindings[index].ToDisplayString();
+            if (index == InputsData.JoystickEventIndex)
+            {
+                //TODO: assign icon
+            }
+            else if (index == InputsData.KeyboardEventIndex)
+            {
+                //TODO: assign icon
+            }
         }
 
         private void OnButtonDown(RebindableButtonView button, InputAction action, int index)
