@@ -8,8 +8,10 @@ using UISystem.PhysicalInput;
 using UISystem.PopupSystem;
 using UISystem.PopupSystem.Popups.Controllers;
 using UISystem.PopupSystem.Popups.Views;
+using UISystem.ScreenFade;
 using UISystem.Views;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UISystem
 {
@@ -18,7 +20,8 @@ namespace UISystem
 
         public static UiInstaller Instance { get; private set; }
 
-        //[Export] private TextureRect menuBackground;
+        [SerializeField] private Image menuBackground;
+        [SerializeField] private Image fade;
         [SerializeField] private Transform menusParent;
         [SerializeField] private Transform popupsParent;
         [SerializeField] private ViewBase mainMenuPrefab;
@@ -70,7 +73,8 @@ namespace UISystem
             };
             popupsManager.Init(popups);
 
-            //var backgroundController = new MenuBackgroundController(GetTree(), menuBackground);
+            var fadeManager = new ScreenFadeManager(fade);
+            var backgroundController = new MenuBackgroundController(menuBackground);
 
             var menusManager = new MenusManager<KeyCode, MenuType>();
             var mainMenuViewCreator = new ViewCreator<MainMenuView>(mainMenuPrefab, menusParent);
@@ -83,9 +87,9 @@ namespace UISystem
             var interfaceMenuViewCreator = new ViewCreator<InterfaceSettingsMenuView>(interfaceSettingsMenuPrefab, menusParent);
             var menus = new IMenuController<KeyCode, MenuType>[]
             {
-                new MainMenuController(mainMenuViewCreator, null, menusManager, popupsManager),//screenFadeManager, backgroundController),
+                new MainMenuController(mainMenuViewCreator, null, menusManager, popupsManager, fadeManager, backgroundController),
                 new InGameMenuController(inGameMenuViewCreator, new InGameMenuModel(), menusManager),
-                new PauseMenuController(pauseViewCreator, null, menusManager, popupsManager),//, screenFadeManager, backgroundController),
+                new PauseMenuController(pauseViewCreator, null, menusManager, popupsManager, fadeManager, backgroundController),
                 new OptionsMenuController(optionsViewCreator, null, menusManager),
                 new AudioSettingsMenuController(audioSettingsViewCreator, new AudioSettingsMenuModel(settings), menusManager, popupsManager),
                 new VideoSettingsMenuController(videoSettingsViewCreator, new VideoSettingsMenuModel(settings), menusManager, popupsManager),

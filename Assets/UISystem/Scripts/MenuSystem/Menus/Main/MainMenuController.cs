@@ -1,8 +1,10 @@
+using System;
 using UISystem.Core.MenuSystem;
 using UISystem.Core.PopupSystem;
 using UISystem.Core.Views;
 using UISystem.MenuSystem.Views;
 using UISystem.PopupSystem;
+using UISystem.ScreenFade;
 using UnityEngine;
 
 namespace UISystem.MenuSystem.Controllers
@@ -14,33 +16,55 @@ namespace UISystem.MenuSystem.Controllers
 
         //private readonly SceneTree _sceneTree;
         private readonly IPopupsManager<KeyCode, PopupType, PopupResult> _popupsManager;
-        //private readonly MenuBackgroundController _menuBackgroundController;
-        //private readonly ScreenFadeManager _screenFadeManager;
+        private readonly MenuBackgroundController _menuBackgroundController;
+        private readonly ScreenFadeManager _screenFadeManager;
 
         public MainMenuController(IViewCreator<MainMenuView> viewCreator, IMenuModel model, IMenusManager<KeyCode, MenuType> menusManager,
-             IPopupsManager<KeyCode, PopupType, PopupResult> popupsManager)//, ScreenFadeManager screenFadeManager, 
-            //MenuBackgroundController menuBackgroundController)
+             IPopupsManager<KeyCode, PopupType, PopupResult> popupsManager, ScreenFadeManager screenFadeManager, 
+            MenuBackgroundController menuBackgroundController)
             : base(viewCreator, model, menusManager)
         {
             
             _popupsManager = popupsManager;
-            //_screenFadeManager = screenFadeManager;
-            //_menuBackgroundController = menuBackgroundController;
+            _screenFadeManager = screenFadeManager;
+            _menuBackgroundController = menuBackgroundController;
         }
 
-        //public override void Show(Action onComplete = null, bool instant = false)
-        //{
-        //    base.Show(onComplete, instant);
-        //    //_menuBackgroundController.ShowBackground(instant);
-        //}
+        public override void Show(Action onComplete = null, bool instant = false)
+        {
+            base.Show(onComplete, instant);
+            _menuBackgroundController.ShowBackground(instant);
+        }
 
-        //public override void Hide(StackingType stackingType, Action onComplete = null, bool instant = false)
-        //{
-        //    base.Hide(stackingType, onComplete, instant);
-        //    //if (stackingType != StackingType.Add)
-        //    //    _menuBackgroundController.HideBackground(instant);
-        //}
+        public override void Hide(StackingType stackingType, Action onComplete = null, bool instant = false)
+        {
+            base.Hide(stackingType, onComplete, instant);
+            if (stackingType != StackingType.Add)
+                _menuBackgroundController.HideBackground(instant);
+        }
 
+        //public override void ProcessStacking(StackingType stackingType)
+        //{
+        //    Debug.Log(stackingType);
+        //    base.ProcessStacking(stackingType);
+        //    //switch (stackingType)
+        //    //{
+        //    //    case StackingType.Add:
+        //    //        _menuBackgroundController.ShowBackground();
+        //    //        break;
+        //    //    case StackingType.Remove:
+        //    //        _menuBackgroundController.HideBackground();
+        //    //        break;
+        //    //    case StackingType.Clear:
+        //    //        _menuBackgroundController.ShowBackground(true);
+        //    //        break;
+        //    //    case StackingType.Replace:
+        //    //        _menuBackgroundController.HideBackground(true);
+        //    //        break;
+        //    //    default:
+        //    //        break;
+        //    //}
+        //}
         protected override void SetupElements()
         {
             _view.PlayButton.onClick.AddListener(PressedPlay);
@@ -57,11 +81,11 @@ namespace UISystem.MenuSystem.Controllers
         private void PressedPlay()
         {
             _view.SetLastSelectedElement(_view.PlayButton);
-            _menusManager.ShowMenu(MenuType.InGame, StackingType.Clear, instant: true);
-            //_screenFadeManager.FadeOut(() =>
-            //{
-            //    _menusManager.ShowMenu(MenuType.InGame, StackingType.Clear, instant: true);
-            //});
+            //_menusManager.ShowMenu(MenuType.InGame, StackingType.Clear, instant: true);
+            _screenFadeManager.FadeOut(() =>
+            {
+                _menusManager.ShowMenu(MenuType.InGame, StackingType.Clear, instant: true);
+            });
         }
 
         private void PressedOptions()

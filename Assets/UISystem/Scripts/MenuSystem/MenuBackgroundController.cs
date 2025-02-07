@@ -1,23 +1,34 @@
-﻿//using Godot;
-//using UISystem.Helpers;
+﻿using DG.Tweening;
+using UnityEngine;
+using UnityEngine.UI;
 
-//namespace UISystem.MenuSystem;
-//public class MenuBackgroundController
-//{
+namespace UISystem.MenuSystem
+{
+    public class MenuBackgroundController
+    {
 
-//    private readonly SceneTree _sceneTree;
-//    private readonly TextureRect _background;
+        private const float Duration = 0.1f;
 
-//    public MenuBackgroundController(SceneTree sceneTree, TextureRect background)
-//    {
-//        _sceneTree = sceneTree;
-//        _background = background;
-//    }
+        private readonly Image _background;
 
-//    public void SetBackgroundColor(Color backgroundColor) => _background.Modulate = new Color(backgroundColor, 1);
+        public MenuBackgroundController(Image background)
+        {
+            _background = background;
+        }
 
-//    public void ShowBackground(bool instant) => Fader.Show(_sceneTree, _background, null, instant);
+        // in case some menus need to have different background color
+        public void SetBackgroundColor(Color color) => _background.color = color;
 
-//    public void HideBackground(bool instant) => Fader.Hide(_sceneTree, _background, null, instant);
+        public void ShowBackground(bool instant = false)
+        {
+            _background.enabled = true;
+            _background.DOFade(1, Duration);
+        }
 
-//}
+        public void HideBackground(bool instant = false)
+        {
+            _background.DOFade(0, Duration).OnComplete(()=> _background.enabled = false);
+        }
+
+    }
+}
