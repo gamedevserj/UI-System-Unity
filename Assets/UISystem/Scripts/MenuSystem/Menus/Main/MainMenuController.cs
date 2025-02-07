@@ -15,12 +15,12 @@ namespace UISystem.MenuSystem.Controllers
         public override MenuType Type => MenuType.Main;
 
         //private readonly SceneTree _sceneTree;
-        private readonly IPopupsManager<KeyCode, PopupType, PopupResult> _popupsManager;
+        private readonly IPopupsManager<PopupType, PopupResult> _popupsManager;
         private readonly MenuBackgroundController _menuBackgroundController;
         private readonly ScreenFadeManager _screenFadeManager;
 
-        public MainMenuController(IViewCreator<MainMenuView> viewCreator, IMenuModel model, IMenusManager<KeyCode, MenuType> menusManager,
-             IPopupsManager<KeyCode, PopupType, PopupResult> popupsManager, ScreenFadeManager screenFadeManager, 
+        public MainMenuController(IViewCreator<MainMenuView> viewCreator, IMenuModel model, IMenusManager<MenuType> menusManager,
+             IPopupsManager<PopupType, PopupResult> popupsManager, ScreenFadeManager screenFadeManager, 
             MenuBackgroundController menuBackgroundController)
             : base(viewCreator, model, menusManager)
         {

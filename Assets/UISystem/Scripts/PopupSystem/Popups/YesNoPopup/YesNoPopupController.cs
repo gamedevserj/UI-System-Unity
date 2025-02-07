@@ -1,7 +1,6 @@
 using UISystem.Core.PopupSystem;
 using UISystem.Core.Views;
 using UISystem.PopupSystem.Popups.Views;
-using UnityEngine;
 
 namespace UISystem.PopupSystem.Popups.Controllers
 {
@@ -10,7 +9,7 @@ namespace UISystem.PopupSystem.Popups.Controllers
         public override PopupType Type => PopupType.YesNo;
         public override PopupResult PressedReturnPopupResult => PopupResult.No;
 
-        public YesNoPopupController(IViewCreator<YesNoPopupView> viewCreator, IPopupsManager<KeyCode, PopupType, PopupResult> popupsManager) : base(viewCreator, popupsManager)
+        public YesNoPopupController(IViewCreator<YesNoPopupView> viewCreator, IPopupsManager<PopupType, PopupResult> popupsManager) : base(viewCreator, popupsManager)
         { }
 
         protected override void SetupElements()

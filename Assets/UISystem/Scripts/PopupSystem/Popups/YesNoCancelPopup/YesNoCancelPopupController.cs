@@ -11,7 +11,7 @@ namespace UISystem.PopupSystem.Popups.Controllers
         public override PopupType Type => PopupType.YesNoCancel;
         public override PopupResult PressedReturnPopupResult => PopupResult.Cancel;
 
-        public YesNoCancelPopupController(IViewCreator<YesNoCancelPopupView> viewCreator, IPopupsManager<KeyCode, PopupType, PopupResult> popupsManager) : base(viewCreator, popupsManager)
+        public YesNoCancelPopupController(IViewCreator<YesNoCancelPopupView> viewCreator, IPopupsManager<PopupType, PopupResult> popupsManager) : base(viewCreator, popupsManager)
         { }
 
         protected override void SetupElements()

@@ -1,14 +1,13 @@
 using UISystem.Core.MenuSystem;
 using UISystem.Core.Views;
 using UISystem.MenuSystem.Views;
-using UnityEngine;
 
 namespace UISystem.MenuSystem.Controllers
 {
     internal class OptionsMenuController : MenuControllerBase<IViewCreator<OptionsMenuView>, OptionsMenuView>
     {
         public override MenuType Type => MenuType.Options;
-        public OptionsMenuController(IViewCreator<OptionsMenuView> viewCreator, IMenuModel model, IMenusManager<KeyCode, MenuType> menusManager) : base(viewCreator, model, menusManager)
+        public OptionsMenuController(IViewCreator<OptionsMenuView> viewCreator, IMenuModel model, IMenusManager<MenuType> menusManager) : base(viewCreator, model, menusManager)
         { }
 
         protected override void SetupElements()

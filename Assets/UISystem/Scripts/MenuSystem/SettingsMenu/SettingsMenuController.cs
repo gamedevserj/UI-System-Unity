@@ -2,22 +2,21 @@
 using UISystem.Core.PopupSystem;
 using UISystem.Core.Views;
 using UISystem.PopupSystem;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.SettingsMenu
 {
     internal abstract class SettingsMenuController<TViewCreator, TView, TModel>
-        : MenuController<TViewCreator, TView, TModel, KeyCode, Selectable, MenuType>
+        : MenuController<TViewCreator, TView, TModel, Selectable, MenuType>
         where TViewCreator : IViewCreator<TView>
         where TView : SettingsMenuView
         where TModel : ISettingsMenuModel
     {
 
-        protected readonly IPopupsManager<KeyCode, PopupType, PopupResult> _popupsManager;
+        protected readonly IPopupsManager<PopupType, PopupResult> _popupsManager;
 
-        protected SettingsMenuController(TViewCreator viewCreator, TModel model, IMenusManager<KeyCode, MenuType> menusManager,
-            IPopupsManager<KeyCode, PopupType, PopupResult> popupsManager) 
+        protected SettingsMenuController(TViewCreator viewCreator, TModel model, IMenusManager<MenuType> menusManager,
+            IPopupsManager<PopupType, PopupResult> popupsManager) 
             : base(viewCreator, model, menusManager)
         {
             _popupsManager = popupsManager;

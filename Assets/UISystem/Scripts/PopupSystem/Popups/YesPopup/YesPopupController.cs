@@ -11,7 +11,7 @@ namespace UISystem.PopupSystem.Popups.Controllers
         public override PopupType Type => PopupType.Yes;
         public override PopupResult PressedReturnPopupResult => PopupResult.Yes;
 
-        public YesPopupController(IViewCreator<YesPopupView> viewCreator, IPopupsManager<KeyCode, PopupType, PopupResult> popupsManager) : base(viewCreator, popupsManager)
+        public YesPopupController(IViewCreator<YesPopupView> viewCreator, IPopupsManager<PopupType, PopupResult> popupsManager) : base(viewCreator, popupsManager)
         { }
 
         protected override void SetupElements()

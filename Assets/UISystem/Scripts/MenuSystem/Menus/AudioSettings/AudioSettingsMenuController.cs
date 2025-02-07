@@ -5,8 +5,6 @@ using UISystem.MenuSystem.Models;
 using UISystem.MenuSystem.SettingsMenu;
 using UISystem.MenuSystem.Views;
 using UISystem.PopupSystem;
-using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace UISystem.MenuSystem.Controllers
 {
@@ -16,7 +14,7 @@ namespace UISystem.MenuSystem.Controllers
         public override MenuType Type => MenuType.AudioSettings;
 
         public AudioSettingsMenuController(IViewCreator<AudioSettingsMenuView> viewCreator, AudioSettingsMenuModel model,
-            IMenusManager<KeyCode, MenuType> menusManager, IPopupsManager<KeyCode, PopupType, PopupResult> popupsManager) 
+            IMenusManager<MenuType> menusManager, IPopupsManager<PopupType, PopupResult> popupsManager) 
             : base(viewCreator, model, menusManager, popupsManager)
         { }
 

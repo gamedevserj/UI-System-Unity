@@ -8,7 +8,6 @@ using UISystem.MenuSystem.SettingsMenu;
 using UISystem.MenuSystem.Views;
 using UISystem.PhysicalInput;
 using UISystem.PopupSystem;
-using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -22,15 +21,10 @@ namespace UISystem.MenuSystem.Controllers
         private GameActions Actions => GameSettings.Actions;
 
         public RebindKeysMenuController(IViewCreator<RebindKeysMenuView> viewCreator, RebindKeysMenuModel model,
-            IMenusManager<KeyCode, MenuType> menusManager, IPopupsManager<KeyCode, PopupType, PopupResult> popupsManager)
+            IMenusManager<MenuType> menusManager, IPopupsManager<PopupType, PopupResult> popupsManager)
             : base(viewCreator, model, menusManager, popupsManager)
         { }
 
-        public override void OnAnyButtonDown(KeyCode inputEvent)
-        {
-            //if (_model.IsRebinding)
-            //    _model.RebindKey(inputEvent);
-        }
         public override void OnReturnButtonDown()
         {
             if (!_model.IsRebinding)

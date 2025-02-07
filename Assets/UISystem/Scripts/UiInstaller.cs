@@ -61,11 +61,11 @@ namespace UISystem
 
         public void Init(GameSettings settings)
         {
-            var popupsManager = new PopupsManager<KeyCode, PopupType, PopupResult>();
+            var popupsManager = new PopupsManager<PopupType, PopupResult>();
             var yesPopupViewCreator = new ViewCreator<YesPopupView>(yesPopupPrefab, popupsParent);
             var yesNoPopupViewCreator = new ViewCreator<YesNoPopupView>(yesNoPopupPrefab, popupsParent);
             var yesNoCancelPopupViewCreator = new ViewCreator<YesNoCancelPopupView>(yesNoCancelPopupPrefab, popupsParent);
-            var popups = new IPopupController<KeyCode, PopupType, PopupResult>[]
+            var popups = new IPopupController<PopupType, PopupResult>[]
             {
                 new YesPopupController(yesPopupViewCreator, popupsManager),
                 new YesNoPopupController(yesNoPopupViewCreator, popupsManager),
@@ -76,7 +76,7 @@ namespace UISystem
             var fadeManager = new ScreenFadeManager(fade);
             var backgroundController = new MenuBackgroundController(menuBackground);
 
-            var menusManager = new MenusManager<KeyCode, MenuType>();
+            var menusManager = new MenusManager<MenuType>();
             var mainMenuViewCreator = new ViewCreator<MainMenuView>(mainMenuPrefab, menusParent);
             var inGameMenuViewCreator = new ViewCreator<InGameMenuView>(inGameMenuPrefab, menusParent);
             var pauseViewCreator = new ViewCreator<PauseMenuView>(pauseMenuPrefab, menusParent);
@@ -85,7 +85,7 @@ namespace UISystem
             var videoSettingsViewCreator = new ViewCreator<VideoSettingsMenuView>(videoSettingsMenuPrefab, menusParent);
             var rebindKeysViewCreator = new ViewCreator<RebindKeysMenuView>(rebindKeysMenuPrefab, menusParent);
             var interfaceMenuViewCreator = new ViewCreator<InterfaceSettingsMenuView>(interfaceSettingsMenuPrefab, menusParent);
-            var menus = new IMenuController<KeyCode, MenuType>[]
+            var menus = new IMenuController<MenuType>[]
             {
                 new MainMenuController(mainMenuViewCreator, null, menusManager, popupsManager, fadeManager, backgroundController),
                 new InGameMenuController(inGameMenuViewCreator, new InGameMenuModel(), menusManager),

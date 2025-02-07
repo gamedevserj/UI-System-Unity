@@ -6,7 +6,6 @@ using UISystem.MenuSystem.Models;
 using UISystem.MenuSystem.SettingsMenu;
 using UISystem.MenuSystem.Views;
 using UISystem.PopupSystem;
-using UnityEngine;
 
 namespace UISystem.MenuSystem.Controllers
 {
@@ -16,7 +15,7 @@ namespace UISystem.MenuSystem.Controllers
         public override MenuType Type => MenuType.VideoSettings;
 
         public VideoSettingsMenuController(IViewCreator<VideoSettingsMenuView> viewCreator, VideoSettingsMenuModel model,
-            IMenusManager<KeyCode, MenuType> menusManager, IPopupsManager<KeyCode, PopupType, PopupResult> popupsManager) : base(viewCreator, model, menusManager, popupsManager)
+            IMenusManager<MenuType> menusManager, IPopupsManager<PopupType, PopupResult> popupsManager) : base(viewCreator, model, menusManager, popupsManager)
         { }
 
         protected override void SetupElements()
