@@ -56,7 +56,6 @@ namespace UISystem.Transitions
             sequence.SetEase(Ease.Linear);
             for (int i = 0; i < _secondaryElements.Length; i++)
             {
-                //_secondaryElements[i].Resizable.position = _mainElement.Resizable.position;
                 Tween tween = _secondaryElements[i].Resizable.DOMove(_mainElementPosition, _secondaryElementDuration);
                 if (i == _secondaryElements.Length - 1)
                     tween.OnComplete(() => SwitchSecondaryButtonsVisibility(false));
@@ -94,7 +93,6 @@ namespace UISystem.Transitions
 
             if (!_initializedParameters)
             {
-                // maybe use UniTask to delay a frame?
                 await InitElementParameters();
             }
 
