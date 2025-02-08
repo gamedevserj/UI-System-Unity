@@ -7,7 +7,7 @@ namespace UISystem.ScreenFade
     public class ScreenFadeManager
     {
 
-        private const float Duration = 2.5f;
+        private const float Duration = 0.5f;
 
         private bool _isFading;
         private readonly Image _image;
@@ -33,7 +33,7 @@ namespace UISystem.ScreenFade
             {
                 _isFading = false;
                 _image.enabled = false;
-            }));
+            })).Play();
         }
     }
 }

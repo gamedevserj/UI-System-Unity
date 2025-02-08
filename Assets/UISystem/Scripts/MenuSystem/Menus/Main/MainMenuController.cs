@@ -67,9 +67,9 @@ namespace UISystem.MenuSystem.Controllers
         //}
         protected override void SetupElements()
         {
-            _view.PlayButton.onClick.AddListener(PressedPlay);
-            _view.OptionsButton.onClick.AddListener(PressedOptions);
-            _view.QuitButton.onClick.AddListener(PressedQuit);
+            _view.PlayButton.Button.onClick.AddListener(PressedPlay);
+            _view.OptionsButton.Button.onClick.AddListener(PressedOptions);
+            _view.QuitButton.Button.onClick.AddListener(PressedQuit);
         }
 
         public override void OnReturnButtonDown()
@@ -80,7 +80,7 @@ namespace UISystem.MenuSystem.Controllers
 
         private void PressedPlay()
         {
-            _view.SetLastSelectedElement(_view.PlayButton);
+            _view.SetLastSelectedElement(_view.PlayButton.Button);
             //_menusManager.ShowMenu(MenuType.InGame, StackingType.Clear, instant: true);
             _screenFadeManager.FadeOut(() =>
             {
@@ -90,13 +90,13 @@ namespace UISystem.MenuSystem.Controllers
 
         private void PressedOptions()
         {
-            _view.SetLastSelectedElement(_view.OptionsButton);
+            _view.SetLastSelectedElement(_view.OptionsButton.Button);
             _menusManager.ShowMenu(MenuType.Options);
         }
 
         private void PressedQuit()
         {
-            _view.SetLastSelectedElement(_view.QuitButton);
+            _view.SetLastSelectedElement(_view.QuitButton.Button);
             ShowQuitPopup();
         }
 

@@ -35,7 +35,7 @@ namespace UISystem.Transitions
             _target.DOFade(0, Duration).SetEase(Ease.Linear).OnComplete(()=>
             {
                 FinishedHiding();
-            });
+            }).Play();
         }
 
         public void Show(Action onShown, bool instant)
@@ -62,7 +62,7 @@ namespace UISystem.Transitions
             _target.DOFade(1, Duration).SetEase(Ease.Linear).OnComplete(() =>
             {
                 FinishedShowing();
-            });
+            }).Play();
         }
     }
 }

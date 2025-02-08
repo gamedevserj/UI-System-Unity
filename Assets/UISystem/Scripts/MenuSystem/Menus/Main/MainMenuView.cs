@@ -1,3 +1,4 @@
+using UISystem.Common.Elements;
 using UISystem.Core.Transitions;
 using UISystem.Transitions;
 using UnityEngine;
@@ -8,20 +9,19 @@ namespace UISystem.MenuSystem.Views
     public partial class MainMenuView : MenuView
     {
 
-        [SerializeField] private Button playButton;
-        [SerializeField] private Button optionsButton;
-        [SerializeField] private Button quitButton;
+        [SerializeField] private ButtonView playButton;
+        [SerializeField] private ButtonView optionsButton;
+        [SerializeField] private ButtonView quitButton;
 
-        public Button PlayButton => playButton;
-        public Button OptionsButton => optionsButton;
-        public Button QuitButton => quitButton;
+        public ButtonView PlayButton => playButton;
+        public ButtonView OptionsButton => optionsButton;
+        public ButtonView QuitButton => quitButton;
 
-        protected override Selectable DefaultSelectedElement => PlayButton;
+        protected override Selectable DefaultSelectedElement => PlayButton.Button;
 
         protected override IViewTransition CreateTransition()
         {
-            return new FadeTransition(FadeObjectsContainer);
-            //return new MainElementDropTransition(this, FadeObjectsContainer, PlayButton, new[] { OptionsButton, QuitButton });
+            return new MainElementDropTransition(FadeObjectsContainer, PlayButton, new IResizableElement[] { OptionsButton, QuitButton });
         }
 
         protected override void PopulateFocusableElements()

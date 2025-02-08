@@ -12,34 +12,34 @@ namespace UISystem.MenuSystem.Controllers
 
         protected override void SetupElements()
         {
-            _view.ReturnButton.onClick.AddListener(OnReturnButtonDown);
-            _view.AudioSettingsButton.onClick.AddListener(OnAudioSettingsButtonDown);
-            _view.VideoSettingsButton.onClick.AddListener(OnVideoSettingsButtonDown);
-            _view.RebindKeysButton.onClick.AddListener(OnRebindKeysButtonDown);
-            _view.InterfaceSettingsButton.onClick.AddListener(OnInterfaceSettingsButtonDown);
+            _view.ReturnButton.Button.onClick.AddListener(OnReturnButtonDown);
+            _view.AudioSettingsButton.Button.onClick.AddListener(OnAudioSettingsButtonDown);
+            _view.VideoSettingsButton.Button.onClick.AddListener(OnVideoSettingsButtonDown);
+            _view.RebindKeysButton.Button.onClick.AddListener(OnRebindKeysButtonDown);
+            _view.InterfaceSettingsButton.Button.onClick.AddListener(OnInterfaceSettingsButtonDown);
         }
 
         private void OnAudioSettingsButtonDown()
         {
-            _view.SetLastSelectedElement(_view.AudioSettingsButton);
+            _view.SetLastSelectedElement(_view.AudioSettingsButton.Button);
             _menusManager.ShowMenu(MenuType.AudioSettings);
         }
 
         private void OnVideoSettingsButtonDown()
         {
-            _view.SetLastSelectedElement(_view.VideoSettingsButton);
+            _view.SetLastSelectedElement(_view.VideoSettingsButton.Button);
             _menusManager.ShowMenu(MenuType.VideoSettings);
         }
 
         private void OnRebindKeysButtonDown()
         {
-            _view.SetLastSelectedElement(_view.RebindKeysButton);
+            _view.SetLastSelectedElement(_view.RebindKeysButton.Button);
             _menusManager.ShowMenu(MenuType.RebindKeys);
         }
 
         private void OnInterfaceSettingsButtonDown()
         {
-            _view.SetLastSelectedElement(_view.InterfaceSettingsButton);
+            _view.SetLastSelectedElement(_view.InterfaceSettingsButton.Button);
             _menusManager.ShowMenu(MenuType.InterfaceSettings);
         }
     }

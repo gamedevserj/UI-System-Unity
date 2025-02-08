@@ -5,7 +5,6 @@ using UISystem.Core.Views;
 using UISystem.MenuSystem.Views;
 using UISystem.PopupSystem;
 using UISystem.ScreenFade;
-using UnityEngine;
 
 namespace UISystem.MenuSystem.Controllers
 {
@@ -46,20 +45,20 @@ namespace UISystem.MenuSystem.Controllers
 
         protected override void SetupElements()
         {
-            _view.ResumeGameButton.onClick.AddListener(OnReturnButtonDown);
-            _view.OptionsButton.onClick.AddListener(PressedOptions);
-            _view.ReturnToMainMenuButton.onClick.AddListener(PressedReturn);
+            _view.ResumeGameButton.Button.onClick.AddListener(OnReturnButtonDown);
+            _view.OptionsButton.Button.onClick.AddListener(PressedOptions);
+            _view.ReturnToMainMenuButton.Button.onClick.AddListener(PressedReturn);
         }
 
         private void PressedOptions()
         {
-            _view.SetLastSelectedElement(_view.OptionsButton);
+            _view.SetLastSelectedElement(_view.OptionsButton.Button);
             _menusManager.ShowMenu(MenuType.Options);
         }
 
         private void PressedReturn()
         {
-            _view.SetLastSelectedElement(_view.ReturnToMainMenuButton);
+            _view.SetLastSelectedElement(_view.ReturnToMainMenuButton.Button);
             SwitchFocusAvailability(false);
 
             _popupsManager.ShowPopup(PopupType.YesNo, PopupMessages.QuitToMainMenu, (result) =>
