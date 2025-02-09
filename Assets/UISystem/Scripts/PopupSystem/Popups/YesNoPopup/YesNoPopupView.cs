@@ -22,7 +22,7 @@ namespace UISystem.PopupSystem.Popups.Views
             //new ITweenableMenuElement[] { YesButton, NoButton, MessageMask });
         }
 
-        protected override void PopulateFocusableElements()
+        protected override void SetInteractableElements()
         {
             //_focusableElements = new IFocusableControl[] { YesButton, NoButton };
         }

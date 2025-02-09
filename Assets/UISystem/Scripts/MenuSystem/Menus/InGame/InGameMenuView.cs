@@ -14,7 +14,7 @@ namespace UISystem.MenuSystem.Views
             return new FadeTransition(FadeObjectsContainer);
         }
 
-        protected override void PopulateFocusableElements()
+        protected override void SetInteractableElements()
         { }
 
     }

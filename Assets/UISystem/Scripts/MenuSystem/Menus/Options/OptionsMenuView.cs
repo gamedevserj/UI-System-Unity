@@ -25,17 +25,13 @@ namespace UISystem.MenuSystem.Views
 
         protected override IViewTransition CreateTransition()
         {
-            //return new FadeTransition(FadeObjectsContainer);
-            //return new MainElementDropTransition(this, FadeObjectsContainer, InterfaceSettingsButton,
-            //new[] { ReturnButton, AudioSettingsButton, VideoSettingsButton, RebindKeysButton });
             return new MainElementDropTransition(FadeObjectsContainer, InterfaceSettingsButton, 
                 new IResizableElement[] { ReturnButton, AudioSettingsButton, VideoSettingsButton, RebindKeysButton });
         }
-        protected override void PopulateFocusableElements()
+        protected override void SetInteractableElements()
         {
-
-            //_focusableElements = new IFocusableControl[] { ReturnButton, AudioSettingsButton, VideoSettingsButton,
-            //RebindKeysButton, InterfaceSettingsButton };
+            _interactableElements = new IInteractableElement[] { ReturnButton, AudioSettingsButton, VideoSettingsButton,
+            RebindKeysButton, InterfaceSettingsButton };
         }
 
     }

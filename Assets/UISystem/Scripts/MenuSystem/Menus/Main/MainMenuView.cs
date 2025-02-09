@@ -24,9 +24,9 @@ namespace UISystem.MenuSystem.Views
             return new MainElementDropTransition(FadeObjectsContainer, PlayButton, new IResizableElement[] { OptionsButton, QuitButton });
         }
 
-        protected override void PopulateFocusableElements()
+        protected override void SetInteractableElements()
         {
-            //_focusableElements = new IFocusableControl[] { PlayButton, OptionsButton, QuitButton };
+            _interactableElements = new IInteractableElement[] { PlayButton, OptionsButton, QuitButton };
         }
 
     }

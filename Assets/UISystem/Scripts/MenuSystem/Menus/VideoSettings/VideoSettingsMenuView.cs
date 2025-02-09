@@ -1,4 +1,5 @@
 ﻿using TMPro;
+using UISystem.Common.Elements;
 using UISystem.Core.Transitions;
 using UISystem.MenuSystem.SettingsMenu;
 using UISystem.Transitions;
@@ -10,25 +11,26 @@ namespace UISystem.MenuSystem.Views
     public partial class VideoSettingsMenuView : SettingsMenuView
     {
 
-        [SerializeField] private TMP_Dropdown windowModeDropdown;
-        [SerializeField] private TMP_Dropdown resolutionDropdown;
-        [SerializeField] private TMP_Dropdown refreshRateDropdown;
-        [SerializeField] private Button saveSettingsButton;
+        [SerializeField] private DropdownView windowModeDropdown;
+        [SerializeField] private DropdownView resolutionDropdown;
+        [SerializeField] private DropdownView refreshRateDropdown;
+        [SerializeField] private ButtonView saveSettingsButton;
         [SerializeField] private RectTransform panel;
 
-        public TMP_Dropdown WindowModeDropdown => windowModeDropdown;
-        public TMP_Dropdown ResolutionDropdown => resolutionDropdown;
-        public TMP_Dropdown RefreshRateDropdown => refreshRateDropdown;
-        public Button SaveSettingsButton => saveSettingsButton;
+        public DropdownView WindowModeDropdown => windowModeDropdown;
+        public DropdownView ResolutionDropdown => resolutionDropdown;
+        public DropdownView RefreshRateDropdown => refreshRateDropdown;
+        public ButtonView SaveSettingsButton => saveSettingsButton;
         public RectTransform Panel => panel;
         protected override IViewTransition CreateTransition()
         {
             return new FadeTransition(FadeObjectsContainer);
         }
 
-        protected override void PopulateFocusableElements()
+        protected override void SetInteractableElements()
         {
-            
+            _interactableElements = new IInteractableElement[] {WindowModeDropdown, ResolutionDropdown, RefreshRateDropdown, 
+                SaveSettingsButton, ReturnButton, ResetButton};
         }
 
     }

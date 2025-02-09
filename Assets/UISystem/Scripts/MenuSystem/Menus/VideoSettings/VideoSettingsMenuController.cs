@@ -24,28 +24,28 @@ namespace UISystem.MenuSystem.Controllers
             SetupWindowModeDropdown();
             SetupResolutionDropdown();
             SetupRefreshRateDropdown();
-            _view.SaveSettingsButton.onClick.AddListener(_model.SaveSettings);
+            _view.SaveSettingsButton.AddListener(_model.SaveSettings);
         }
 
         private void SetupWindowModeDropdown()
         {
             _view.WindowModeDropdown.AddOptions(VideoSettings.FullScreenModeNames);
-            _view.WindowModeDropdown.value = _model.CurrenWindowModeIndex;
-            _view.WindowModeDropdown.onValueChanged.AddListener(OnWindowModeDropdownSelect);
+            _view.WindowModeDropdown.SetValue(_model.CurrenWindowModeIndex);
+            _view.WindowModeDropdown.AddListener(OnWindowModeDropdownSelect);
         }
 
         private void SetupResolutionDropdown()
         {
             _view.ResolutionDropdown.AddOptions(VideoSettings.ResolutionNames);
-            _view.ResolutionDropdown.value = _model.CurrentResolutionIndex;
-            _view.ResolutionDropdown.onValueChanged.AddListener(OnResolutionDropdownSelect);
+            _view.ResolutionDropdown.SetValue(_model.CurrentResolutionIndex);
+            _view.ResolutionDropdown.AddListener(OnResolutionDropdownSelect);
         }
 
         private void SetupRefreshRateDropdown()
         {
             _view.RefreshRateDropdown.AddOptions(VideoSettings.RefreshRateNames);
-            _view.RefreshRateDropdown.value = _model.CurrentRefreshRate;
-            _view.RefreshRateDropdown.onValueChanged.AddListener(OnRefreshRateDropdownSelect);
+            _view.RefreshRateDropdown.SetValue(_model.CurrentRefreshRate);
+            _view.RefreshRateDropdown.AddListener(OnRefreshRateDropdownSelect);
         }
 
         private void OnResolutionDropdownSelect(int index)
@@ -65,8 +65,8 @@ namespace UISystem.MenuSystem.Controllers
 
         protected override void ResetViewToDefault()
         {
-            _view.WindowModeDropdown.value = _model.CurrenWindowModeIndex;
-            _view.ResolutionDropdown.value = _model.CurrentResolutionIndex;
+            _view.WindowModeDropdown.SetValue(_model.CurrenWindowModeIndex);
+            _view.ResolutionDropdown.SetValue(_model.CurrentResolutionIndex);
         }
     }
 }

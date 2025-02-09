@@ -35,10 +35,10 @@ namespace UISystem.MenuSystem.Views
             //        MoveLeftLabelResizableControl, MoveRightLabelResizableControl, JumpLabelResizableControl});
         }
 
-        protected override void PopulateFocusableElements()
+        protected override void SetInteractableElements()
         {
-            //_focusableElements = new IFocusableControl[]
-            //{ MoveLeft, MoveLeftJoystick, MoveRight, MoveRightJoystick, Jump, JumpJoystick, ResetButton, ReturnButton };
+            _interactableElements = new IInteractableElement[]
+            { MoveLeft, MoveLeftJoystick, MoveRight, MoveRightJoystick, Jump, JumpJoystick, ResetButton, ReturnButton };
         }
 
     }

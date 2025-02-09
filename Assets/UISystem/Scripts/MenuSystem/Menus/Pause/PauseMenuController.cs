@@ -45,9 +45,9 @@ namespace UISystem.MenuSystem.Controllers
 
         protected override void SetupElements()
         {
-            _view.ResumeGameButton.Button.onClick.AddListener(OnReturnButtonDown);
-            _view.OptionsButton.Button.onClick.AddListener(PressedOptions);
-            _view.ReturnToMainMenuButton.Button.onClick.AddListener(PressedReturn);
+            _view.ResumeGameButton.AddListener(OnReturnButtonDown);
+            _view.OptionsButton.AddListener(PressedOptions);
+            _view.ReturnToMainMenuButton.AddListener(PressedReturn);
         }
 
         private void PressedOptions()
@@ -59,7 +59,7 @@ namespace UISystem.MenuSystem.Controllers
         private void PressedReturn()
         {
             _view.SetLastSelectedElement(_view.ReturnToMainMenuButton.Button);
-            SwitchFocusAvailability(false);
+            SwitchInteractability(false);
 
             _popupsManager.ShowPopup(PopupType.YesNo, PopupMessages.QuitToMainMenu, (result) =>
             {
@@ -72,7 +72,7 @@ namespace UISystem.MenuSystem.Controllers
                 }
                 else if (result == PopupResult.No)
                 {
-                    SwitchFocusAvailability(true);
+                    SwitchInteractability(true);
                 }
             });
         }

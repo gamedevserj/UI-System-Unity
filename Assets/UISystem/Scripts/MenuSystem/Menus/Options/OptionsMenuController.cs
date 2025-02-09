@@ -12,11 +12,11 @@ namespace UISystem.MenuSystem.Controllers
 
         protected override void SetupElements()
         {
-            _view.ReturnButton.Button.onClick.AddListener(OnReturnButtonDown);
-            _view.AudioSettingsButton.Button.onClick.AddListener(OnAudioSettingsButtonDown);
-            _view.VideoSettingsButton.Button.onClick.AddListener(OnVideoSettingsButtonDown);
-            _view.RebindKeysButton.Button.onClick.AddListener(OnRebindKeysButtonDown);
-            _view.InterfaceSettingsButton.Button.onClick.AddListener(OnInterfaceSettingsButtonDown);
+            _view.ReturnButton.AddListener(OnReturnButtonDown);
+            _view.AudioSettingsButton.AddListener(OnAudioSettingsButtonDown);
+            _view.VideoSettingsButton.AddListener(OnVideoSettingsButtonDown);
+            _view.RebindKeysButton.AddListener(OnRebindKeysButtonDown);
+            _view.InterfaceSettingsButton.AddListener(OnInterfaceSettingsButtonDown);
         }
 
         private void OnAudioSettingsButtonDown()

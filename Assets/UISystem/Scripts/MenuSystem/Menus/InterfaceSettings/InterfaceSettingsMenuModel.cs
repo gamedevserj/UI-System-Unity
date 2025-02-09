@@ -1,8 +1,6 @@
 ﻿using UISystem.Common.Enums;
 using UISystem.Constants;
 using UISystem.Core.MenuSystem;
-using UnityEditor;
-using UnityEngine;
 
 namespace UISystem.MenuSystem.Models
 {

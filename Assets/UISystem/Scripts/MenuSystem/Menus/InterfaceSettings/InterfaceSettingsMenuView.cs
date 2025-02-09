@@ -1,4 +1,4 @@
-﻿using TMPro;
+﻿using UISystem.Common.Elements;
 using UISystem.Core.Transitions;
 using UISystem.MenuSystem.SettingsMenu;
 using UISystem.Transitions;
@@ -10,20 +10,21 @@ namespace UISystem.MenuSystem.Views
     public partial class InterfaceSettingsMenuView : SettingsMenuView
     {
 
-        [SerializeField] private TMP_Dropdown controllerIconsDropdown;
-        [SerializeField] private Button saveSettingsButton;
+        [SerializeField] private DropdownView controllerIconsDropdown;
+        [SerializeField] private ButtonView saveSettingsButton;
         [SerializeField] private RectTransform panel;
 
-        public Button SaveSettingsButton => saveSettingsButton;
-        public TMP_Dropdown ControllerIconsDropdown => controllerIconsDropdown;
+        public ButtonView SaveSettingsButton => saveSettingsButton;
+        public DropdownView ControllerIconsDropdown => controllerIconsDropdown;
         public RectTransform Panel => panel;
+
         protected override IViewTransition CreateTransition()
         {
-            return new FadeTransition(FadeObjectsContainer);
+            return new PanelSizeTransition(FadeObjectsContainer, panel);
         }
-        protected override void PopulateFocusableElements()
+        protected override void SetInteractableElements()
         {
-            //_focusableElements = new IFocusableControl[] { ReturnButton, ControllerIconsDropdown, SaveSettingsButton, ResetButton };
+            _interactableElements = new IInteractableElement[] { ReturnButton, ControllerIconsDropdown, SaveSettingsButton, ResetButton };
         }
     }
 

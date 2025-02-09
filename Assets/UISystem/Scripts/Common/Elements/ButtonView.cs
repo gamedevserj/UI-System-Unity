@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace UISystem.Common.Elements
@@ -29,8 +31,9 @@ namespace UISystem.Common.Elements
             }
         }
         public RectTransform Resizable => resizable;
-        public bool IsInteractable { get; private set; }
 
-        public void SwitchInteractability(bool enable) => IsInteractable = enable;
+        public void SwitchInteractability(bool enable) => Button.enabled = enable;
+
+        public void AddListener(UnityAction action) => Button.onClick.AddListener(action);
     }
 }

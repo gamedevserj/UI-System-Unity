@@ -25,9 +25,9 @@ namespace UISystem.MenuSystem.Views
             return new MainElementDropTransition(FadeObjectsContainer, ResumeGameButton, new[] { OptionsButton, ReturnToMainMenuButton });
         }
 
-        protected override void PopulateFocusableElements()
+        protected override void SetInteractableElements()
         {
-            //_focusableElements = new IFocusableControl[] { ResumeGameButton, OptionsButton, ReturnToMainMenuButton };
+            _interactableElements = new IInteractableElement[] { ResumeGameButton, OptionsButton, ReturnToMainMenuButton };
         }
 
     }

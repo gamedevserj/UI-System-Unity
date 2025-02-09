@@ -26,17 +26,17 @@ namespace UISystem.MenuSystem.SettingsMenu
 
         protected override void SetupElements()
         {
-            _view.ReturnButton.onClick.AddListener(OnReturnButtonDown);
-            _view.ResetButton.onClick.AddListener(OnResetToDefaultButtonDown);
+            _view.ReturnButton.Button.onClick.AddListener(OnReturnButtonDown);
+            _view.ResetButton.Button.onClick.AddListener(OnResetToDefaultButtonDown);
         }
 
         public override void OnReturnButtonDown()
         {
             if (_model.HasUnappliedSettings)
             {
-                _view.SetLastSelectedElement(_view.ReturnButton);
+                _view.SetLastSelectedElement(_view.ReturnButton.Button);
                 CanReceivePhysicalInput = false;
-                SwitchFocusAvailability(false);
+                SwitchInteractability(false);
                 _popupsManager.ShowPopup(PopupType.YesNoCancel, PopupMessages.SaveChanges, (result) =>
                 {
                     OnReturnToPreviousMenuPopupClosed(result);
@@ -62,18 +62,18 @@ namespace UISystem.MenuSystem.SettingsMenu
                     base.OnReturnButtonDown();
                     break;
                 case PopupResult.Cancel:
-                    SwitchFocusAvailability(true);
+                    SwitchInteractability(true);
                     break;
                 default:
-                    SwitchFocusAvailability(true);
+                    SwitchInteractability(true);
                     break;
             }
         }
 
         protected virtual void OnResetToDefaultButtonDown()
         {
-            _view.SetLastSelectedElement(_view.ResetButton);
-            SwitchFocusAvailability(false);
+            _view.SetLastSelectedElement(_view.ResetButton.Button);
+            SwitchInteractability(false);
             _popupsManager.ShowPopup(PopupType.YesNo, PopupMessages.ResetToDefault, (result) =>
             {
                 if (result == PopupResult.Yes)
@@ -81,7 +81,7 @@ namespace UISystem.MenuSystem.SettingsMenu
                     _model.ResetToDefault();
                     ResetViewToDefault();
                 }
-                SwitchFocusAvailability(true);
+                SwitchInteractability(true);
             });
         }
     }

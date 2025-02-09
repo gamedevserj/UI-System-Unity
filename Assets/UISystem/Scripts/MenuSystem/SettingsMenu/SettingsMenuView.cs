@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UISystem.Common.Elements;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.SettingsMenu
@@ -6,13 +7,13 @@ namespace UISystem.MenuSystem.SettingsMenu
     public abstract partial class SettingsMenuView : MenuView
     {
 
-        [SerializeField] private Button returnButton;
-        [SerializeField] private Button resetButton;
+        [SerializeField] private ButtonView returnButton;
+        [SerializeField] private ButtonView resetButton;
 
-        public Button ReturnButton => returnButton;
-        public Button ResetButton => resetButton;
+        public ButtonView ReturnButton => returnButton;
+        public ButtonView ResetButton => resetButton;
 
-        protected override Selectable DefaultSelectedElement => ReturnButton;
+        protected override Selectable DefaultSelectedElement => ReturnButton.Button;
 
     }
 }

@@ -1,27 +1,24 @@
-﻿using UISystem.Core.Transitions;
+﻿using UISystem.Common.Elements;
+using UISystem.Core.Transitions;
 using UISystem.MenuSystem.SettingsMenu;
 using UISystem.Transitions;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.Views
 {
     public partial class AudioSettingsMenuView : SettingsMenuView
     {
 
-        //[SerializeField] private RectTransform resizableControlMusic; // label container
-        [SerializeField] private Slider musicSlider;
-        //[SerializeField] private RectTransform resizableControlSfx; // label container
-        [SerializeField] private Slider sfxSlider;
-        [SerializeField] private Button saveSettingsButton;
+        [SerializeField] private SliderView musicSlider;
+        [SerializeField] private SliderView sfxSlider;
+        [SerializeField] private ButtonView saveSettingsButton;
         [SerializeField] private RectTransform panel; 
 
-        public Slider MusicSlider => musicSlider;
-        public Slider SfxSlider => sfxSlider;
-        public Button SaveSettingsButton => saveSettingsButton;
+        public SliderView MusicSlider => musicSlider;
+        public SliderView SfxSlider => sfxSlider;
+        public ButtonView SaveSettingsButton => saveSettingsButton;
         public RectTransform Panel => panel;
-        //public RectTransform ResizableControlMusic => resizableControlMusic;
-        //public RectTransform ResizableControlSfx => resizableControlSfx;
+
         protected override IViewTransition CreateTransition()
         {
             return new FadeTransition(FadeObjectsContainer);
@@ -29,9 +26,9 @@ namespace UISystem.MenuSystem.Views
             //new ITweenableMenuElement[] { ReturnButton, SaveSettingsButton, ResetButton,
             //MusicSlider, SfxSlider, ResizableControlMusic, ResizableControlSfx });
         }
-        protected override void PopulateFocusableElements()
+        protected override void SetInteractableElements()
         {
-            //_focusableElements = new IFocusableControl[] { MusicSlider, SfxSlider, SaveSettingsButton, ResetButton, ReturnButton };
+            _interactableElements = new IInteractableElement[] { MusicSlider, SfxSlider, SaveSettingsButton, ResetButton, ReturnButton };
         }
 
     }

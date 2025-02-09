@@ -23,22 +23,19 @@ namespace UISystem.MenuSystem.Controllers
             base.SetupElements();
             SetupMusicSlider();
             SetupSfxSlider();
-            _view.SaveSettingsButton.onClick.AddListener(OnSaveSettingsButtonDown);
+            _view.SaveSettingsButton.AddListener(OnSaveSettingsButtonDown);
         }
 
         private void OnSaveSettingsButtonDown()
         {
             _model.SaveSettings();
-            _view.SetLastSelectedElement(_view.SaveSettingsButton);
+            _view.SetLastSelectedElement(_view.SaveSettingsButton.Button);
         }
 
         private void SetupMusicSlider()
         {
-            _view.MusicSlider.value = _model.MusicVolume;
-            _view.MusicSlider.onValueChanged.AddListener(OnMusicSliderDragEnded);
-            //_view.MusicSlider.SetValueNoSignal(_model.MusicVolume);
-            //_view.MusicSlider.DragEnded += OnMusicSliderDragEnded;
-            //_view.MusicSlider.DragStarted += OnMusicSliderDragStarted;
+            _view.MusicSlider.SetValue(_model.MusicVolume);
+            _view.MusicSlider.AddListener(OnMusicSliderDragEnded);
         }
 
         private void OnMusicSliderDragEnded(float value)
@@ -46,19 +43,10 @@ namespace UISystem.MenuSystem.Controllers
             _model.MusicVolume = value;
         }
 
-        //private void OnMusicSliderDragStarted()
-        //{
-        //    _model.MusicVolume = _view.MusicSlider.value;
-        //    _view.SetLastSelectedElement(_view.MusicSlider);
-        //}
-
         private void SetupSfxSlider()
         {
-            _view.SfxSlider.value = _model.SfxVolume;
-            _view.SfxSlider.onValueChanged.AddListener(OnSfxSliderDragEnded);
-            //_view.SfxSlider.SetValueNoSignal(_model.SfxVolume);
-            //_view.SfxSlider.DragEnded += OnSfxSliderDragEnded;
-            //_view.SfxSlider.DragStarted += OnSfxSliderDragStarted;
+            _view.SfxSlider.SetValue(_model.SfxVolume);
+            _view.SfxSlider.AddListener(OnSfxSliderDragEnded);
         }
 
         private void OnSfxSliderDragEnded(float value)
@@ -66,17 +54,11 @@ namespace UISystem.MenuSystem.Controllers
             _model.SfxVolume = value;
         }
 
-        //private void OnSfxSliderDragStarted()
-        //{
-        //    _model.SfxVolume = (float)_view.SfxSlider.Value;
-        //    _view.SetLastSelectedElement(_view.SfxSlider);
-        //}
-
         protected override void ResetViewToDefault()
         {
-            //_view.MusicSlider.SetValue(_model.MusicVolume);
-            //_view.SfxSlider.SetValue(_model.SfxVolume);
-            _view.SetLastSelectedElement(_view.ResetButton);
+            _view.MusicSlider.SetValue(_model.MusicVolume);
+            _view.SfxSlider.SetValue(_model.SfxVolume);
+            _view.SetLastSelectedElement(_view.ResetButton.Button);
         }
 
     }

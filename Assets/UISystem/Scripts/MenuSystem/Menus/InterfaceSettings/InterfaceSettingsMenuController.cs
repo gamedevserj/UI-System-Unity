@@ -28,18 +28,18 @@ namespace UISystem.MenuSystem.Controllers
         {
             SetupControllerIconsDropdown();
             base.SetupElements();
-            _view.SaveSettingsButton.onClick.AddListener(OnSaveSettingsButtonDown);
+            _view.SaveSettingsButton.AddListener(OnSaveSettingsButtonDown);
         }
 
         private void OnSaveSettingsButtonDown()
         {
             _model.SaveSettings();
-            _view.SetLastSelectedElement(_view.SaveSettingsButton);
+            _view.SetLastSelectedElement(_view.SaveSettingsButton.Button);
         }
 
         private void SetupControllerIconsDropdown()
         {
-            _view.ControllerIconsDropdown.ClearOptions();
+            _view.ControllerIconsDropdown.Dropdown.ClearOptions();
             var options = new List<string>();
             foreach (var item in Enum.GetValues(typeof(ControllerIconsType)))
             {
@@ -47,19 +47,19 @@ namespace UISystem.MenuSystem.Controllers
             }
             
             _view.ControllerIconsDropdown.AddOptions(options);
-            _view.ControllerIconsDropdown.onValueChanged.AddListener(SelectControllerIconsType);
-            _view.ControllerIconsDropdown.value = (int)_model.ControllerIconsType;
+            _view.ControllerIconsDropdown.SetValue((int)_model.ControllerIconsType);
+            _view.ControllerIconsDropdown.AddListener(SelectControllerIconsType);
         }
 
         private void SelectControllerIconsType(int index)
         {
             _model.SelectIconType(index);
-            _view.SetLastSelectedElement(_view.ControllerIconsDropdown);
+            _view.SetLastSelectedElement(_view.ControllerIconsDropdown.Dropdown);
         }
 
         protected override void ResetViewToDefault()
         {
-            _view.ControllerIconsDropdown.value = (int)_model.ControllerIconsType;
+            _view.ControllerIconsDropdown.SetValue((int)_model.ControllerIconsType);
         }
 
     }

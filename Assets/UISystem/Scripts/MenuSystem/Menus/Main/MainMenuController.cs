@@ -43,33 +43,11 @@ namespace UISystem.MenuSystem.Controllers
                 _menuBackgroundController.HideBackground(instant);
         }
 
-        //public override void ProcessStacking(StackingType stackingType)
-        //{
-        //    Debug.Log(stackingType);
-        //    base.ProcessStacking(stackingType);
-        //    //switch (stackingType)
-        //    //{
-        //    //    case StackingType.Add:
-        //    //        _menuBackgroundController.ShowBackground();
-        //    //        break;
-        //    //    case StackingType.Remove:
-        //    //        _menuBackgroundController.HideBackground();
-        //    //        break;
-        //    //    case StackingType.Clear:
-        //    //        _menuBackgroundController.ShowBackground(true);
-        //    //        break;
-        //    //    case StackingType.Replace:
-        //    //        _menuBackgroundController.HideBackground(true);
-        //    //        break;
-        //    //    default:
-        //    //        break;
-        //    //}
-        //}
         protected override void SetupElements()
         {
-            _view.PlayButton.Button.onClick.AddListener(PressedPlay);
-            _view.OptionsButton.Button.onClick.AddListener(PressedOptions);
-            _view.QuitButton.Button.onClick.AddListener(PressedQuit);
+            _view.PlayButton.AddListener(PressedPlay);
+            _view.OptionsButton.AddListener(PressedOptions);
+            _view.QuitButton.AddListener(PressedQuit);
         }
 
         public override void OnReturnButtonDown()
@@ -102,13 +80,13 @@ namespace UISystem.MenuSystem.Controllers
 
         private void ShowQuitPopup()
         {
-            SwitchFocusAvailability(false);
+            SwitchInteractability(false);
             _popupsManager.ShowPopup(PopupType.YesNo, PopupMessages.QuitGame, (result) =>
             {
                 if (result == PopupResult.Yes)
                     Application.Quit();
                 else if (result == PopupResult.No)
-                    SwitchFocusAvailability(true);
+                    SwitchInteractability(true);
             });
         }
 

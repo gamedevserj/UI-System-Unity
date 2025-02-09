@@ -48,19 +48,19 @@ namespace UISystem.MenuSystem.Controllers
         {
             button.Label.text = "...";
             _view.SetLastSelectedElement(button.Button);
-            SwitchFocusAvailability(false);
+            SwitchInteractability(false);
 
             _model.StartRebinding(action, index, () =>
             {
                 SwitchRebindingButtonFocusability(button.Button, true);
                 UpdateButtonView(button, action, index);
-                SwitchFocusAvailability(true);
+                SwitchInteractability(true);
             });
         }
 
         private void SwitchRebindingButtonFocusability(Button button, bool allowFocus)
         {
-            SwitchFocusAvailability(allowFocus);
+            SwitchInteractability(allowFocus);
             if (allowFocus)
             {
                 _view.SetLastSelectedElement(button);
@@ -69,22 +69,22 @@ namespace UISystem.MenuSystem.Controllers
 
         protected override void SetupElements()
         {
-            _view.ReturnButton.onClick.AddListener(OnReturnButtonDown);
-            _view.ResetButton.onClick.AddListener(OnResetToDefaultButtonDown);
+            _view.ReturnButton.AddListener(OnReturnButtonDown);
+            _view.ResetButton.AddListener(OnResetToDefaultButtonDown);
 
-            _view.MoveLeft.Button.onClick.AddListener(() => 
+            _view.MoveLeft.AddListener(() => 
             { OnButtonDown(_view.MoveLeft, Actions.Gameplay.Left, InputsData.KeyboardEventIndex); });
-            _view.MoveLeftJoystick.Button.onClick.AddListener(() => 
+            _view.MoveLeftJoystick.AddListener(() => 
             { OnButtonDown(_view.MoveLeftJoystick, Actions.Gameplay.Left, InputsData.JoystickEventIndex); });
 
-            _view.MoveRight.Button.onClick.AddListener(() =>
+            _view.MoveRight.AddListener(() =>
             { OnButtonDown(_view.MoveRight, Actions.Gameplay.Right, InputsData.KeyboardEventIndex); });
-            _view.MoveRightJoystick.Button.onClick.AddListener(() =>
+            _view.MoveRightJoystick.AddListener(() =>
             { OnButtonDown(_view.MoveRightJoystick, Actions.Gameplay.Right, InputsData.JoystickEventIndex); });
 
-            _view.Jump.Button.onClick.AddListener(() =>
+            _view.Jump.AddListener(() =>
             { OnButtonDown(_view.Jump, Actions.Gameplay.Jump, InputsData.KeyboardEventIndex); });
-            _view.JumpJoystick.Button.onClick.AddListener(() =>
+            _view.JumpJoystick.AddListener(() =>
             { OnButtonDown(_view.JumpJoystick, Actions.Gameplay.Jump, InputsData.JoystickEventIndex); });
 
             UpdateAllButtonViews();

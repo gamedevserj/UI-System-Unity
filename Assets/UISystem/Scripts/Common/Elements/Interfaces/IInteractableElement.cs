@@ -1,9 +1,7 @@
 ﻿namespace UISystem.Common.Elements
 {
-    internal interface IInteractableElement
+    public interface IInteractableElement
     {
-
-        bool IsInteractable { get; }
 
         void SwitchInteractability(bool enable);
 
