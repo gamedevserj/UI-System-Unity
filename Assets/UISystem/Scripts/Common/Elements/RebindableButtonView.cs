@@ -8,8 +8,10 @@ namespace UISystem.Common.Elements
     {
 
         [SerializeField] private TextMeshProUGUI label;
+        [SerializeField] private Image icon;
 
         public TextMeshProUGUI Label => label;
+        public Image Icon => icon;
 
     }
 }

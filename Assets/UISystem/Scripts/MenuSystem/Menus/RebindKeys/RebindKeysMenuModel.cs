@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using UISystem.Core.MenuSystem;
 using UnityEngine.InputSystem;
 
@@ -42,16 +43,31 @@ namespace UISystem.MenuSystem.Models
                 _rebindOperation = null;
             }
 
-            void FinishRebinding()
+            async void FinishRebinding()
             {
-                _isRebinding = false;
                 onFinishedRebinding?.Invoke();
                 CleanUp();
+                // need to delay if player presses return button
+                await Task.Delay(100);
+                _isRebinding = false;
             }
 
             // Configure the rebind.
             _rebindOperation = action.PerformInteractiveRebinding(index)
-                .WithCancelingThrough("<Keyboard>/escape")
+                .WithCancelingThrough("asdfg")// overwriting default cancel
+                .OnPotentialMatch(operation =>
+                {
+                    // allows to cancel with either button
+                    // doesn't allow cancelling keyboard rebind with gamepad's start button
+                    // solution is to check for input in update and cancel it from there if one these buttons was pressed
+                    // https://discussions.unity.com/t/impossible-to-get-cancelling-of-control-rebind-working-with-both-keyboard-and-gamepad/1576251/3
+                    if (operation.selectedControl.name == "escape" ||
+                        operation.selectedControl.name == "start")
+                    {
+                        operation.Cancel();
+                        return;
+                    }
+                })
                 .OnCancel(operation => { FinishRebinding(); })
                 .OnComplete(operation => 
                 {

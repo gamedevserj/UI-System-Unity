@@ -8,6 +8,7 @@ using UISystem.MenuSystem.SettingsMenu;
 using UISystem.MenuSystem.Views;
 using UISystem.PhysicalInput;
 using UISystem.PopupSystem;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -34,9 +35,23 @@ namespace UISystem.MenuSystem.Controllers
         private static void UpdateButtonView(RebindableButtonView button, InputAction action, int index)
         {
             button.Label.text = action.bindings[index].ToDisplayString();
+            action.GetBindingDisplayString(index, out string device, out string path);
+
             if (index == InputsData.JoystickEventIndex)
             {
                 //TODO: assign icon
+                Sprite sprite = null;
+                switch (GameSettings.ControllerIconsType)
+                {
+                    case Common.Enums.ControllerIconsType.Xbox:
+                        sprite = XboxIcons.GetIcon(path);
+                        break;
+                    case Common.Enums.ControllerIconsType.Ps5:
+                        break;
+                    default:
+                        break;
+                }
+                button.Icon.sprite = sprite;
             }
             else if (index == InputsData.KeyboardEventIndex)
             {
@@ -46,6 +61,8 @@ namespace UISystem.MenuSystem.Controllers
 
         private void OnButtonDown(RebindableButtonView button, InputAction action, int index)
         {
+            if (_model.IsRebinding)
+                return;
             button.Label.text = "...";
             _view.SetLastSelectedElement(button.Button);
             SwitchInteractability(false);
