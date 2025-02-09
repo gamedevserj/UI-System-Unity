@@ -47,6 +47,7 @@ namespace UISystem.MenuSystem.Controllers
                         sprite = XboxIcons.GetIcon(path);
                         break;
                     case Common.Enums.ControllerIconsType.Ps5:
+                        sprite = PS5Icons.GetIcon(path);
                         break;
                     default:
                         break;

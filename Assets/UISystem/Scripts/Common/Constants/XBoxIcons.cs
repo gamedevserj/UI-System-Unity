@@ -13,70 +13,40 @@ namespace UISystem.Constants
         static XboxIcons()
         {
             _buttons = new Dictionary<string, string>
-        {
-            { "dpad/left", "xbox_dpad_left" },
-            { "dpad/up", "xbox_dpad_up" },
-            { "dpad/right", "xbox_dpad_right" },
-            { "dpad/down", "xbox_dpad_down" },
-            { "buttonSouth", "xbox_button_color_a" },
-            { "buttonEast", "xbox_button_color_b" },
-            { "buttonWest", "xbox_button_color_x" },
-            { "buttonNorth", "xbox_button_color_y" },
-            // L1
-            { "leftShoulder", "xbox_lb" },
-            // R1
-            { "rightShoulder", "xbox_rb" },
-            // share
-            { "select", "xbox_button_share" },
-            // options
-            { "start", "xbox_button_menu" },
-            // L3
-            { "leftStickPress", "xbox_ls" },
-            // R3
-            { "rightStickPress", "xbox_rs" },
-            { "leftTrigger", "xbox_lt" },
-            { "rightTrigger", "xbox_rt" },
-            { "leftStick/right", "xbox_stick_l_right" },
-            { "leftStick/down", "xbox_stick_l_down" },
-            { "leftStick/left", "xbox_stick_l_left" },
-            { "leftStick/up", "xbox_stick_l_up" },
+            {
+                { "dpad/left", "xbox_dpad_left" },
+                { "dpad/up", "xbox_dpad_up" },
+                { "dpad/right", "xbox_dpad_right" },
+                { "dpad/down", "xbox_dpad_down" },
+                { "buttonSouth", "xbox_button_color_a" },
+                { "buttonEast", "xbox_button_color_b" },
+                { "buttonWest", "xbox_button_color_x" },
+                { "buttonNorth", "xbox_button_color_y" },
+                
+                { "leftShoulder", "xbox_lb" },// L1
+                { "rightShoulder", "xbox_rb" },// R1
+                { "select", "xbox_button_share" },// share
+                { "start", "xbox_button_menu" },// options
+                { "leftStickPress", "xbox_ls" },// L3
+                { "rightStickPress", "xbox_rs" },// R3
+                { "leftTrigger", "xbox_lt" }, // L2
+                { "rightTrigger", "xbox_rt" }, // R2
 
-            { "rightStick/right", "xbox_stick_r_right" },
-            { "rightStick/down", "xbox_stick_r_down" },
-            { "rightStick/left", "xbox_stick_r_left" },
-            { "rightStick/up", "xbox_stick_r_up" },
-        };
+                { "leftStick/right", "xbox_stick_l_right" },
+                { "leftStick/down", "xbox_stick_l_down" },
+                { "leftStick/left", "xbox_stick_l_left" },
+                { "leftStick/up", "xbox_stick_l_up" },
 
-        //    _triggersPositive = new Dictionary<JoyAxis, string>
-        //{
-        //    {JoyAxis.TriggerLeft, "xbox_lt.png" },
-        //    {JoyAxis.TriggerRight, "xbox_rt.png" },
-        //    {JoyAxis.LeftX, "xbox_stick_l_right.png" },
-        //    {JoyAxis.LeftY, "xbox_stick_l_down.png" },
-        //    {JoyAxis.RightX, "xbox_stick_r_right.png" },
-        //    {JoyAxis.RightY, "xbox_stick_r_down.png" },
-        //};
-
-        //    _triggersNegative = new Dictionary<JoyAxis, string>
-        //{
-        //    {JoyAxis.LeftX, "xbox_stick_l_left.png" },
-        //    {JoyAxis.LeftY, "xbox_stick_l_up.png" },
-        //    {JoyAxis.RightX, "xbox_stick_r_left.png" },
-        //    {JoyAxis.RightY, "xbox_stick_r_up.png" },
-        //};
-
+                { "rightStick/right", "xbox_stick_r_right" },
+                { "rightStick/down", "xbox_stick_r_down" },
+                { "rightStick/left", "xbox_stick_r_left" },
+                { "rightStick/up", "xbox_stick_r_up" },
+            };
         }
 
         public static Sprite GetIcon(string button)
         {
             return Resources.Load<Sprite>(ItemsFolder + _buttons[button]);
         }
-
-        //public static string GetIcon(JoyAxis axis, float positive = 1)
-        //{
-        //    string icon = positive > 0 ? _triggersPositive[axis] : _triggersNegative[axis];
-        //    return ItemsFolder + icon;
-        //}
-
     }
 }
