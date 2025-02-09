@@ -21,7 +21,7 @@ namespace UISystem.Common.Elements
                 return _button;
             }
         }
-        public RectTransform ButtonTransform
+        public RectTransform Reference
         {
             get
             {

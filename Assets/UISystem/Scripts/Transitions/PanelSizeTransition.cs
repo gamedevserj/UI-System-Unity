@@ -13,8 +13,6 @@ namespace UISystem.Transitions
         protected const float PanelDuration = 0.2f;
         protected const float ElementsDuration = 0.1f;
 
-        private bool _initializedParameters;
-
         private Vector2 _panelSize;
 
         private readonly CanvasGroup _fadeObjectsContainer;
@@ -38,19 +36,11 @@ namespace UISystem.Transitions
                 return;
             }
 
-            //var tasks = new Task[_elements.Length];
-            //for (int i = 0; i < tasks.Length; i++)
-            //{
-            //    tasks[i] = _elements[i].ResetHover();
-            //}
-            //await Task.WhenAll(tasks);
-
             Sequence sequence = DOTween.Sequence();
             sequence.Join(_panel.DOSizeDelta(-_panelSize, _panelDuration))
                 .Append(_fadeObjectsContainer.DOFade(1, FadeDuration))
                 .OnComplete(() => onHidden?.Invoke())
                 .Play();
-
         }
 
         public async void Show(Action onShown, bool instant)
@@ -58,8 +48,7 @@ namespace UISystem.Transitions
             // should always hide before showing because awaiting for parameters shows menu for a split second
             _fadeObjectsContainer.alpha = 0;
 
-            if (!_initializedParameters)
-                await InitElementParameters();
+            await InitElementParameters();
 
             if (instant)
             {
@@ -82,9 +71,6 @@ namespace UISystem.Transitions
         {
             await Task.Delay(100);
             _panelSize = new Vector2(_panel.rect.width, _panel.rect.height);
-
-            _initializedParameters = true;
-
         }
     }
 }

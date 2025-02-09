@@ -15,9 +15,6 @@ namespace UISystem.Transitions
         private const float MainElementAnimationDuration = 0.2f;
         private const float SecondaryElementAnimationDuration = 0.2f;
 
-        private bool _initializedParameters;
-        private Vector3 _mainElementPosition;
-
         private readonly CanvasGroup _fadeObjectsContainer;
         private readonly IResizableElement _mainElement;
         private readonly IResizableElement[] _secondaryElements;
@@ -44,26 +41,18 @@ namespace UISystem.Transitions
                 return;
             }
 
-            //var tasks = new Task[_secondaryElements.Length + 1];
-            //for (int i = 0; i < _secondaryElements.Length; i++)
-            //{
-            //    tasks[i] = _secondaryElements[i].ResetHover();
-            //}
-            //tasks[_secondaryElements.Length] = _mainElement.ResetHover();
-            //await Task.WhenAll(tasks);
-
             Sequence sequence = DOTween.Sequence();
             sequence.SetEase(Ease.Linear);
             for (int i = 0; i < _secondaryElements.Length; i++)
             {
-                Tween tween = _secondaryElements[i].Resizable.DOMove(_mainElementPosition, _secondaryElementDuration);
+                Tween tween = _secondaryElements[i].Resizable.DOMove(_mainElement.Reference.position, _secondaryElementDuration);
                 if (i == _secondaryElements.Length - 1)
                     tween.OnComplete(() => SwitchSecondaryButtonsVisibility(false));
                 sequence.Join(tween.SetEase(Ease.InBack));
             }
 
-            sequence.Append(_mainElement.Resizable.DOSizeDelta(Vector2.left * _mainElement.ButtonTransform.sizeDelta.x, _mainElementDuration))
-                .Join(_mainElement.Resizable.DOAnchorPos(Vector2.left * _mainElement.ButtonTransform.sizeDelta.x * 0.5f, _mainElementDuration));
+            sequence.Append(_mainElement.Resizable.DOSizeDelta(Vector2.left * _mainElement.Reference.sizeDelta.x, _mainElementDuration))
+                .Join(_mainElement.Resizable.DOAnchorPos(Vector2.left * _mainElement.Reference.sizeDelta.x * 0.5f, _mainElementDuration));
 
             sequence.Append(_fadeObjectsContainer.DOFade(0, FadeDuration));
             sequence.Play().OnComplete(() => onHidden?.Invoke());
@@ -91,18 +80,15 @@ namespace UISystem.Transitions
                 return;
             }
 
-            if (!_initializedParameters)
-            {
-                await InitElementParameters();
-            }
+            await Task.Delay(100);
 
             for (int i = 0; i < _secondaryElements.Length; i++)
             {
-                _secondaryElements[i].Resizable.position = _mainElementPosition;
+                _secondaryElements[i].Resizable.position = _mainElement.Reference.position;
             }
 
-            _mainElement.Resizable.sizeDelta = Vector2.left * _mainElement.ButtonTransform.sizeDelta.x;
-            _mainElement.Resizable.anchoredPosition = Vector2.left * _mainElement.ButtonTransform.sizeDelta.x * 0.5f;
+            _mainElement.Resizable.sizeDelta = Vector2.left * _mainElement.Reference.sizeDelta.x;
+            _mainElement.Resizable.anchoredPosition = Vector2.left * _mainElement.Reference.sizeDelta.x * 0.5f;
             _mainElement.Resizable.gameObject.SetActive(true);
 
             Sequence sequence = DOTween.Sequence();
@@ -124,14 +110,6 @@ namespace UISystem.Transitions
             }
 
             sequence.Play().OnComplete(() => onShown?.Invoke());
-        }
-
-        private async Task InitElementParameters()
-        {
-            // maybe use UniTask to delay a frame?
-            await Task.Delay(100);
-            _mainElementPosition = _mainElement.Resizable.position;
-            _initializedParameters = true;
         }
 
         private void SwitchSecondaryButtonsVisibility(bool show)

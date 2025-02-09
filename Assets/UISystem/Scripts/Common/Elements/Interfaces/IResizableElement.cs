@@ -4,7 +4,7 @@ namespace UISystem.Common.Elements
 {
     public interface IResizableElement
     {
-        RectTransform ButtonTransform { get; }
+        RectTransform Reference { get; }
         RectTransform Resizable { get; }
     }
 }

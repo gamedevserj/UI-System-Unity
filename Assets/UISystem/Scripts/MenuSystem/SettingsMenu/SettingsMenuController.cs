@@ -26,8 +26,8 @@ namespace UISystem.MenuSystem.SettingsMenu
 
         protected override void SetupElements()
         {
-            _view.ReturnButton.Button.onClick.AddListener(OnReturnButtonDown);
-            _view.ResetButton.Button.onClick.AddListener(OnResetToDefaultButtonDown);
+            _view.ReturnButton.AddListener(OnReturnButtonDown);
+            _view.ResetButton.AddListener(OnResetToDefaultButtonDown);
         }
 
         public override void OnReturnButtonDown()
