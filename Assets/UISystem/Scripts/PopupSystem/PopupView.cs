@@ -11,11 +11,9 @@ namespace UISystem.PopupSystem
 
         [SerializeField] protected RectTransform panel;
         [SerializeField] private TextMeshProUGUI messageLabel;
-        [SerializeField] protected RectTransform messageMask;
 
         public RectTransform Panel => panel;
         public TextMeshProUGUI Message { set => messageLabel = value; }
-        public RectTransform MessageMask => messageMask;
         public abstract Selectable DefaultSelectedElement { get; }
 
         public override void FocusElement()
