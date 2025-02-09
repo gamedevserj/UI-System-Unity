@@ -1,4 +1,5 @@
 ﻿using UISystem.Common.Elements;
+using UISystem.Common.Enums;
 using UISystem.Constants;
 using UISystem.Core.MenuSystem;
 using UISystem.Core.PopupSystem;
@@ -20,6 +21,7 @@ namespace UISystem.MenuSystem.Controllers
         public override MenuType Type => MenuType.RebindKeys;
 
         private GameActions Actions => GameSettings.Actions;
+        private const string EllipsisPath = "Textures/Inputs/ellipsis";
 
         public RebindKeysMenuController(IViewCreator<RebindKeysMenuView> viewCreator, RebindKeysMenuModel model,
             IMenusManager<MenuType> menusManager, IPopupsManager<PopupType, PopupResult> popupsManager)
@@ -34,37 +36,44 @@ namespace UISystem.MenuSystem.Controllers
 
         private static void UpdateButtonView(RebindableButtonView button, InputAction action, int index)
         {
-            button.Label.text = action.bindings[index].ToDisplayString();
             action.GetBindingDisplayString(index, out string device, out string path);
 
+            Sprite sprite = null;
             if (index == InputsData.JoystickEventIndex)
             {
-                //TODO: assign icon
-                Sprite sprite = null;
                 switch (GameSettings.ControllerIconsType)
                 {
-                    case Common.Enums.ControllerIconsType.Xbox:
+                    case ControllerIconsType.Xbox:
                         sprite = XboxIcons.GetIcon(path);
                         break;
-                    case Common.Enums.ControllerIconsType.Ps5:
+                    case ControllerIconsType.Ps5:
                         sprite = PS5Icons.GetIcon(path);
                         break;
                     default:
                         break;
                 }
-                button.Icon.sprite = sprite;
+                
             }
             else if (index == InputsData.KeyboardEventIndex)
             {
                 //TODO: assign icon
+                if (device == InputsData.KeyboardDevice)
+                {
+                    sprite = KeyboardIcons.GetIcon(path);
+                }
+                else if (device == InputsData.MouseDevice)
+                {
+                    sprite = MouseIcons.GetIcon(path);
+                }
             }
+            button.Icon.sprite = sprite;
         }
 
         private void OnButtonDown(RebindableButtonView button, InputAction action, int index)
         {
             if (_model.IsRebinding)
                 return;
-            button.Label.text = "...";
+            button.Icon.sprite = Resources.Load<Sprite>(EllipsisPath); ;
             _view.SetLastSelectedElement(button.Button);
             SwitchInteractability(false);
 
