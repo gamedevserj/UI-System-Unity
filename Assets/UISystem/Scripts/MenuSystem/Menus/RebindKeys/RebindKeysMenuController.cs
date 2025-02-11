@@ -41,22 +41,16 @@ namespace UISystem.MenuSystem.Controllers
             Sprite sprite = null;
             if (index == InputsData.JoystickEventIndex)
             {
-                switch (GameSettings.ControllerIconsType)
+                sprite = GameSettings.ControllerIconsType switch
                 {
-                    case ControllerIconsType.Xbox:
-                        sprite = XboxIcons.GetIcon(path);
-                        break;
-                    case ControllerIconsType.Ps5:
-                        sprite = PS5Icons.GetIcon(path);
-                        break;
-                    default:
-                        break;
-                }
+                    ControllerIconsType.Xbox => XboxIcons.GetIcon(path),
+                    ControllerIconsType.Ps5 => PS5Icons.GetIcon(path),
+                    _ => XboxIcons.GetIcon(path)
+                };
                 
             }
             else if (index == InputsData.KeyboardEventIndex)
             {
-                //TODO: assign icon
                 if (device == InputsData.KeyboardDevice)
                 {
                     sprite = KeyboardIcons.GetIcon(path);

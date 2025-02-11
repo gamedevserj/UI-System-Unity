@@ -2,9 +2,7 @@
 {
     public enum ControllerIconsType
     {
-
         Xbox = 0,
         Ps5 = 1,
-
     }
 }

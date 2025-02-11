@@ -1,7 +1,6 @@
 ﻿using UISystem.Core.PopupSystem;
 using UISystem.Core.Views;
 using UISystem.PopupSystem.Popups.Views;
-using UnityEngine;
 
 namespace UISystem.PopupSystem.Popups.Controllers
 {

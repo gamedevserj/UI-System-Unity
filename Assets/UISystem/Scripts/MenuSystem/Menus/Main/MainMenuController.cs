@@ -14,7 +14,6 @@ namespace UISystem.MenuSystem.Controllers
 
         public override MenuType Type => MenuType.Main;
 
-        //private readonly SceneTree _sceneTree;
         private readonly IPopupsManager<PopupType, PopupResult> _popupsManager;
         private readonly MenuBackgroundController _menuBackgroundController;
         private readonly ScreenFadeManager _screenFadeManager;
@@ -59,7 +58,6 @@ namespace UISystem.MenuSystem.Controllers
         private void PressedPlay()
         {
             _view.SetLastSelectedElement(_view.PlayButton.Button);
-            //_menusManager.ShowMenu(MenuType.InGame, StackingType.Clear, instant: true);
             _screenFadeManager.FadeOut(() =>
             {
                 _menusManager.ShowMenu(MenuType.InGame, StackingType.Clear, instant: true);

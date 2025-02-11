@@ -20,12 +20,10 @@ namespace UISystem.PopupSystem.Popups.Views
         protected override IViewTransition CreateTransition()
         {
             return new FadeTransition(FadeObjectsContainer);
-            //return new PanelSizeTransition(this, FadeObjectsContainer, Panel,
-            //    new ITweenableMenuElement[] { YesButton, NoButton, CancelButton, MessageMask });
         }
         protected override void SetInteractableElements()
         {
-            //_focusableElements = new IFocusableControl[] { YesButton, NoButton, CancelButton };
+            
         }
 
     }

@@ -130,6 +130,6 @@ namespace UISystem.Constants
 }
 
 /*
- * 
+ * Names are taken from here
  * https://discussions.unity.com/t/list-of-all-inputcontrolpath/909946/10
  */

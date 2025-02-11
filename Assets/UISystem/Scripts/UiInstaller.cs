@@ -37,7 +37,6 @@ namespace UISystem
         [SerializeField] private ViewBase yesPopupPrefab;
         [SerializeField] private ViewBase yesNoPopupPrefab;
         [SerializeField] private ViewBase yesNoCancelPopupPrefab;
-        //[Export] private ScreenFadeManager screenFadeManager;
 
         private InputProcessor _inputProcessor;
         private UIInputActions _inputActions;

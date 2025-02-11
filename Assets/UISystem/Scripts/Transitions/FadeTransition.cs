@@ -22,8 +22,6 @@ namespace UISystem.Transitions
             void FinishedHiding()
             {
                 _target.alpha = 0;
-                //_target.interactable = false;
-                //_target.blocksRaycasts = false;
                 onHidden?.Invoke();
             }
 
@@ -42,14 +40,10 @@ namespace UISystem.Transitions
         {
             // should always hide before showing because awaiting for parameters shows menu for a split second
             _target.alpha = 0;
-            //_target.interactable = false;
-            //_target.blocksRaycasts = false;
 
             void FinishedShowing()
             {
                 _target.alpha = 1;
-                //_target.interactable = true;
-                //_target.blocksRaycasts = true;
                 onShown?.Invoke();
             }
 

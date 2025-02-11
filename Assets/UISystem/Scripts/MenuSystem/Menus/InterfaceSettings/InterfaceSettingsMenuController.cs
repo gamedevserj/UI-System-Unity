@@ -14,15 +14,12 @@ namespace UISystem.MenuSystem.Controllers
     internal class InterfaceSettingsMenuController : SettingsMenuController<IViewCreator<InterfaceSettingsMenuView>, InterfaceSettingsMenuView, InterfaceSettingsMenuModel>
     {
 
-        private readonly int _controllerIconsNumber;
         public override MenuType Type => MenuType.InterfaceSettings;
 
         public InterfaceSettingsMenuController(IViewCreator<InterfaceSettingsMenuView> viewCreator, InterfaceSettingsMenuModel model,
             IMenusManager<MenuType> menusManager, IPopupsManager<PopupType, PopupResult> popupsManager)
             : base(viewCreator, model, menusManager, popupsManager)
-        {
-            _controllerIconsNumber = Enum.GetNames(typeof(ControllerIconsType)).Length;
-        }
+        { }
 
         protected override void SetupElements()
         {

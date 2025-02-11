@@ -3,7 +3,6 @@ using UISystem.Core.Transitions;
 using UISystem.MenuSystem.SettingsMenu;
 using UISystem.Transitions;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.Views
 {
@@ -28,11 +27,7 @@ namespace UISystem.MenuSystem.Views
 
         protected override IViewTransition CreateTransition()
         {
-            return new FadeTransition(FadeObjectsContainer);
-            //return new PanelSizeTransition(this, FadeObjectsContainer, Panel,
-            //    new ITweenableMenuElement[] { ReturnButton, ResetButton,
-            //        MoveLeft, MoveLeftJoystick, MoveRight, MoveRightJoystick, Jump, JumpJoystick,
-            //        MoveLeftLabelResizableControl, MoveRightLabelResizableControl, JumpLabelResizableControl});
+            return new PanelSizeTransition(FadeObjectsContainer, Panel);
         }
 
         protected override void SetInteractableElements()

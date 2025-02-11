@@ -32,7 +32,7 @@ namespace UISystem.Transitions
             _secondaryElementDuration = secondaryElementDuration;
         }
 
-        public async void Hide(Action onHidden, bool instant)
+        public void Hide(Action onHidden, bool instant)
         {
             if (instant)
             {

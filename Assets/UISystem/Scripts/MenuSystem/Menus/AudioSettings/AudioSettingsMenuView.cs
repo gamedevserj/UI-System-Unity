@@ -21,10 +21,7 @@ namespace UISystem.MenuSystem.Views
 
         protected override IViewTransition CreateTransition()
         {
-            return new FadeTransition(FadeObjectsContainer);
-            //return new PanelSizeTransition(this, FadeObjectsContainer, Panel,
-            //new ITweenableMenuElement[] { ReturnButton, SaveSettingsButton, ResetButton,
-            //MusicSlider, SfxSlider, ResizableControlMusic, ResizableControlSfx });
+            return new PanelSizeTransition(FadeObjectsContainer, Panel);
         }
         protected override void SetInteractableElements()
         {

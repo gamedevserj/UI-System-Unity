@@ -21,7 +21,6 @@ namespace UISystem.MenuSystem.Views
 
         protected override IViewTransition CreateTransition()
         {
-            //return new FadeTransition(FadeObjectsContainer);
             return new MainElementDropTransition(FadeObjectsContainer, ResumeGameButton, new[] { OptionsButton, ReturnToMainMenuButton });
         }
 
