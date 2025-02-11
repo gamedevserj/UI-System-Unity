@@ -22,11 +22,22 @@ namespace UISystem.MenuSystem
         public void ShowBackground(bool instant = false)
         {
             _background.enabled = true;
+            if (instant)
+            {
+                _background.color = new Color(_background.color.r, _background.color.g, _background.color.b, 1);
+                return;
+            }
             _background.DOFade(1, Duration).Play();
         }
 
         public void HideBackground(bool instant = false)
         {
+            if (instant)
+            {
+                _background.color = new Color(_background.color.r, _background.color.g, _background.color.b, 0);
+                _background.enabled = false;
+                return;
+            }
             _background.DOFade(0, Duration).OnComplete(()=> _background.enabled = false).Play();
         }
 
