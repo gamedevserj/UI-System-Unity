@@ -3,7 +3,6 @@
 UI system for Unity engine that uses Dependency Injection and MVC patterns.  
 Core of this system is a submodule that can be found here : https://github.com/gamedevserj/UI-System-Core 
 
-
 To add new menu:
 1. Add your menu type to the MenuType enum
 2. Create your menu view script that either inherits from MenuView or from SettingsMenuView (it has functionality to reset setting to default via model and reset view to default)
@@ -19,7 +18,8 @@ To add new menu:
 A simple script that handles menu's background, look at MainMenu and PauseMenu controllers for example.
 
 ℹ️: 
-Audio, video, and interface menus are setup to have a popup if some settings were not saved before quitting. Key rebinding menu saves binds when new key is assigned that's why it has empty Save and DiscardChanges methods. If you want to save changes only when pressing save button, you need to make some changes - look at audio/video settings for example how it can be done.
+1. Audio, video, and interface menus are setup to have a popup if some settings were not saved before quitting. Key rebinding menu saves binds when new key is assigned that's why it has empty Save and DiscardChanges methods. If you want to save changes only when pressing save button, you need to make some changes - look at audio/video settings for example how it can be done.
+2. For saving settings the repo uses Advanced INI parser asset from asset store. You can replace it with any other method of your choosing.
 
 #### Rebinding menu example
 
@@ -28,8 +28,12 @@ Rebinding menu uses the new Input system and parts of the script for rebinding a
 
  ⚠️ The example rebinding menu uses image names from https://kenney.nl/assets/input-prompts, but they are not included in this repository. You'll need to download them separately.
 
+## Popup system
+Some of the popups are already setup and some menus already use them. The steps to create a new type of popup are the same as creating a new menu. 
+
 ## Screen fade
 A simple script that controls fading, call FadeOut() with an optional action as a parameter that you want to happen when screen is completely black.
 
 ## Transitions  
-Transition control the way view is shown/hidden. The repo includes few transitions as example. Note that resizing canvas elements require redrawing the whole canvas which means that some complex transitions may not be very suitable for mobile platforms.
+Transition control the way view is shown/hidden. The repo includes few transitions as example. Note that resizing canvas elements require redrawing the whole canvas which means that some complex transitions may not be very suitable for mobile platforms. 
+Transitions use DOTween package, the default settings are changed. Major changes are - tweens use unscale time and they don't autostart.
