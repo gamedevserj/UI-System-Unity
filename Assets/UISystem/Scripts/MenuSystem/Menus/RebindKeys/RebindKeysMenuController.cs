@@ -34,14 +34,14 @@ namespace UISystem.MenuSystem.Controllers
                 base.OnReturnButtonDown();
         }
 
-        private static void UpdateButtonView(RebindableButtonView button, InputAction action, int index)
+        private void UpdateButtonView(RebindableButtonView button, InputAction action, int index)
         {
             action.GetBindingDisplayString(index, out string device, out string path);
 
             Sprite sprite = null;
             if (index == InputsData.JoystickEventIndex)
             {
-                sprite = GameSettings.ControllerIconsType switch
+                sprite = _model.IconsType switch
                 {
                     ControllerIconsType.Xbox => XboxIcons.GetIcon(path),
                     ControllerIconsType.Ps5 => PS5Icons.GetIcon(path),

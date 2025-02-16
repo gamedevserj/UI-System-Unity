@@ -17,14 +17,42 @@ namespace UISystem
         public static event Action<float> OnSfxVolumeChanged;
         public static event Action<ControllerIconsType> OnControllerIconsChanged;
 
+        private float _musicVolume;
+        private float _sfxVolume;
+        private ControllerIconsType _controllerIcons;
+
         private readonly INIParser _config;
 
-        public static float MusicVolume { get; private set; } = ConfigData.DefaultMusicVolume;
-        public static float SfxVolume { get; private set; } = ConfigData.DefaultSfxVolume;
+        public float MusicVolume
+        {
+            get => _musicVolume;
+            set
+            {
+                _musicVolume = value;
+                OnMusicVolumeChanged?.Invoke(value);
+            }
+        }
+        public float SfxVolume
+        {
+            get => _sfxVolume;
+            set
+            {
+                _sfxVolume = value;
+                OnSfxVolumeChanged?.Invoke(value);
+            }
+        }
         public static Vector2Int Resolution { get; private set; } = ConfigData.DefaultResolution;
         public static FullScreenMode WindowMode { get; private set; } = ConfigData.DefaultFullScreenMode;
         public static int RefreshRate { get; private set; } = ConfigData.DefaultRefreshRate;
-        public static ControllerIconsType ControllerIconsType { get; private set; } = ConfigData.DefaultControllerIconsType;
+        public ControllerIconsType ControllerIconsType
+        {
+            get => _controllerIcons;
+            set
+            {
+                _controllerIcons = value;
+                OnControllerIconsChanged?.Invoke(value);
+            }
+        }
 
         public static GameActions Actions { get; private set; }
 
@@ -36,25 +64,15 @@ namespace UISystem
             LoadSettings();
         }
 
-        public void SaveMusicVolume(float volume)
+        public void SaveAudioSettings()
         {
-            MusicVolume = volume;
-            SaveSetting(ConfigData.AudioSectionName, ConfigData.MusicVolumeKey, volume);
-            OnMusicVolumeChanged?.Invoke(volume);
+            SaveSetting(ConfigData.AudioSectionName, ConfigData.MusicVolumeKey, MusicVolume);
+            SaveSetting(ConfigData.AudioSectionName, ConfigData.SfxVolumeKey, SfxVolume);
         }
 
-        public void SaveSfxVolume(float volume)
+        public void SaveInterfaceSettings()
         {
-            SfxVolume = volume;
-            SaveSetting(ConfigData.AudioSectionName, ConfigData.SfxVolumeKey, volume);
-            OnSfxVolumeChanged?.Invoke(volume);
-        }
-
-        public void SaveControllerIconsType(ControllerIconsType type)
-        {
-            ControllerIconsType = type;
-            SaveSetting(ConfigData.InterfaceSectionName, ConfigData.ControllerIconsKey, (int)type);
-            OnControllerIconsChanged?.Invoke(type);
+            SaveSetting(ConfigData.InterfaceSectionName, ConfigData.ControllerIconsKey, (int)ControllerIconsType);
         }
 
         public void SaveResolution(Vector2Int resolution)

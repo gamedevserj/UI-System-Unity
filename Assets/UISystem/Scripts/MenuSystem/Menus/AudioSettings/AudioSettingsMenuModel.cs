@@ -6,43 +6,44 @@ namespace UISystem.MenuSystem.Models
     public class AudioSettingsMenuModel : ISettingsMenuModel
     {
 
-        private float _tempMusicVolume;
-        private float _tempSfxVolume;
+        private float _lastMusicVolume;
+        private float _lastSfxVolume;
 
         private readonly GameSettings _settings;
 
-        public bool HasUnappliedSettings => MusicVolume != _tempMusicVolume || SfxVolume != _tempSfxVolume;
-        public float MusicVolume { get => GameSettings.MusicVolume; set => _tempMusicVolume = value; }
-        public float SfxVolume { get => GameSettings.SfxVolume; set => _tempSfxVolume = value; }
+        public bool HasUnappliedSettings => MusicVolume != _lastMusicVolume || SfxVolume != _lastSfxVolume;
+        public float MusicVolume { get => _settings.MusicVolume; set => _settings.MusicVolume = value; }
+        public float SfxVolume { get => _settings.SfxVolume; set => _settings.SfxVolume = value; }
 
         public AudioSettingsMenuModel(GameSettings settings)
         {
             _settings = settings;
-            LoadSettings();
+            RememberLastSavedSettings();
         }
 
         public void ResetToDefault()
         {
-            _tempMusicVolume = ConfigData.DefaultMusicVolume;
-            _tempSfxVolume = ConfigData.DefaultSfxVolume;
+            MusicVolume = ConfigData.DefaultMusicVolume;
+            SfxVolume = ConfigData.DefaultSfxVolume;
             SaveSettings();
         }
 
         public void SaveSettings()
         {
-            _settings.SaveMusicVolume(_tempMusicVolume);
-            _settings.SaveSfxVolume(_tempSfxVolume);
+            RememberLastSavedSettings();
+            _settings.SaveAudioSettings();
         }
 
         public void DiscardChanges()
         {
-            LoadSettings();
+            MusicVolume = _lastMusicVolume;
+            SfxVolume = _lastSfxVolume;
         }
 
-        private void LoadSettings()
+        private void RememberLastSavedSettings()
         {
-            _tempMusicVolume = GameSettings.MusicVolume;
-            _tempSfxVolume = GameSettings.SfxVolume;
+            _lastMusicVolume = MusicVolume;
+            _lastSfxVolume = SfxVolume;
         }
 
     }

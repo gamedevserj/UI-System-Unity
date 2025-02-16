@@ -7,43 +7,43 @@ namespace UISystem.MenuSystem.Models
     public class InterfaceSettingsMenuModel : ISettingsMenuModel
     {
 
-        private ControllerIconsType _tempIconsType;
+        private ControllerIconsType _lastIconsType;
         private readonly GameSettings _settings;
 
-        public bool HasUnappliedSettings => GameSettings.ControllerIconsType != _tempIconsType;
-        public ControllerIconsType ControllerIconsType { get => GameSettings.ControllerIconsType; set => _tempIconsType = value; }
+        public bool HasUnappliedSettings => _settings.ControllerIconsType != _lastIconsType;
+        public ControllerIconsType ControllerIconsType { get => _settings.ControllerIconsType; set => _settings.ControllerIconsType = value; }
 
         public InterfaceSettingsMenuModel(GameSettings settings)
         {
             _settings = settings;
-            LoadSettings();
+            RememberLastSavedSettings();
         }
 
         public void SelectIconType(int index)
         {
-            _tempIconsType = (ControllerIconsType)index;
+            ControllerIconsType = (ControllerIconsType)index;
         }
 
         public void SaveSettings()
         {
-            _settings.SaveControllerIconsType(_tempIconsType);
+            RememberLastSavedSettings();
+            _settings.SaveInterfaceSettings();
         }
 
         public void DiscardChanges()
         {
-            LoadSettings();
+            ControllerIconsType = _lastIconsType;
         }
 
         public void ResetToDefault()
         {
-            _tempIconsType = ConfigData.DefaultControllerIconsType;
-            _settings.SaveControllerIconsType(_tempIconsType);
+            ControllerIconsType = ConfigData.DefaultControllerIconsType;
             SaveSettings();
         }
 
-        private void LoadSettings()
+        private void RememberLastSavedSettings()
         {
-            _tempIconsType = GameSettings.ControllerIconsType;
+            _lastIconsType = ControllerIconsType;
         }
 
     }
