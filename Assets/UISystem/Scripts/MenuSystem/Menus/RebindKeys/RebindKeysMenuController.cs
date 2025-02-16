@@ -18,10 +18,10 @@ namespace UISystem.MenuSystem.Controllers
     internal class RebindKeysMenuController : SettingsMenuController<IViewCreator<RebindKeysMenuView>, RebindKeysMenuView, RebindKeysMenuModel>
     {
 
-        public override MenuType Type => MenuType.RebindKeys;
-
-        private GameActions Actions => GameSettings.Actions;
         private const string EllipsisPath = "Textures/Inputs/ellipsis";
+
+        public override MenuType Type => MenuType.RebindKeys;
+        private GameActions Actions => _model.GameActions;
 
         public RebindKeysMenuController(IViewCreator<RebindKeysMenuView> viewCreator, RebindKeysMenuModel model,
             IMenusManager<MenuType> menusManager, IPopupsManager<PopupType, PopupResult> popupsManager)

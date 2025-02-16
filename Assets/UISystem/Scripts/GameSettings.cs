@@ -41,9 +41,9 @@ namespace UISystem
                 OnSfxVolumeChanged?.Invoke(value);
             }
         }
-        public static Vector2Int Resolution { get; private set; } = ConfigData.DefaultResolution;
-        public static FullScreenMode WindowMode { get; private set; } = ConfigData.DefaultFullScreenMode;
-        public static int RefreshRate { get; private set; } = ConfigData.DefaultRefreshRate;
+        public Vector2Int Resolution { get; set; } = ConfigData.DefaultResolution;
+        public FullScreenMode WindowMode { get; set; } = ConfigData.DefaultFullScreenMode;
+        public int RefreshRate { get; set; } = ConfigData.DefaultRefreshRate;
         public ControllerIconsType ControllerIconsType
         {
             get => _controllerIcons;
@@ -54,7 +54,7 @@ namespace UISystem
             }
         }
 
-        public static GameActions Actions { get; private set; }
+        public GameActions Actions { get; private set; }
 
         public GameSettings(INIParser config, GameActions actions)
         {
@@ -75,22 +75,11 @@ namespace UISystem
             SaveSetting(ConfigData.InterfaceSectionName, ConfigData.ControllerIconsKey, (int)ControllerIconsType);
         }
 
-        public void SaveResolution(Vector2Int resolution)
+        public void SaveVideoSettings()
         {
-            Resolution = resolution;
-            SaveSetting(ConfigData.VideoSectionName, ConfigData.ResolutionKey, resolution);
-        }
-
-        public void SaveWindowMode(FullScreenMode mode)
-        {
-            WindowMode = mode;
-            SaveSetting(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)mode);
-        }
-
-        public void SetRefreshRate(int rate)
-        {
-            RefreshRate = rate;
-            SaveSetting(ConfigData.VideoSectionName, ConfigData.RefreshRateKey, rate);
+            SaveSetting(ConfigData.VideoSectionName, ConfigData.ResolutionKey, Resolution);
+            SaveSetting(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)WindowMode);
+            SaveSetting(ConfigData.VideoSectionName, ConfigData.RefreshRateKey, RefreshRate);
         }
 
         public void SaveInputKeys()
@@ -111,6 +100,7 @@ namespace UISystem
             
             Resolution = GetConfigValue(ConfigData.VideoSectionName, ConfigData.ResolutionKey, ConfigData.DefaultResolution);
             WindowMode = (FullScreenMode)(int)GetConfigValue(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)ConfigData.DefaultFullScreenMode);
+            RefreshRate = GetConfigValue(ConfigData.VideoSectionName, ConfigData.RefreshRateKey, ConfigData.DefaultRefreshRate);
 
             ControllerIconsType = (ControllerIconsType)(int)GetConfigValue(ConfigData.InterfaceSectionName, ConfigData.ControllerIconsKey, (int)ConfigData.DefaultControllerIconsType);
             LoadActions();
@@ -124,6 +114,16 @@ namespace UISystem
             bool isNewSetting = CheckIfNewSetting(sectionName, keyName);
 
             float value = _config.ReadValue(sectionName, keyName, defaultValue);
+            if (isNewSetting) _config.WriteValue(sectionName, keyName, value);
+
+            return value;
+        }
+
+        private int GetConfigValue(string sectionName, string keyName, int defaultValue)
+        {
+            bool isNewSetting = CheckIfNewSetting(sectionName, keyName);
+
+            int value = _config.ReadValue(sectionName, keyName, defaultValue);
             if (isNewSetting) _config.WriteValue(sectionName, keyName, value);
 
             return value;
@@ -166,7 +166,7 @@ namespace UISystem
             _config.Close();
         }
 
-        private void OpenConfig() => _config.Open(Application.persistentDataPath + ConfigData.ConfigLocation);
+        private void OpenConfig() => _config.Open(ConfigData.ConfigLocation);
         private void CloseConfig() => _config.Close();
 
         private void LoadActions()

@@ -10,7 +10,7 @@ namespace UISystem
         private void Start()
         {
             var config = new INIParser();
-            config.Open(Application.persistentDataPath + ConfigData.ConfigLocation);
+            config.Open(ConfigData.ConfigLocation);
             var actions = new GameActions();
             GameSettings settings = new(config, actions);
 

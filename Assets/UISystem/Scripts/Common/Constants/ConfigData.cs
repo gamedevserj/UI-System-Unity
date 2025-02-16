@@ -6,7 +6,7 @@ namespace UISystem.Constants
     public static class ConfigData
     {
 
-        public const string ConfigLocation = "Config.txt";
+        public static string ConfigLocation => Application.persistentDataPath + "/" + "Config.txt";
 
         public const string AudioSectionName = "AudioSettings";
         public const string MusicVolumeKey = "MusicVolume";

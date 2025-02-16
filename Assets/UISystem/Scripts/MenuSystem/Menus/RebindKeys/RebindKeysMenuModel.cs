@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using UISystem.Common.Enums;
 using UISystem.Core.MenuSystem;
+using UISystem.PhysicalInput;
 using UnityEngine.InputSystem;
 
 namespace UISystem.MenuSystem.Models
@@ -14,6 +15,7 @@ namespace UISystem.MenuSystem.Models
         private InputActionRebindingExtensions.RebindingOperation _rebindOperation;
 
         public bool IsRebinding => _isRebinding;
+        public GameActions GameActions => _settings.Actions;
         public ControllerIconsType IconsType => _settings.ControllerIconsType;
 
         public bool HasUnappliedSettings => false;
