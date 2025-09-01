@@ -20,11 +20,10 @@ namespace UISystem.MenuSystem.Controllers
 
         private const string EllipsisPath = "Textures/Inputs/ellipsis";
 
-        public override MenuType Type => MenuType.RebindKeys;
         private GameActions Actions => _model.GameActions;
 
         public RebindKeysMenuController(IViewCreator<RebindKeysMenuView> viewCreator, RebindKeysMenuModel model,
-            IMenusManager<MenuType> menusManager, IPopupsManager<PopupType, PopupResult> popupsManager)
+            IMenusManager menusManager, IPopupsManager<PopupResult> popupsManager)
             : base(viewCreator, model, menusManager, popupsManager)
         { }
 

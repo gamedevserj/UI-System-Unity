@@ -1,7 +1,6 @@
 ﻿using UISystem.Core.MenuSystem;
 using UISystem.Core.PhysicalInput;
 using UISystem.Core.PopupSystem;
-using UISystem.MenuSystem;
 using UISystem.PopupSystem;
 using UnityEngine.InputSystem;
 using static UISystem.PhysicalInput.UIInputActions;
@@ -22,13 +21,13 @@ namespace UISystem.PhysicalInput
         {
             _inputActions = inputActions;
             _inputActions.UI.SetCallbacks(this);
-            MenusManager<MenuType>.OnControllerSwitch += OnMenuControllerSwitch;
-            PopupsManager<PopupType, PopupResult>.OnControllerSwitch += OnPopupControllerSwitch;
+            MenusManager.OnControllerSwitch += OnMenuControllerSwitch;
+            PopupsManager<PopupResult>.OnControllerSwitch += OnPopupControllerSwitch;
         }
         ~InputProcessor()
         {
-            MenusManager<MenuType>.OnControllerSwitch -= OnMenuControllerSwitch;
-            PopupsManager<PopupType, PopupResult>.OnControllerSwitch -= OnPopupControllerSwitch;
+            MenusManager.OnControllerSwitch -= OnMenuControllerSwitch;
+            PopupsManager<PopupResult>.OnControllerSwitch -= OnPopupControllerSwitch;
         }
 
         private void OnPopupControllerSwitch(IInputReceiver inputReceiver)

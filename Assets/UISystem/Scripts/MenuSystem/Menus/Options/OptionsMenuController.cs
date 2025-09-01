@@ -6,8 +6,7 @@ namespace UISystem.MenuSystem.Controllers
 {
     internal class OptionsMenuController : MenuControllerBase<IViewCreator<OptionsMenuView>, OptionsMenuView>
     {
-        public override MenuType Type => MenuType.Options;
-        public OptionsMenuController(IViewCreator<OptionsMenuView> viewCreator, IMenuModel model, IMenusManager<MenuType> menusManager) : base(viewCreator, model, menusManager)
+        public OptionsMenuController(IViewCreator<OptionsMenuView> viewCreator, IMenuModel model, IMenusManager menusManager) : base(viewCreator, model, menusManager)
         { }
 
         protected override void SetupElements()
@@ -22,25 +21,25 @@ namespace UISystem.MenuSystem.Controllers
         private void OnAudioSettingsButtonDown()
         {
             _view.SetLastSelectedElement(_view.AudioSettingsButton.Button);
-            _menusManager.ShowMenu(MenuType.AudioSettings);
+            _menusManager.ShowMenu(typeof(AudioSettingsMenuController));
         }
 
         private void OnVideoSettingsButtonDown()
         {
             _view.SetLastSelectedElement(_view.VideoSettingsButton.Button);
-            _menusManager.ShowMenu(MenuType.VideoSettings);
+            _menusManager.ShowMenu(typeof(VideoSettingsMenuController));
         }
 
         private void OnRebindKeysButtonDown()
         {
             _view.SetLastSelectedElement(_view.RebindKeysButton.Button);
-            _menusManager.ShowMenu(MenuType.RebindKeys);
+            _menusManager.ShowMenu(typeof(RebindKeysMenuController));
         }
 
         private void OnInterfaceSettingsButtonDown()
         {
             _view.SetLastSelectedElement(_view.InterfaceSettingsButton.Button);
-            _menusManager.ShowMenu(MenuType.InterfaceSettings);
+            _menusManager.ShowMenu(typeof(InterfaceSettingsMenuController));
         }
     }
 }

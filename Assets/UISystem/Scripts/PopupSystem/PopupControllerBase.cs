@@ -5,11 +5,11 @@ namespace UISystem.PopupSystem
 {
     // just a base class to adapt generic controller 
     // so that there is no need to specify enums
-    internal abstract class PopupControllerBase<TViewCreator, TView> : PopupController<TViewCreator, TView, PopupType, PopupResult>
+    internal abstract class PopupControllerBase<TViewCreator, TView> : PopupController<TViewCreator, TView, PopupResult>
         where TViewCreator : IViewCreator<TView>
         where TView : IPopupView
     {
-        protected PopupControllerBase(TViewCreator viewCreator, IPopupsManager<PopupType, PopupResult> popupsManager) : base(viewCreator, popupsManager)
+        protected PopupControllerBase(TViewCreator viewCreator, IPopupsManager<PopupResult> popupsManager) : base(viewCreator, popupsManager)
         {
         }
     }

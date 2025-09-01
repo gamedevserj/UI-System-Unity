@@ -11,10 +11,8 @@ namespace UISystem.MenuSystem.Controllers
     internal class AudioSettingsMenuController : SettingsMenuController<IViewCreator<AudioSettingsMenuView>, AudioSettingsMenuView, AudioSettingsMenuModel>
     {
 
-        public override MenuType Type => MenuType.AudioSettings;
-
         public AudioSettingsMenuController(IViewCreator<AudioSettingsMenuView> viewCreator, AudioSettingsMenuModel model,
-            IMenusManager<MenuType> menusManager, IPopupsManager<PopupType, PopupResult> popupsManager) 
+            IMenusManager menusManager, IPopupsManager<PopupResult> popupsManager) 
             : base(viewCreator, model, menusManager, popupsManager)
         { }
 
