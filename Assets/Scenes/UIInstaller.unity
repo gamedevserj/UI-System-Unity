@@ -510,17 +510,8 @@ MonoBehaviour:
   fade: {fileID: 723987921}
   menusParent: {fileID: 1204626036}
   popupsParent: {fileID: 964332728}
-  mainMenuPrefab: {fileID: 5153324140853557564, guid: ddd64e79af444fb4eaf70152310b7ee1, type: 3}
-  inGameMenuPrefab: {fileID: 6160874080520597880, guid: e2fab0aba52f38e4b95c1e98fe063b32, type: 3}
-  optionMenuPrefab: {fileID: 267874291535618262, guid: 31b5a84406ad13e4fb0569f17ad3aa10, type: 3}
-  audioSettingsMenuPrefab: {fileID: 4594926490695857866, guid: 3f3d048fc6714b349853a567d95700fc, type: 3}
-  interfaceSettingsMenuPrefab: {fileID: 4567655925260146625, guid: ec7609033f8e004458ef901271113ca2, type: 3}
-  videoSettingsMenuPrefab: {fileID: -7575950645491578456, guid: db527883ee1fe2a40a38daa266d5f44f, type: 3}
-  rebindKeysMenuPrefab: {fileID: 8888589713957639505, guid: 09fbe8481aa1f7d4b88ff17fca7d6a9d, type: 3}
-  pauseMenuPrefab: {fileID: 4906327715830764667, guid: 5371680613ca6b14ebe05d268f4a746a, type: 3}
-  yesPopupPrefab: {fileID: 2082051489736832666, guid: b4477f73ed2b1184d86e43a72d3819a0, type: 3}
-  yesNoPopupPrefab: {fileID: 1798598869478096647, guid: ac19c4945c24ca64fa0ccf2ef1ba7bc0, type: 3}
-  yesNoCancelPopupPrefab: {fileID: 1562753231777474937, guid: df0a59e9e21676b4f97772a67c7befc7, type: 3}
+  menuViewsDatabase: {fileID: 11400000, guid: 2d81d1dd33721284ba78f08bc40a74d9, type: 2}
+  popupViewsDatabase: {fileID: 11400000, guid: 99020904abeb7174cbff167cdba74f7d, type: 2}
 --- !u!1 &1199407238
 GameObject:
   m_ObjectHideFlags: 0

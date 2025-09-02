@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6d3281b11450147be6132dd848834a, type: 3}
+  m_Name: MenuViewsDatabase
+  m_EditorClassIdentifier: 
+  mainMenuPrefab: {fileID: 5153324140853557564, guid: ddd64e79af444fb4eaf70152310b7ee1, type: 3}
+  inGameMenuPrefab: {fileID: 6160874080520597880, guid: e2fab0aba52f38e4b95c1e98fe063b32, type: 3}
+  optionMenuPrefab: {fileID: 267874291535618262, guid: 31b5a84406ad13e4fb0569f17ad3aa10, type: 3}
+  audioSettingsMenuPrefab: {fileID: 4594926490695857866, guid: 3f3d048fc6714b349853a567d95700fc, type: 3}
+  interfaceSettingsMenuPrefab: {fileID: 4567655925260146625, guid: ec7609033f8e004458ef901271113ca2, type: 3}
+  videoSettingsMenuPrefab: {fileID: -7575950645491578456, guid: db527883ee1fe2a40a38daa266d5f44f, type: 3}
+  rebindKeysMenuPrefab: {fileID: 8888589713957639505, guid: 09fbe8481aa1f7d4b88ff17fca7d6a9d, type: 3}
+  pauseMenuPrefab: {fileID: 4906327715830764667, guid: 5371680613ca6b14ebe05d268f4a746a, type: 3}

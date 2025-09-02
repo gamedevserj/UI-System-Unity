@@ -1,4 +1,5 @@
-﻿using UISystem.Core.MenuSystem;
+﻿using System;
+using UISystem.Core.MenuSystem;
 using UISystem.Core.PopupSystem;
 using UISystem.MenuSystem;
 using UISystem.MenuSystem.Controllers;
@@ -9,6 +10,7 @@ using UISystem.PopupSystem;
 using UISystem.PopupSystem.Popups.Controllers;
 using UISystem.PopupSystem.Popups.Views;
 using UISystem.ScreenFade;
+using UISystem.ScriptableObjects;
 using UISystem.Views;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,19 +26,9 @@ namespace UISystem
         [SerializeField] private Image fade;
         [SerializeField] private Transform menusParent;
         [SerializeField] private Transform popupsParent;
-        [SerializeField] private ViewBase mainMenuPrefab;
-        [SerializeField] private ViewBase inGameMenuPrefab;
-        [SerializeField] private ViewBase optionMenuPrefab;
-        [SerializeField] private ViewBase audioSettingsMenuPrefab;
-        [SerializeField] private ViewBase interfaceSettingsMenuPrefab;
-        [SerializeField] private ViewBase videoSettingsMenuPrefab;
-        [SerializeField] private ViewBase rebindKeysMenuPrefab;
-        [SerializeField] private ViewBase pauseMenuPrefab;
+        [SerializeField] private MenuViewsDatabase menuViewsDatabase;
+        [SerializeField] private PopupViewsDatabase popupViewsDatabase;
         [SerializeField] private GameActions gameActions;
-
-        [SerializeField] private ViewBase yesPopupPrefab;
-        [SerializeField] private ViewBase yesNoPopupPrefab;
-        [SerializeField] private ViewBase yesNoCancelPopupPrefab;
 
         private InputProcessor _inputProcessor;
         private UIInputActions _inputActions;
@@ -61,9 +53,9 @@ namespace UISystem
         public void Init(GameSettings settings)
         {
             var popupsManager = new PopupsManager<PopupResult>();
-            var yesPopupViewCreator = new ViewCreator<YesPopupView>(yesPopupPrefab, popupsParent);
-            var yesNoPopupViewCreator = new ViewCreator<YesNoPopupView>(yesNoPopupPrefab, popupsParent);
-            var yesNoCancelPopupViewCreator = new ViewCreator<YesNoCancelPopupView>(yesNoCancelPopupPrefab, popupsParent);
+            var yesPopupViewCreator = new ViewCreator<YesPopupView>(GetPopupView(typeof(YesPopupView)), popupsParent);
+            var yesNoPopupViewCreator = new ViewCreator<YesNoPopupView>(GetPopupView(typeof(YesNoPopupView)), popupsParent);
+            var yesNoCancelPopupViewCreator = new ViewCreator<YesNoCancelPopupView>(GetPopupView(typeof(YesNoCancelPopupView)), popupsParent);
             var popups = new IPopupController<PopupResult>[]
             {
                 new YesPopupController(yesPopupViewCreator, popupsManager),
@@ -76,14 +68,14 @@ namespace UISystem
             var backgroundController = new MenuBackgroundController(menuBackground);
 
             var menusManager = new MenusManager();
-            var mainMenuViewCreator = new ViewCreator<MainMenuView>(mainMenuPrefab, menusParent);
-            var inGameMenuViewCreator = new ViewCreator<InGameMenuView>(inGameMenuPrefab, menusParent);
-            var pauseViewCreator = new ViewCreator<PauseMenuView>(pauseMenuPrefab, menusParent);
-            var optionsViewCreator = new ViewCreator<OptionsMenuView>(optionMenuPrefab, menusParent);
-            var audioSettingsViewCreator = new ViewCreator<AudioSettingsMenuView>(audioSettingsMenuPrefab, menusParent);
-            var videoSettingsViewCreator = new ViewCreator<VideoSettingsMenuView>(videoSettingsMenuPrefab, menusParent);
-            var rebindKeysViewCreator = new ViewCreator<RebindKeysMenuView>(rebindKeysMenuPrefab, menusParent);
-            var interfaceMenuViewCreator = new ViewCreator<InterfaceSettingsMenuView>(interfaceSettingsMenuPrefab, menusParent);
+            var mainMenuViewCreator = new ViewCreator<MainMenuView>(GetMenuView(typeof(MainMenuView)), menusParent);
+            var inGameMenuViewCreator = new ViewCreator<InGameMenuView>(GetMenuView(typeof(InGameMenuView)), menusParent);
+            var pauseViewCreator = new ViewCreator<PauseMenuView>(GetMenuView(typeof(PauseMenuView)), menusParent);
+            var optionsViewCreator = new ViewCreator<OptionsMenuView>(GetMenuView(typeof(OptionsMenuView)), menusParent);
+            var audioSettingsViewCreator = new ViewCreator<AudioSettingsMenuView>(GetMenuView(typeof(AudioSettingsMenuView)), menusParent);
+            var videoSettingsViewCreator = new ViewCreator<VideoSettingsMenuView>(GetMenuView(typeof(VideoSettingsMenuView)), menusParent);
+            var rebindKeysViewCreator = new ViewCreator<RebindKeysMenuView>(GetMenuView(typeof(RebindKeysMenuView)), menusParent);
+            var interfaceMenuViewCreator = new ViewCreator<InterfaceSettingsMenuView>(GetMenuView(typeof(InterfaceSettingsMenuView)), menusParent);
             var menus = new IMenuController[]
             {
                 new MainMenuController(mainMenuViewCreator, null, menusManager, popupsManager, fadeManager, backgroundController),
@@ -99,5 +91,7 @@ namespace UISystem
             menusManager.ShowMenu(typeof(MainMenuController), StackingType.Clear);
         }
 
+        private ViewBase GetMenuView(Type type) => menuViewsDatabase.GetView(type);
+        private ViewBase GetPopupView(Type type) => popupViewsDatabase.GetView(type);
     }
 }
