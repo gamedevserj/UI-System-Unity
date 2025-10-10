@@ -3,6 +3,9 @@
 UI system for Unity engine that uses Dependency Injection and MVC patterns.  
 Core of this system is a submodule that can be found here : https://github.com/gamedevserj/UI-System-Core 
 
+Demo
+https://youtu.be/GK0ND4SRPmg
+
 To add new menu:
 1. Create your menu view script that either inherits from MenuView or from SettingsMenuView (it has functionality to reset setting to default via model and reset view to default)
 2. If your view has interactable elements (buttons, sliders, etc.), they should have scripts attached to them that implement IFocusableControl to disable elements during menu transitions. Some of the elements already included in the repo at UISystem/Common/Elements, there are also prefabs for them in the UISystem/Common/Prefabs, so you can use those
@@ -34,4 +37,4 @@ A simple script that controls fading, call FadeOut() with an optional action as 
 
 ## Transitions  
 Transition control the way view is shown/hidden. The repo includes few transitions as example. Note that resizing canvas elements require redrawing the whole canvas which means that some complex transitions may not be very suitable for mobile platforms. 
-Transitions use DOTween package, the default settings are changed. Major changes are - tweens use unscale time and they don't autostart.
+Transitions use DOTween package, the default settings are changed. Major changes are - tweens use unscaled time and they don't autostart.
