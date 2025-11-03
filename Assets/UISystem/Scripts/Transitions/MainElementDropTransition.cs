@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+﻿using PrimeTween;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,21 +41,18 @@ namespace UISystem.Transitions
                 return;
             }
 
-            Sequence sequence = DOTween.Sequence();
-            sequence.SetEase(Ease.Linear);
+            var sequence = Sequence.Create();
             for (int i = 0; i < _secondaryElements.Length; i++)
             {
-                Tween tween = _secondaryElements[i].Resizable.DOMove(_mainElement.Reference.position, _secondaryElementDuration);
-                if (i == _secondaryElements.Length - 1)
-                    tween.OnComplete(() => SwitchSecondaryButtonsVisibility(false));
-                sequence.Join(tween.SetEase(Ease.InBack));
+                sequence
+                    .Group(Tween.Position(_secondaryElements[i].Resizable, _mainElement.Reference.position, _secondaryElementDuration, Ease.InBack));
             }
-
-            sequence.Append(_mainElement.Resizable.DOSizeDelta(Vector2.left * _mainElement.Reference.sizeDelta.x, _mainElementDuration))
-                .Join(_mainElement.Resizable.DOAnchorPos(Vector2.left * _mainElement.Reference.sizeDelta.x * 0.5f, _mainElementDuration));
-
-            sequence.Append(_fadeObjectsContainer.DOFade(0, FadeDuration));
-            sequence.Play().OnComplete(() => onHidden?.Invoke());
+            sequence
+                .ChainCallback(target: this, target => target.SwitchSecondaryButtonsVisibility(false))
+                .Chain(Tween.UISizeDelta(_mainElement.Resizable, _mainElement.Reference.sizeDelta.x * Vector2.left, _mainElementDuration))
+                .Group(Tween.UIAnchoredPosition(_mainElement.Resizable, _mainElement.Reference.sizeDelta.x * 0.5f * Vector2.left, _mainElementDuration))
+                .Chain(Tween.Alpha(_fadeObjectsContainer, 0, FadeDuration)
+                .OnComplete(() => onHidden?.Invoke()));
         }
 
         public async void Show(Action onShown, bool instant)
@@ -87,29 +84,26 @@ namespace UISystem.Transitions
                 _secondaryElements[i].Resizable.position = _mainElement.Reference.position;
             }
 
-            _mainElement.Resizable.sizeDelta = Vector2.left * _mainElement.Reference.sizeDelta.x;
-            _mainElement.Resizable.anchoredPosition = Vector2.left * _mainElement.Reference.sizeDelta.x * 0.5f;
+            _mainElement.Resizable.sizeDelta = _mainElement.Reference.sizeDelta.x * Vector2.left ;
+            _mainElement.Resizable.anchoredPosition = _mainElement.Reference.sizeDelta.x * 0.5f * Vector2.left;
             _mainElement.Resizable.gameObject.SetActive(true);
 
-            Sequence sequence = DOTween.Sequence();
-            sequence.SetEase(Ease.Linear)
-                .Join(_fadeObjectsContainer.DOFade(1, FadeDuration))
-                .Append(_mainElement.Resizable.DOSizeDelta(Vector2.zero, _mainElementDuration))
-                .Join(_mainElement.Resizable.DOAnchorPos(Vector2.zero, _mainElementDuration)
-                    .OnComplete(() => SwitchSecondaryButtonsVisibility(true)));
+            var sequence = Sequence.Create();
+            sequence
+                .Group(Tween.Alpha(_fadeObjectsContainer, 1, FadeDuration))
+                .Chain(Tween.UISizeDelta(_mainElement.Resizable, Vector2.zero, _mainElementDuration))
+                .Group(
+                    Tween.UIAnchoredPosition(_mainElement.Resizable, Vector2.zero, _mainElementDuration)
+                    .OnComplete(target: this, target => target.SwitchSecondaryButtonsVisibility(true)))
+                .Chain(
+                    Tween.UIAnchoredPosition(_secondaryElements[0].Resizable, Vector2.zero, _secondaryElementDuration, Ease.OutBack));
 
-            Ease secondaryEase = Ease.OutBack;
-            for (int i = 0; i < _secondaryElements.Length; i++)
+            for (int i = 1; i < _secondaryElements.Length; i++)
             {
-                Tween tween = _secondaryElements[i].Resizable.DOAnchorPos(Vector2.zero, _secondaryElementDuration)
-                    .SetEase(secondaryEase);
-                if (i == 0)
-                    sequence.Append(tween);
-                else
-                    sequence.Join(tween);
+                sequence.Group(Tween.UIAnchoredPosition(_secondaryElements[i].Resizable, Vector2.zero, _secondaryElementDuration, Ease.OutBack));
             }
 
-            sequence.Play().OnComplete(() => onShown?.Invoke());
+            sequence.OnComplete(() => onShown?.Invoke());
         }
 
         private void SwitchSecondaryButtonsVisibility(bool show)

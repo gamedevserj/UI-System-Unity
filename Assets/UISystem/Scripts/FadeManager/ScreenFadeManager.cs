@@ -1,4 +1,4 @@
-using DG.Tweening;
+using PrimeTween;
 using System;
 using UnityEngine.UI;
 
@@ -25,15 +25,13 @@ namespace UISystem.ScreenFade
             _isFading = true;
             _image.enabled = true;
 
-            Sequence sequence = DOTween.Sequence();
-            sequence.Append(_image.DOFade(1, Duration).OnComplete(() =>
-            {
-                onFadeOutComplete?.Invoke();
-            })).Append(_image.DOFade(0, Duration).OnComplete(() =>
-            {
-                _isFading = false;
-                _image.enabled = false;
-            })).Play();
+            Sequence.Create()
+                .Chain(Tween.Alpha(_image, 1, Duration).OnComplete(() => onFadeOutComplete?.Invoke()))
+                .Chain(Tween.Alpha(_image, 0, Duration).OnComplete(target: this, target =>
+                {
+                    target._isFading = false;
+                    target._image.enabled = false;
+                }));
         }
     }
 }

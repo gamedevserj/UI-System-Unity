@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+﻿using PrimeTween;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +27,7 @@ namespace UISystem.MenuSystem
                 _background.color = new Color(_background.color.r, _background.color.g, _background.color.b, 1);
                 return;
             }
-            _background.DOFade(1, Duration).Play();
+            Tween.Alpha(_background, 1, Duration);
         }
 
         public void HideBackground(bool instant = false)
@@ -38,7 +38,7 @@ namespace UISystem.MenuSystem
                 _background.enabled = false;
                 return;
             }
-            _background.DOFade(0, Duration).OnComplete(()=> _background.enabled = false).Play();
+            Tween.Alpha(_background, 1, Duration).OnComplete(target: this, target => target._background.enabled = false);
         }
 
     }

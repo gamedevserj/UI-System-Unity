@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+﻿using PrimeTween;
 using System;
 using System.Threading.Tasks;
 using UISystem.Core.Transitions;
@@ -36,11 +36,11 @@ namespace UISystem.Transitions
                 return;
             }
 
-            Sequence sequence = DOTween.Sequence();
-            sequence.Join(_panel.DOSizeDelta(-_panelSize, _panelDuration))
-                .Append(_fadeObjectsContainer.DOFade(1, FadeDuration))
-                .OnComplete(() => onHidden?.Invoke())
-                .Play();
+            var sequence = Sequence.Create();
+            sequence
+                .Group(Tween.UISizeDelta(_panel, -_panelSize, _panelDuration))
+                .Chain(Tween.Alpha(_fadeObjectsContainer, 1, FadeDuration))
+                .OnComplete(() => onHidden?.Invoke());
         }
 
         public async void Show(Action onShown, bool instant)
@@ -60,11 +60,11 @@ namespace UISystem.Transitions
 
             _panel.sizeDelta = -new Vector2(_panelSize.x, _panelSize.y);
 
-            Sequence sequence = DOTween.Sequence();
-            sequence.Join(_fadeObjectsContainer.DOFade(1, FadeDuration))
-                .Append(_panel.DOSizeDelta(Vector2.zero, _panelDuration))
-                .OnComplete(() => onShown?.Invoke())
-                .Play();
+            var sequence = Sequence.Create();
+            sequence
+                .Group(Tween.Alpha(_fadeObjectsContainer, 1, FadeDuration))
+                .Chain(Tween.UISizeDelta(_panel, Vector2.zero, _panelDuration))
+                .OnComplete(() => onShown?.Invoke());
         }
 
         private async Task InitElementParameters()
