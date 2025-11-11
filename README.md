@@ -1,5 +1,7 @@
 # UI-System-Unity
 
+Unity version 2021.3.45f2
+
 UI system for Unity engine that uses Dependency Injection and MVC patterns.  
 Core of this system is a submodule that can be found here : https://github.com/gamedevserj/UI-System-Core 
 
@@ -8,13 +10,13 @@ https://youtu.be/GK0ND4SRPmg
 
 To add new menu:
 1. Create your menu view script that either inherits from MenuView or from SettingsMenuView (it has functionality to reset setting to default via model and reset view to default)
-2. If your view has interactable elements (buttons, sliders, etc.), they should have scripts attached to them that implement IFocusableControl to disable elements during menu transitions. Some of the elements already included in the repo at UISystem/Common/Elements, there are also prefabs for them in the UISystem/Common/Prefabs, so you can use those
-3. Create your menu model script that implements IMenuModel interface (it is just a marker interface) or ISettingsMenuModel (which has methods to save, discard and reset to default)
-4. Create your menu controller script that inherits from MenuControllerBase providing your view and model
-5. In your menu controller implement the MenuType property by providing your menu type and implement SetupElements()
+2. If your view has interactable elements (buttons, sliders, etc.), they should have scripts attached to them that implement ```IFocusableControl``` to disable elements during menu transitions. Some of the elements already included in the repo at UISystem/Common/Elements, there are also prefabs for them in the UISystem/Common/Prefabs, so you can use those
+3. Create your menu model script that implements ```IMenuModel``` interface (it is just a marker interface) or ```ISettingsMenuModel``` (which has methods to save, discard and reset to default)
+4. Create your menu controller script that inherits from ```MenuControllerBase``` providing your view and model
+5. In your menu controller implement ```SetupElements()```
 6. Create field in your UiInstaller for the menu view prefab
-7. Add your menus to the menus array created in the UiInstaller that passes them to the MenusManager
-8. After that you should be able to call _menusManager.ShowMenu(...) to show your new menu
+7. Add your menus to the menus array created in the UiInstaller that passes them to the ```MenusManager```
+8. After that you should be able to call ```_menusManager.ShowMenu(...)``` to show your new menu
 
 ### Menu background controller
 A simple script that handles menu's background, look at MainMenu and PauseMenu controllers for example.
@@ -33,8 +35,8 @@ Rebinding menu uses the new Input system and parts of the script for rebinding a
 Some of the popups are already setup and some menus already use them. The steps to create a new type of popup are the same as creating a new menu. 
 
 ## Screen fade
-A simple script that controls fading, call FadeOut() with an optional action as a parameter that you want to happen when screen is completely black.
+A simple script that controls fading, call ```FadeOut()``` with an optional action as a parameter that you want to happen when screen is completely black.
 
 ## Transitions  
-Transition control the way view is shown/hidden. The repo includes few transitions as example. Note that resizing canvas elements require redrawing the whole canvas which means that some complex transitions may not be very suitable for mobile platforms. 
-Transitions use DOTween package, the default settings are changed. Major changes are - tweens use unscaled time and they don't autostart.
+Transition control the way view is shown/hidden. The repo includes few transitions as example. Note that resizing canvas elements require redrawing the whole canvas which means that some complex transitions may not be very suitable for mobile platforms.  
+Transitions use [PrimeTween](https://github.com/KyryloKuzyk/PrimeTween) for tweening
