@@ -42,19 +42,17 @@ namespace UISystem.Views
             }
         }
 
-        public async Task Show(Action onShown, bool instant = false)
+        public async Task Show(bool instant = false)
         {
             SwitchInteractability(false);
             await _transition.Show(instant);
             SwitchInteractability(true);
-            onShown?.Invoke();
         }
 
-        public async Task Hide(Action onHidden, bool instant = false)
+        public async Task Hide(bool instant = false)
         {
             SwitchInteractability(false);
             await _transition.Hide(instant);
-            onHidden?.Invoke();
         }
 
         public void DestroyView() => Destroy(this.gameObject);
