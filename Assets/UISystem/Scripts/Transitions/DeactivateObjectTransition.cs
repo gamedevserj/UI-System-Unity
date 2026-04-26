@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using UISystem.Core.Transitions;
 using UnityEngine;
 
@@ -14,16 +14,14 @@ namespace UISystem.Transitions
             _gameObject = gameObject;
         }
 
-        public void Hide(Action onHidden, bool instant)
+        public async Task Hide(bool instant = false)
         {
             _gameObject.SetActive(false);
-            onHidden?.Invoke();
         }
 
-        public void Show(Action onShown, bool instant)
+        public async Task Show(bool instant = false)
         {
             _gameObject.SetActive(true);
-            onShown?.Invoke();
         }
     }
 }

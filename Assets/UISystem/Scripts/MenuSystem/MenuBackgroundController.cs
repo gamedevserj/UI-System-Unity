@@ -16,9 +16,6 @@ namespace UISystem.MenuSystem
             _background = background;
         }
 
-        // in case some menus need to have different background color
-        public void SetBackgroundColor(Color color) => _background.color = color;
-
         public void ShowBackground(bool instant = false)
         {
             _background.enabled = true;
@@ -38,7 +35,7 @@ namespace UISystem.MenuSystem
                 _background.enabled = false;
                 return;
             }
-            Tween.Alpha(_background, 1, Duration).OnComplete(target: this, target => target._background.enabled = false);
+            Tween.Alpha(_background, 0, Duration).OnComplete(target: this, target => target._background.enabled = false);
         }
 
     }

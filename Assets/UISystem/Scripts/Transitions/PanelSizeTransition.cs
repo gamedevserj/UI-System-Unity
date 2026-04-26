@@ -1,5 +1,4 @@
 ﻿using PrimeTween;
-using System;
 using System.Threading.Tasks;
 using UISystem.Core.Transitions;
 using UnityEngine;
@@ -27,23 +26,21 @@ namespace UISystem.Transitions
             
         }
 
-        public void Hide(Action onHidden, bool instant)
+        public async Task Hide(bool instant = false)
         {
             if (instant)
             {
                 _fadeObjectsContainer.alpha = 0;
-                onHidden?.Invoke();
                 return;
             }
 
             var sequence = Sequence.Create();
-            sequence
+            await sequence
                 .Group(Tween.UISizeDelta(_panel, -_panelSize, _panelDuration))
-                .Chain(Tween.Alpha(_fadeObjectsContainer, 1, FadeDuration))
-                .OnComplete(() => onHidden?.Invoke());
+                .Chain(Tween.Alpha(_fadeObjectsContainer, 0, FadeDuration));
         }
 
-        public async void Show(Action onShown, bool instant)
+        public async Task Show(bool instant = false)
         {
             // should always hide before showing because awaiting for parameters shows menu for a split second
             _fadeObjectsContainer.alpha = 0;
@@ -54,17 +51,15 @@ namespace UISystem.Transitions
             {
                 _panel.sizeDelta = Vector2.zero;
                 _fadeObjectsContainer.alpha = 1;
-                onShown?.Invoke();
                 return;
             }
 
             _panel.sizeDelta = -new Vector2(_panelSize.x, _panelSize.y);
 
             var sequence = Sequence.Create();
-            sequence
+            await sequence
                 .Group(Tween.Alpha(_fadeObjectsContainer, 1, FadeDuration))
-                .Chain(Tween.UISizeDelta(_panel, Vector2.zero, _panelDuration))
-                .OnComplete(() => onShown?.Invoke());
+                .Chain(Tween.UISizeDelta(_panel, Vector2.zero, _panelDuration));
         }
 
         private async Task InitElementParameters()

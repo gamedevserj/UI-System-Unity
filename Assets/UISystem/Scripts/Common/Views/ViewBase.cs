@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using UISystem.Common.Elements;
 using UISystem.Core.Transitions;
 using UISystem.Core.Views;
@@ -41,23 +42,19 @@ namespace UISystem.Views
             }
         }
 
-        public void Show(Action onShown, bool instant = false)
+        public async Task Show(Action onShown, bool instant = false)
         {
             SwitchInteractability(false);
-            _transition.Show(() =>
-            {
-                SwitchInteractability(true);
-                onShown?.Invoke();
-            }, instant);
+            await _transition.Show(instant);
+            SwitchInteractability(true);
+            onShown?.Invoke();
         }
 
-        public void Hide(Action onHidden, bool instant = false)
+        public async Task Hide(Action onHidden, bool instant = false)
         {
             SwitchInteractability(false);
-            _transition.Hide(() =>
-            {
-                onHidden?.Invoke();
-            }, instant);
+            await _transition.Hide(instant);
+            onHidden?.Invoke();
         }
 
         public void DestroyView() => Destroy(this.gameObject);

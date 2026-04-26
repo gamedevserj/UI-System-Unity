@@ -1,5 +1,5 @@
 ﻿using PrimeTween;
-using System;
+using System.Threading.Tasks;
 using UISystem.Core.Transitions;
 using UnityEngine;
 
@@ -17,41 +17,31 @@ namespace UISystem.Transitions
             _target = target;
         }
 
-        public void Hide(Action onHidden, bool instant)
+        public async Task Hide(bool instant = false)
         {
-            void Finished()
-            {
-                _target.alpha = 0;
-                onHidden?.Invoke();
-            }
-
             if (instant)
             {
-                Finished();
+                _target.alpha = 0;
                 return;
             }
 
-            Tween.Alpha(_target, 0, Duration, Ease.Linear).OnComplete(Finished);
+            await Tween.Alpha(_target, 0, Duration, Ease.Linear);
+            _target.alpha = 0;
         }
 
-        public void Show(Action onShown, bool instant)
+        public async Task Show(bool instant)
         {
             // should always hide before showing because awaiting for parameters shows menu for a split second
             _target.alpha = 0;
 
-            void Finished()
-            {
-                _target.alpha = 1;
-                onShown?.Invoke();
-            }
-
             if (instant)
             {
-                Finished();
+                _target.alpha = 1;
                 return;
             }
 
-            Tween.Alpha(_target, 1, Duration, Ease.Linear).OnComplete(Finished);
+            await Tween.Alpha(_target, 1, Duration, Ease.Linear);
+            _target.alpha = 1;
         }
     }
 }

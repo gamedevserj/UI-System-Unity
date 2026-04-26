@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 using UISystem.Core.MenuSystem;
 using UISystem.Core.PopupSystem;
 using UISystem.Core.Views;
 using UISystem.MenuSystem.Views;
 using UISystem.PopupSystem;
-using UISystem.PopupSystem.Popups.Controllers;
 using UISystem.PopupSystem.Popups.Views;
 using UISystem.ScreenFade;
 
@@ -26,21 +26,19 @@ namespace UISystem.MenuSystem.Controllers
             _menuBackgroundController = menuBackgroundController;
         }
 
-        public override void Show(Action onComplete = null, bool instant = false)
+        public override async Task Show(Action onComplete = null, bool instant = false)
         {
-            base.Show(onComplete, instant);
             _menuBackgroundController.ShowBackground(instant);
+            await base.Show(onComplete, instant);
         }
 
-        public override void Hide(StackingType stackingType, Action onComplete = null, bool instant = false)
+        public override async Task Hide(StackingType stackingType, Action onComplete = null, bool instant = false)
         {
-            base.Hide(stackingType, () =>
-            {
-                if (stackingType != StackingType.Add)
-                    _menuBackgroundController.HideBackground(instant);
+            await base.Hide(stackingType, () => { }, instant);
+            onComplete?.Invoke();
 
-                onComplete?.Invoke();
-            }, instant);
+            if (stackingType != StackingType.Add)
+                _menuBackgroundController.HideBackground(instant);
         }
 
         protected override void SetupElements()
