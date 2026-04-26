@@ -13,19 +13,24 @@ namespace UISystem.PhysicalInput
         private IInputReceiver _menuInputReceiver;
         private IInputReceiver _activeReceiver;
 
+        private readonly IMenusManager _menusManager;
+        private readonly IPopupsManager<PopupResult> _popupsManager;
+
         private bool CanProcessActions => _activeReceiver != null && _activeReceiver.CanReceivePhysicalInput;
 
-        public InputProcessor(UIInputActions inputActions)
+        public InputProcessor(UIInputActions inputActions, IMenusManager menusManager, IPopupsManager<PopupResult> popupsManager)
         {
             inputActions.UI.SetCallbacks(this);
-            MenusManager.OnControllerSwitch += OnMenuControllerSwitch;
-            PopupsManager<PopupResult>.OnControllerSwitch += OnPopupControllerSwitch;
+            _menusManager = menusManager;
+            _menusManager.OnControllerSwitch += OnMenuControllerSwitch;
+            _popupsManager = popupsManager;
+            _popupsManager.OnControllerSwitch += OnPopupControllerSwitch;
         }
 
         ~InputProcessor()
         {
-            MenusManager.OnControllerSwitch -= OnMenuControllerSwitch;
-            PopupsManager<PopupResult>.OnControllerSwitch -= OnPopupControllerSwitch;
+            _menusManager.OnControllerSwitch -= OnMenuControllerSwitch;
+            _popupsManager.OnControllerSwitch -= OnPopupControllerSwitch;
         }
 
         private void OnPopupControllerSwitch(IInputReceiver inputReceiver)

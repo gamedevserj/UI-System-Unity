@@ -36,9 +36,8 @@ namespace UISystem
 
         private void Awake()
         {
-            Instance ??= this;
+            Instance = Instance != null ? Instance : this;
             _inputActions = new UIInputActions();
-            _inputProcessor = new InputProcessor(_inputActions);
         }
 
         private void OnEnable()
@@ -153,6 +152,8 @@ namespace UISystem
             };
             menusManager.Init(menus);
             menusManager.ShowMenu(typeof(MainMenuView), StackingType.Clear);
+
+            _inputProcessor = new InputProcessor(_inputActions, menusManager, popupsManager);
         }
 
         private ViewBase GetMenuView(Type type) => menuViewsDatabase.GetView(type);
