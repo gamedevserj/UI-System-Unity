@@ -16,7 +16,10 @@ namespace UISystem.MenuSystem.SettingsMenu
         protected readonly TModel _model;
         protected readonly IPopupsManager<PopupResult> _popupsManager;
 
-        protected SettingsMenuController(TViewCreator viewCreator, TModel model, IMenusManager menusManager,
+        protected SettingsMenuController(
+            TViewCreator viewCreator, 
+            IMenusManager menusManager,
+            TModel model, 
             IPopupsManager<PopupResult> popupsManager) 
             : base(viewCreator, menusManager)
         {

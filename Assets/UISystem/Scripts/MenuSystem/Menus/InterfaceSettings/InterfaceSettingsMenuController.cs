@@ -14,9 +14,12 @@ namespace UISystem.MenuSystem.Controllers
     internal class InterfaceSettingsMenuController : SettingsMenuController<IViewCreator<InterfaceSettingsMenuView>, InterfaceSettingsMenuView, InterfaceSettingsMenuModel>
     {
 
-        public InterfaceSettingsMenuController(IViewCreator<InterfaceSettingsMenuView> viewCreator, InterfaceSettingsMenuModel model,
-            IMenusManager menusManager, IPopupsManager<PopupResult> popupsManager)
-            : base(viewCreator, model, menusManager, popupsManager)
+        public InterfaceSettingsMenuController(
+            IViewCreator<InterfaceSettingsMenuView> viewCreator, 
+            IMenusManager menusManager, 
+            InterfaceSettingsMenuModel model,
+            IPopupsManager<PopupResult> popupsManager)
+            : base(viewCreator, menusManager, model, popupsManager)
         { }
 
         protected override void SetupElements()

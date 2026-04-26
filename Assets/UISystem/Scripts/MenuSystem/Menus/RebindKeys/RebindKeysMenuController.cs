@@ -22,9 +22,12 @@ namespace UISystem.MenuSystem.Controllers
 
         private GameActions Actions => _model.GameActions;
 
-        public RebindKeysMenuController(IViewCreator<RebindKeysMenuView> viewCreator, RebindKeysMenuModel model,
-            IMenusManager menusManager, IPopupsManager<PopupResult> popupsManager)
-            : base(viewCreator, model, menusManager, popupsManager)
+        public RebindKeysMenuController(
+            IViewCreator<RebindKeysMenuView> viewCreator, 
+            IMenusManager menusManager, 
+            RebindKeysMenuModel model,
+            IPopupsManager<PopupResult> popupsManager)
+            : base(viewCreator, menusManager, model, popupsManager)
         { }
 
         public override void OnReturnButtonDown()

@@ -119,32 +119,32 @@ namespace UISystem
                     typeof(AudioSettingsMenuView),
                     new AudioSettingsMenuController(
                         audioSettingsViewCreator, 
-                        new AudioSettingsMenuModel(settings), 
                         menusManager, 
+                        new AudioSettingsMenuModel(settings), 
                         popupsManager)
                 },
                 {
                     typeof(VideoSettingsMenuView),
                     new VideoSettingsMenuController(
                         videoSettingsViewCreator, 
-                        new VideoSettingsMenuModel(settings), 
                         menusManager, 
+                        new VideoSettingsMenuModel(settings), 
                         popupsManager)
                 },
                 {
                     typeof(RebindKeysMenuView),
                     new RebindKeysMenuController(
                         rebindKeysViewCreator, 
-                        new RebindKeysMenuModel(settings), 
                         menusManager, 
+                        new RebindKeysMenuModel(settings), 
                         popupsManager)
                 },
                 {
                     typeof(InterfaceSettingsMenuView),
                     new InterfaceSettingsMenuController(
                         interfaceMenuViewCreator, 
-                        new InterfaceSettingsMenuModel(settings), 
                         menusManager, 
+                        new InterfaceSettingsMenuModel(settings), 
                         popupsManager)
                 },
             };
