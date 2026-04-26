@@ -7,7 +7,8 @@ namespace UISystem.MenuSystem.Controllers
     internal class InGameMenuController : MenuControllerBase<IViewCreator<InGameMenuView>, InGameMenuView>
     {
 
-        public InGameMenuController(IViewCreator<InGameMenuView> viewCreator, IMenuModel model, IMenusManager menusManager) : base(viewCreator, model, menusManager)
+        public InGameMenuController(IViewCreator<InGameMenuView> viewCreator, IMenusManager menusManager) 
+            : base(viewCreator, menusManager)
         { }
 
         public override void OnPauseButtonDown()
@@ -16,9 +17,6 @@ namespace UISystem.MenuSystem.Controllers
         }
 
         protected override void SetupElements()
-        {
-
-        }
-
+        { }
     }
 }

@@ -17,9 +17,13 @@ namespace UISystem.MenuSystem.Controllers
         private readonly ScreenFadeManager _screenFadeManager;
         private readonly MenuBackgroundController _menuBackgroundController;
 
-        public PauseMenuController(IViewCreator<PauseMenuView> viewCreator, IMenuModel model, IMenusManager menusManager,
-            IPopupsManager<PopupResult> popupsManager, ScreenFadeManager screenFadeManager, MenuBackgroundController menuBackgroundController)
-            : base(viewCreator, model, menusManager)
+        public PauseMenuController(
+            IViewCreator<PauseMenuView> viewCreator, 
+            IMenusManager menusManager,
+            IPopupsManager<PopupResult> popupsManager, 
+            ScreenFadeManager screenFadeManager, 
+            MenuBackgroundController menuBackgroundController)
+            : base(viewCreator, menusManager)
         {
             _popupsManager = popupsManager;
             _screenFadeManager = screenFadeManager;
@@ -74,6 +78,5 @@ namespace UISystem.MenuSystem.Controllers
                 }
             });
         }
-
     }
 }

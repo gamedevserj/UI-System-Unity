@@ -93,7 +93,6 @@ namespace UISystem
                     typeof(MainMenuView), 
                     new MainMenuController(
                         mainMenuViewCreator, 
-                        null, 
                         menusManager, 
                         popupsManager, 
                         fadeManager, 
@@ -101,13 +100,12 @@ namespace UISystem
                 },
                 {
                     typeof(InGameMenuView),
-                    new InGameMenuController(inGameMenuViewCreator, new InGameMenuModel(), menusManager)
+                    new InGameMenuController(inGameMenuViewCreator, menusManager)
                 },
                 {
                     typeof(PauseMenuView),
                     new PauseMenuController(
                         pauseViewCreator, 
-                        null, 
                         menusManager, 
                         popupsManager, 
                         fadeManager, 
@@ -115,7 +113,7 @@ namespace UISystem
                 },
                 {
                     typeof(OptionsMenuView),
-                    new OptionsMenuController(optionsViewCreator, null, menusManager)
+                    new OptionsMenuController(optionsViewCreator, menusManager)
                 },
                 {
                     typeof(AudioSettingsMenuView),

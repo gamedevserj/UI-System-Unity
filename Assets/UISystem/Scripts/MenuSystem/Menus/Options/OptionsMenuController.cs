@@ -6,7 +6,8 @@ namespace UISystem.MenuSystem.Controllers
 {
     internal class OptionsMenuController : MenuControllerBase<IViewCreator<OptionsMenuView>, OptionsMenuView>
     {
-        public OptionsMenuController(IViewCreator<OptionsMenuView> viewCreator, IMenuModel model, IMenusManager menusManager) : base(viewCreator, model, menusManager)
+        public OptionsMenuController(IViewCreator<OptionsMenuView> viewCreator, IMenusManager menusManager) 
+            : base(viewCreator, menusManager)
         { }
 
         protected override void SetupElements()

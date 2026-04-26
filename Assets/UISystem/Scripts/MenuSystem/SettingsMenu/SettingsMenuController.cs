@@ -8,18 +8,19 @@ using UnityEngine.UI;
 namespace UISystem.MenuSystem.SettingsMenu
 {
     internal abstract class SettingsMenuController<TViewCreator, TView, TModel>
-        : MenuController<TViewCreator, TView, TModel, Selectable>
+        : MenuController<TViewCreator, TView, Selectable>
         where TViewCreator : IViewCreator<TView>
         where TView : SettingsMenuView
         where TModel : ISettingsMenuModel
     {
-
+        protected readonly TModel _model;
         protected readonly IPopupsManager<PopupResult> _popupsManager;
 
         protected SettingsMenuController(TViewCreator viewCreator, TModel model, IMenusManager menusManager,
             IPopupsManager<PopupResult> popupsManager) 
-            : base(viewCreator, model, menusManager)
+            : base(viewCreator, menusManager)
         {
+            _model = model;
             _popupsManager = popupsManager;
         }
 
