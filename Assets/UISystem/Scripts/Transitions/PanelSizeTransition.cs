@@ -1,31 +1,38 @@
-﻿using PrimeTween;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using PrimeTween;
 using UISystem.Core.Transitions;
 using UnityEngine;
 
 namespace UISystem.Transitions
 {
+    /// <summary>
+    /// Transition where panel is grows/shrinks in size.
+    /// </summary>
     public class PanelSizeTransition : IViewTransition
     {
-
         private const float FadeDuration = 0.1f;
-        protected const float PanelDuration = 0.2f;
-        protected const float ElementsDuration = 0.1f;
-
-        private Vector2 _panelSize;
+        private const float PanelDuration = 0.2f;
 
         private readonly CanvasGroup _fadeObjectsContainer;
         private readonly RectTransform _panel;
         private readonly float _panelDuration;
 
-        public PanelSizeTransition(CanvasGroup fadeObjectsContainer, RectTransform panel, float panelDuration = PanelDuration)
+        private Vector2 _panelSize;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PanelSizeTransition"/> class.
+        /// </summary>
+        /// <param name="fadeObjectsContainer">Canvas group that contains all objects.</param>
+        /// <param name="panel">Panel that will be resized.</param>
+        /// <param name="duration">Duration to resize panel.</param>
+        public PanelSizeTransition(CanvasGroup fadeObjectsContainer, RectTransform panel, float duration = PanelDuration)
         {
             _fadeObjectsContainer = fadeObjectsContainer;
             _panel = panel;
-            _panelDuration = panelDuration;
-            
+            _panelDuration = duration;
         }
 
+        /// <inheritdoc/>
         public async Task Hide(bool instant = false)
         {
             if (instant)
@@ -40,6 +47,7 @@ namespace UISystem.Transitions
                 .Chain(Tween.Alpha(_fadeObjectsContainer, 0, FadeDuration));
         }
 
+        /// <inheritdoc/>
         public async Task Show(bool instant = false)
         {
             // should always hide before showing because awaiting for parameters shows menu for a split second

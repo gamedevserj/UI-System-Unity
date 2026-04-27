@@ -7,7 +7,6 @@ namespace UISystem
 {
     public class GameInstaller : MonoBehaviour
     {
-
         private void Start()
         {
             var saver = new IniSaver(ConfigData.ConfigLocation);

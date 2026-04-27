@@ -1,14 +1,16 @@
-﻿using PrimeTween;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using PrimeTween;
 using UISystem.Common.Elements;
 using UISystem.Core.Transitions;
 using UnityEngine;
 
 namespace UISystem.Transitions
 {
+    /// <summary>
+    /// Transition where elements fall down from the main one.
+    /// </summary>
     public class MainElementDropTransition : IViewTransition
     {
-
         private const float FadeDuration = 0.1f;
         private const float MainElementAnimationDuration = 0.2f;
         private const float SecondaryElementAnimationDuration = 0.2f;
@@ -19,8 +21,19 @@ namespace UISystem.Transitions
         private readonly float _mainElementDuration;
         private readonly float _secondaryElementDuration;
 
-        public MainElementDropTransition(CanvasGroup fadeObjectsContainer, IResizableElement mainResizableControl,
-            IResizableElement[] secondaryElements, float mainElementDuration = MainElementAnimationDuration,
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainElementDropTransition"/> class.
+        /// </summary>
+        /// <param name="fadeObjectsContainer">Canvas group that contains all objects.</param>
+        /// <param name="mainResizableControl">Main resizable element.</param>
+        /// <param name="secondaryElements">Secondary elements.</param>
+        /// <param name="mainElementDuration">Duration for the main element to resize.</param>
+        /// <param name="secondaryElementDuration">Duration for the secondary elements to drop.</param>
+        public MainElementDropTransition(
+            CanvasGroup fadeObjectsContainer,
+            IResizableElement mainResizableControl,
+            IResizableElement[] secondaryElements,
+            float mainElementDuration = MainElementAnimationDuration,
             float secondaryElementDuration = SecondaryElementAnimationDuration)
         {
             _fadeObjectsContainer = fadeObjectsContainer;
@@ -30,6 +43,7 @@ namespace UISystem.Transitions
             _secondaryElementDuration = secondaryElementDuration;
         }
 
+        /// <inheritdoc/>
         public async Task Hide(bool instant = false)
         {
             if (instant)
@@ -44,6 +58,7 @@ namespace UISystem.Transitions
                 _ = sequence
                     .Group(Tween.Position(_secondaryElements[i].Resizable, _mainElement.Reference.position, _secondaryElementDuration, Ease.InBack));
             }
+
             await sequence
                 .ChainCallback(target: this, target => target.SwitchSecondaryButtonsVisibility(false))
                 .Chain(Tween.UISizeDelta(_mainElement.Resizable, _mainElement.Reference.sizeDelta.x * Vector2.left, _mainElementDuration))
@@ -51,6 +66,7 @@ namespace UISystem.Transitions
                 .Chain(Tween.Alpha(_fadeObjectsContainer, 0, FadeDuration));
         }
 
+        /// <inheritdoc/>
         public async Task Show(bool instant = false)
         {
             // should always hide before showing because awaiting for parameters shows menu for a split second
@@ -67,6 +83,7 @@ namespace UISystem.Transitions
                 {
                     _secondaryElements[i].Resizable.anchoredPosition = Vector2.zero;
                 }
+
                 SwitchSecondaryButtonsVisibility(true);
                 _fadeObjectsContainer.alpha = 1;
                 return;
@@ -80,7 +97,7 @@ namespace UISystem.Transitions
                 _secondaryElements[i].Resizable.position = _mainElement.Reference.position;
             }
 
-            _mainElement.Resizable.sizeDelta = _mainElement.Reference.sizeDelta.x * Vector2.left ;
+            _mainElement.Resizable.sizeDelta = _mainElement.Reference.sizeDelta.x * Vector2.left;
             _mainElement.Resizable.anchoredPosition = _mainElement.Reference.sizeDelta.x * 0.5f * Vector2.left;
             _mainElement.Resizable.gameObject.SetActive(true);
 
