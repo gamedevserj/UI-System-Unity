@@ -1,4 +1,5 @@
-﻿using PrimeTween;
+﻿using System.Threading.Tasks;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,23 +26,26 @@ namespace UISystem.MenuSystem
         /// Shows background.
         /// </summary>
         /// <param name="instant">Whether transition should happen instantly.</param>
-        public void ShowBackground(bool instant = false)
+        public async Task ShowBackground(bool instant = false)
         {
             _background.enabled = true;
+            if (Mathf.Approximately(_background.color.a, 1))
+                return;
+
             if (instant)
             {
                 _background.color = new Color(_background.color.r, _background.color.g, _background.color.b, 1);
                 return;
             }
 
-            Tween.Alpha(_background, 1, Duration);
+            await Tween.Alpha(_background, 1, Duration);
         }
 
         /// <summary>
         /// Hides background.
         /// </summary>
         /// <param name="instant">Whether transition should happen instantly.</param>
-        public void HideBackground(bool instant = false)
+        public async Task HideBackground(bool instant = false)
         {
             if (instant)
             {
@@ -50,7 +54,8 @@ namespace UISystem.MenuSystem
                 return;
             }
 
-            Tween.Alpha(_background, 0, Duration).OnComplete(target: this, target => target._background.enabled = false);
+            await Tween.Alpha(_background, 0, Duration);
+            _background.enabled = false;
         }
     }
 }

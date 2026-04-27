@@ -56,7 +56,11 @@ namespace UISystem.Transitions
             for (int i = 0; i < _secondaryElements.Length; i++)
             {
                 _ = sequence
-                    .Group(Tween.Position(_secondaryElements[i].Resizable, _mainElement.Reference.position, _secondaryElementDuration, Ease.InBack));
+                    .Group(Tween.Position(
+                        _secondaryElements[i].Resizable,
+                        _mainElement.Reference.position,
+                        _secondaryElementDuration,
+                        Ease.InBack));
             }
 
             await sequence

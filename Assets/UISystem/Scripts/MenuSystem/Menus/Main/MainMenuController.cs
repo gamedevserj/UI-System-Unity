@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using AsyncAwaitBestPractices;
 using UISystem.Core.MenuSystem;
 using UISystem.Core.PopupSystem;
 using UISystem.Core.Views;
@@ -44,7 +45,7 @@ namespace UISystem.MenuSystem.Controllers
         /// <inheritdoc/>
         public override async Task Show(Action onComplete = null, bool instant = false)
         {
-            _menuBackgroundController.ShowBackground(instant);
+            _menuBackgroundController.ShowBackground(instant).SafeFireAndForget();
             await base.Show(onComplete, instant);
         }
 
@@ -52,7 +53,7 @@ namespace UISystem.MenuSystem.Controllers
         public override async Task Hide(StackingType stackingType, Action onComplete = null, bool instant = false)
         {
             if (stackingType != StackingType.Add)
-                _menuBackgroundController.HideBackground(instant);
+                _menuBackgroundController.HideBackground(instant).SafeFireAndForget();
             await base.Hide(stackingType, onComplete, instant);
         }
 
@@ -66,18 +67,17 @@ namespace UISystem.MenuSystem.Controllers
         /// <inheritdoc/>
         protected override void SetupElements()
         {
-            View.PlayButton.AddOnClickListener(PressedPlay);
+            View.PlayButton.AddOnClickListener(async () => { await PressedPlay(); });
             View.OptionsButton.AddOnClickListener(PressedOptions);
             View.QuitButton.AddOnClickListener(PressedQuit);
         }
 
-        private void PressedPlay()
+        private async Task PressedPlay()
         {
             View.SetLastSelectedElement(View.PlayButton.Button);
-            _screenFadeManager.FadeOut(() =>
-            {
-                MenusManager.ShowMenu(typeof(InGameMenuView), StackingType.Clear, instant: true);
-            });
+            await _screenFadeManager.FadeOut();
+            MenusManager.ShowMenu(typeof(InGameMenuView), StackingType.Clear, instant: true);
+            await _screenFadeManager.FadeIn();
         }
 
         private void PressedOptions()

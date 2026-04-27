@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AsyncAwaitBestPractices;
 using UISystem.Core.MenuSystem;
 using UISystem.Core.PopupSystem;
 using UISystem.Core.Views;
@@ -43,7 +44,7 @@ namespace UISystem.MenuSystem.Controllers
         /// <inheritdoc/>
         public override async Task Show(Action onComplete = null, bool instant = false)
         {
-            _menuBackgroundController.ShowBackground(instant);
+            _menuBackgroundController.ShowBackground(instant).SafeFireAndForget();
             await base.Show(onComplete, instant);
         }
 
@@ -54,7 +55,7 @@ namespace UISystem.MenuSystem.Controllers
             onComplete?.Invoke();
 
             if (stackingType != StackingType.Add)
-                _menuBackgroundController.HideBackground(instant);
+                _menuBackgroundController.HideBackground(instant).SafeFireAndForget();
         }
 
         /// <inheritdoc/>
@@ -76,14 +77,13 @@ namespace UISystem.MenuSystem.Controllers
             View.SetLastSelectedElement(View.ReturnToMainMenuButton.Button);
             SwitchInteractability(false);
 
-            _popupsManager.ShowPopup(typeof(YesNoPopupView), PopupMessages.QuitToMainMenu, (result) =>
+            _popupsManager.ShowPopup(typeof(YesNoPopupView), PopupMessages.QuitToMainMenu, async (result) =>
             {
                 if (result == PopupResult.Yes)
                 {
-                    _screenFadeManager.FadeOut(() =>
-                    {
-                        MenusManager.ShowMenu(typeof(MainMenuView), StackingType.Clear, null, true);
-                    });
+                    await _screenFadeManager.FadeOut();
+                    MenusManager.ShowMenu(typeof(MainMenuView), StackingType.Clear, null, true);
+                    await _screenFadeManager.FadeIn();
                 }
                 else if (result == PopupResult.No)
                 {

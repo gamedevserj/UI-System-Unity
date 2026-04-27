@@ -1,4 +1,4 @@
-using System;
+using System.Threading.Tasks;
 using PrimeTween;
 using UnityEngine.UI;
 
@@ -26,22 +26,24 @@ namespace UISystem.ScreenFade
         /// <summary>
         /// Fades screen out.
         /// </summary>
-        /// <param name="onFadeOutComplete">Action to perform when screen is finished fading out.</param>
-        public void FadeOut(Action onFadeOutComplete = null)
+        public async Task FadeOut()
         {
             if (_isFading)
                 return;
 
             _isFading = true;
             _image.enabled = true;
+            await Tween.Alpha(_image, 1, Duration);
+        }
 
-            Sequence.Create()
-                .Chain(Tween.Alpha(_image, 1, Duration).OnComplete(() => onFadeOutComplete?.Invoke()))
-                .Chain(Tween.Alpha(_image, 0, Duration).OnComplete(target: this, target =>
-                {
-                    target._isFading = false;
-                    target._image.enabled = false;
-                }));
+        /// <summary>
+        /// Fades screen in.
+        /// </summary>
+        public async Task FadeIn()
+        {
+            await Tween.Alpha(_image, 0, Duration);
+            _isFading = false;
+            _image.enabled = false;
         }
     }
 }
