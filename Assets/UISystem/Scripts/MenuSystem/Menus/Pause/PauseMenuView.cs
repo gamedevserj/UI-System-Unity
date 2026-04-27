@@ -6,28 +6,44 @@ using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.Views
 {
+    /// <summary>
+    /// Pause menu view.
+    /// </summary>
     public partial class PauseMenuView : MenuView
     {
 
-        [SerializeField] private ButtonView resumeGameButton;
-        [SerializeField] private ButtonView optionsButton;
-        [SerializeField] private ButtonView returnToMainMenuButton;
+        [SerializeField] private ButtonView _resumeGameButton;
+        [SerializeField] private ButtonView _optionsButton;
+        [SerializeField] private ButtonView _returnToMainMenuButton;
 
-        public ButtonView ResumeGameButton => resumeGameButton;
-        public ButtonView OptionsButton => optionsButton;
-        public ButtonView ReturnToMainMenuButton => returnToMainMenuButton;
+        /// <summary>
+        /// Gets resume game button.
+        /// </summary>
+        public ButtonView ResumeGameButton => _resumeGameButton;
 
+        /// <summary>
+        /// Gets options button.
+        /// </summary>
+        public ButtonView OptionsButton => _optionsButton;
+
+        /// <summary>
+        /// Gets return to main menu button.
+        /// </summary>
+        public ButtonView ReturnToMainMenuButton => _returnToMainMenuButton;
+
+        /// <inheritdoc/>
         protected override Selectable DefaultSelectedElement => ResumeGameButton.Button;
 
+        /// <inheritdoc/>
         protected override IViewTransition CreateTransition()
         {
             return new MainElementDropTransition(FadeObjectsContainer, ResumeGameButton, new[] { OptionsButton, ReturnToMainMenuButton });
         }
 
+        /// <inheritdoc/>
         protected override void SetInteractableElements()
         {
-            _interactableElements = new IInteractableElement[] { ResumeGameButton, OptionsButton, ReturnToMainMenuButton };
+            InteractableElements = new IInteractableElement[] { ResumeGameButton, OptionsButton, ReturnToMainMenuButton };
         }
-
     }
 }

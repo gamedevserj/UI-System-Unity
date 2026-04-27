@@ -6,28 +6,43 @@ using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.Views
 {
+    /// <summary>
+    /// Main menu view.
+    /// </summary>
     public partial class MainMenuView : MenuView
     {
+        [SerializeField] private ButtonView _playButton;
+        [SerializeField] private ButtonView _optionsButton;
+        [SerializeField] private ButtonView _quitButton;
 
-        [SerializeField] private ButtonView playButton;
-        [SerializeField] private ButtonView optionsButton;
-        [SerializeField] private ButtonView quitButton;
+        /// <summary>
+        /// Gets play button.
+        /// </summary>
+        public ButtonView PlayButton => _playButton;
 
-        public ButtonView PlayButton => playButton;
-        public ButtonView OptionsButton => optionsButton;
-        public ButtonView QuitButton => quitButton;
+        /// <summary>
+        /// Gets options button.
+        /// </summary>
+        public ButtonView OptionsButton => _optionsButton;
 
+        /// <summary>
+        /// Gets quit button.
+        /// </summary>
+        public ButtonView QuitButton => _quitButton;
+
+        /// <inheritdoc/>
         protected override Selectable DefaultSelectedElement => PlayButton.Button;
 
+        /// <inheritdoc/>
         protected override IViewTransition CreateTransition()
         {
             return new MainElementDropTransition(FadeObjectsContainer, PlayButton, new IResizableElement[] { OptionsButton, QuitButton });
         }
 
+        /// <inheritdoc/>
         protected override void SetInteractableElements()
         {
-            _interactableElements = new IInteractableElement[] { PlayButton, OptionsButton, QuitButton };
+            InteractableElements = new IInteractableElement[] { PlayButton, OptionsButton, QuitButton };
         }
-
     }
 }

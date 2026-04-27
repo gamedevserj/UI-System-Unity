@@ -33,6 +33,7 @@ namespace UISystem
                 OnMusicVolumeChanged?.Invoke(value);
             }
         }
+
         public float SfxVolume
         {
             get => _sfxVolume;
@@ -42,6 +43,7 @@ namespace UISystem
                 OnSfxVolumeChanged?.Invoke(value);
             }
         }
+
         public Vector2Int Resolution { get; set; } = ConfigData.DefaultResolution;
         public FullScreenMode WindowMode { get; set; } = ConfigData.DefaultFullScreenMode;
         public int RefreshRate { get; set; } = ConfigData.DefaultRefreshRate;
@@ -77,7 +79,7 @@ namespace UISystem
 
         public void SaveVideoSettings()
         {
-            _saver.Save(ConfigData.VideoSectionName, ConfigData.ResolutionKey, VideoSettings.ResolutionStringName(Resolution));
+            _saver.Save(ConfigData.VideoSectionName, ConfigData.ResolutionKey, VideoSettings.GetResolutionName(Resolution));
             _saver.Save(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)WindowMode);
             _saver.Save(ConfigData.VideoSectionName, ConfigData.RefreshRateKey, RefreshRate);
         }
@@ -97,19 +99,26 @@ namespace UISystem
         {
             MusicVolume = _saver.Load(ConfigData.AudioSectionName, ConfigData.MusicVolumeKey, ConfigData.DefaultMusicVolume);
             SfxVolume = _saver.Load(ConfigData.AudioSectionName, ConfigData.SfxVolumeKey, ConfigData.DefaultSfxVolume);
-            
-            Resolution = _saver.Load(ConfigData.VideoSectionName, ConfigData.ResolutionKey, ConfigData.DefaultResolution,
-                VideoSettings.ResolutionStringName, VideoSettings.ResolutionFromString);
+
+            Resolution = _saver.Load(
+                ConfigData.VideoSectionName,
+                ConfigData.ResolutionKey,
+                ConfigData.DefaultResolution,
+                VideoSettings.GetResolutionName,
+                VideoSettings.GetResolutionFromString);
             WindowMode = (FullScreenMode)_saver.Load(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)ConfigData.DefaultFullScreenMode);
             RefreshRate = _saver.Load(ConfigData.VideoSectionName, ConfigData.RefreshRateKey, ConfigData.DefaultRefreshRate);
 
-            ControllerIconsType = (ControllerIconsType)_saver.Load(ConfigData.InterfaceSectionName, ConfigData.ControllerIconsKey, (int)ConfigData.DefaultControllerIconsType);
+            ControllerIconsType = (ControllerIconsType)_saver.Load(
+                ConfigData.InterfaceSectionName,
+                ConfigData.ControllerIconsKey,
+                (int)ConfigData.DefaultControllerIconsType);
             LoadActions();
         }
 
         private void LoadActions()
         {
-            string keyOverrides = _saver.Load(ConfigData.KeysSectionName, ConfigData.OverridesKey, "");
+            string keyOverrides = _saver.Load(ConfigData.KeysSectionName, ConfigData.OverridesKey, string.Empty);
             if (!string.IsNullOrEmpty(keyOverrides))
             {
                 Actions.asset.LoadBindingOverridesFromJson(keyOverrides);

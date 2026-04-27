@@ -29,7 +29,7 @@ namespace UISystem.Transitions
             _target.alpha = 0;
         }
 
-        public async Task Show(bool instant)
+        public async Task Show(bool instant = false)
         {
             // should always hide before showing because awaiting for parameters shows menu for a split second
             _target.alpha = 0;

@@ -4,19 +4,30 @@ using UISystem.MenuSystem.Views;
 
 namespace UISystem.MenuSystem.Controllers
 {
+    /// <summary>
+    /// In-game menu controller.
+    /// </summary>
     internal class InGameMenuController : MenuControllerBase<IViewCreator<InGameMenuView>, InGameMenuView>
     {
-
-        public InGameMenuController(IViewCreator<InGameMenuView> viewCreator, IMenusManager menusManager) 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InGameMenuController"/> class.
+        /// </summary>
+        /// <param name="viewCreator">View creator.</param>
+        /// <param name="menusManager">Menus manager.</param>
+        public InGameMenuController(IViewCreator<InGameMenuView> viewCreator, IMenusManager menusManager)
             : base(viewCreator, menusManager)
-        { }
-
-        public override void OnPauseButtonDown()
         {
-            _menusManager.ShowMenu(typeof(PauseMenuView));
         }
 
+        /// <inheritdoc/>
+        public override void OnPauseButtonDown()
+        {
+            MenusManager.ShowMenu(typeof(PauseMenuView));
+        }
+
+        /// <inheritdoc/>
         protected override void SetupElements()
-        { }
+        {
+        }
     }
 }

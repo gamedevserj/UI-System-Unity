@@ -6,35 +6,69 @@ using UnityEngine;
 
 namespace UISystem.MenuSystem.Views
 {
+    /// <summary>
+    /// Rebind keys menu view.
+    /// </summary>
     public partial class RebindKeysMenuView : SettingsMenuView
     {
+        [SerializeField] private RebindableButtonView _moveLeft;
+        [SerializeField] private RebindableButtonView _moveLeftJoystick;
+        [SerializeField] private RebindableButtonView _moveRight;
+        [SerializeField] private RebindableButtonView _moveRightJoystick;
+        [SerializeField] private RebindableButtonView _jump;
+        [SerializeField] private RebindableButtonView _jumpJoystick;
+        [SerializeField] private RectTransform _panel;
 
-        [SerializeField] private RebindableButtonView moveLeft;
-        [SerializeField] private RebindableButtonView moveLeftJoystick;
-        [SerializeField] private RebindableButtonView moveRight;
-        [SerializeField] private RebindableButtonView moveRightJoystick;
-        [SerializeField] private RebindableButtonView jump;
-        [SerializeField] private RebindableButtonView jumpJoystick;
-        [SerializeField] private RectTransform panel;
+        /// <summary>
+        /// Gets move left key.
+        /// </summary>
+        public RebindableButtonView MoveLeft => _moveLeft;
 
-        public RebindableButtonView MoveLeft => moveLeft;
-        public RebindableButtonView MoveLeftJoystick => moveLeftJoystick;
-        public RebindableButtonView MoveRight => moveRight;
-        public RebindableButtonView MoveRightJoystick => moveRightJoystick;
-        public RebindableButtonView Jump => jump;
-        public RebindableButtonView JumpJoystick => jumpJoystick;
-        public RectTransform Panel => panel;
+        /// <summary>
+        /// Gets joystick move left key.
+        /// </summary>
+        public RebindableButtonView MoveLeftJoystick => _moveLeftJoystick;
 
+        /// <summary>
+        /// Gets move right key.
+        /// </summary>
+        public RebindableButtonView MoveRight => _moveRight;
+
+        /// <summary>
+        /// Gets joystick move right key.
+        /// </summary>
+        public RebindableButtonView MoveRightJoystick => _moveRightJoystick;
+
+        /// <summary>
+        /// Gets jump key.
+        /// </summary>
+        public RebindableButtonView Jump => _jump;
+
+        /// <summary>
+        /// Gets joystick jump key.
+        /// </summary>
+        public RebindableButtonView JumpJoystick => _jumpJoystick;
+
+        /// <inheritdoc/>
         protected override IViewTransition CreateTransition()
         {
-            return new PanelSizeTransition(FadeObjectsContainer, Panel);
+            return new PanelSizeTransition(FadeObjectsContainer, _panel);
         }
 
+        /// <inheritdoc/>
         protected override void SetInteractableElements()
         {
-            _interactableElements = new IInteractableElement[]
-            { MoveLeft, MoveLeftJoystick, MoveRight, MoveRightJoystick, Jump, JumpJoystick, ResetButton, ReturnButton };
+            InteractableElements = new IInteractableElement[]
+            {
+                MoveLeft,
+                MoveLeftJoystick,
+                MoveRight,
+                MoveRightJoystick,
+                Jump,
+                JumpJoystick,
+                ResetButton,
+                ReturnButton,
+            };
         }
-
     }
 }

@@ -18,10 +18,8 @@ using UnityEngine.UI;
 
 namespace UISystem
 {
-    public partial class UiInstaller : MonoBehaviour
+    public class UiInstaller : MonoBehaviour
     {
-
-        public static UiInstaller Instance { get; private set; }
 
         [SerializeField] private Image menuBackground;
         [SerializeField] private Image fade;
@@ -33,6 +31,8 @@ namespace UISystem
 
         private InputProcessor _inputProcessor;
         private UIInputActions _inputActions;
+
+        public static UiInstaller Instance { get; private set; }
 
         private void Awake()
         {
@@ -90,12 +90,12 @@ namespace UISystem
             var menus = new Dictionary<Type, IMenuController>
             {
                 {
-                    typeof(MainMenuView), 
+                    typeof(MainMenuView),
                     new MainMenuController(
-                        mainMenuViewCreator, 
-                        menusManager, 
-                        popupsManager, 
-                        fadeManager, 
+                        mainMenuViewCreator,
+                        menusManager,
+                        popupsManager,
+                        fadeManager,
                         backgroundController)
                 },
                 {
@@ -105,10 +105,10 @@ namespace UISystem
                 {
                     typeof(PauseMenuView),
                     new PauseMenuController(
-                        pauseViewCreator, 
-                        menusManager, 
-                        popupsManager, 
-                        fadeManager, 
+                        pauseViewCreator,
+                        menusManager,
+                        popupsManager,
+                        fadeManager,
                         backgroundController)
                 },
                 {
@@ -118,33 +118,33 @@ namespace UISystem
                 {
                     typeof(AudioSettingsMenuView),
                     new AudioSettingsMenuController(
-                        audioSettingsViewCreator, 
-                        menusManager, 
-                        new AudioSettingsMenuModel(settings), 
+                        audioSettingsViewCreator,
+                        menusManager,
+                        new AudioSettingsMenuModel(settings),
                         popupsManager)
                 },
                 {
                     typeof(VideoSettingsMenuView),
                     new VideoSettingsMenuController(
-                        videoSettingsViewCreator, 
-                        menusManager, 
-                        new VideoSettingsMenuModel(settings), 
+                        videoSettingsViewCreator,
+                        menusManager,
+                        new VideoSettingsMenuModel(settings),
                         popupsManager)
                 },
                 {
                     typeof(RebindKeysMenuView),
                     new RebindKeysMenuController(
-                        rebindKeysViewCreator, 
-                        menusManager, 
-                        new RebindKeysMenuModel(settings), 
+                        rebindKeysViewCreator,
+                        menusManager,
+                        new RebindKeysMenuModel(settings),
                         popupsManager)
                 },
                 {
                     typeof(InterfaceSettingsMenuView),
                     new InterfaceSettingsMenuController(
-                        interfaceMenuViewCreator, 
-                        menusManager, 
-                        new InterfaceSettingsMenuModel(settings), 
+                        interfaceMenuViewCreator,
+                        menusManager,
+                        new InterfaceSettingsMenuModel(settings),
                         popupsManager)
                 },
             };
@@ -155,6 +155,7 @@ namespace UISystem
         }
 
         private ViewBase GetMenuView(Type type) => menuViewsDatabase.GetView(type);
+
         private ViewBase GetPopupView(Type type) => popupViewsDatabase.GetView(type);
     }
 }

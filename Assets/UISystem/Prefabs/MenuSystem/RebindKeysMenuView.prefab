@@ -965,16 +965,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68593fac9ef57704aa14f92a1f9c4696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 5153324140853557567}
-  returnButton: {fileID: 9169675834027994052}
-  resetButton: {fileID: 2914753415461197600}
-  moveLeft: {fileID: 7769463006523381786}
-  moveLeftJoystick: {fileID: 5065782673150140700}
-  moveRight: {fileID: 7209372283269326387}
-  moveRightJoystick: {fileID: 1707514018257630207}
-  jump: {fileID: 4634376283767020192}
-  jumpJoystick: {fileID: 4968370819405591786}
-  panel: {fileID: 351611209873124023}
+  _canvasGroup: {fileID: 5153324140853557567}
+  _returnButton: {fileID: 9169675834027994052}
+  _resetButton: {fileID: 2914753415461197600}
+  _moveLeft: {fileID: 7769463006523381786}
+  _moveLeftJoystick: {fileID: 5065782673150140700}
+  _moveRight: {fileID: 7209372283269326387}
+  _moveRightJoystick: {fileID: 1707514018257630207}
+  _jump: {fileID: 4634376283767020192}
+  _jumpJoystick: {fileID: 4968370819405591786}
+  _panel: {fileID: 351611209873124023}
 --- !u!1 &5264152240403301624
 GameObject:
   m_ObjectHideFlags: 0

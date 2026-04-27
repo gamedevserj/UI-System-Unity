@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e60850694fed5142bed15f1235ef68f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 1798598869478096645}
+  _canvasGroup: {fileID: 1798598869478096645}
   panel: {fileID: 2156961803532811027}
   messageLabel: {fileID: 2156961804316358738}
   yesButton: {fileID: 5050968265948361193}

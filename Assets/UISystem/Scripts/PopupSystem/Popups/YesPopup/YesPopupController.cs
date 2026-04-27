@@ -14,7 +14,7 @@ namespace UISystem.PopupSystem.Popups.Controllers
 
         protected override void SetupElements()
         {
-            _view.YesButton.onClick.AddListener(() => _popupsManager.HidePopup(PopupResult.Yes));
+            View.YesButton.onClick.AddListener(() => _popupsManager.HidePopup(PopupResult.Yes));
         }
 
     }

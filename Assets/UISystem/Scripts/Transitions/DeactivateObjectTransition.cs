@@ -14,14 +14,16 @@ namespace UISystem.Transitions
             _gameObject = gameObject;
         }
 
-        public async Task Hide(bool instant = false)
+        public Task Hide(bool instant = false)
         {
             _gameObject.SetActive(false);
+            return Task.CompletedTask;
         }
 
-        public async Task Show(bool instant = false)
+        public Task Show(bool instant = false)
         {
             _gameObject.SetActive(true);
+            return Task.CompletedTask;
         }
     }
 }

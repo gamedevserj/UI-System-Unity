@@ -15,25 +15,78 @@ using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.Controllers
 {
+    /// <summary>
+    /// Rebind keys menu controller.
+    /// </summary>
     internal class RebindKeysMenuController : SettingsMenuController<IViewCreator<RebindKeysMenuView>, RebindKeysMenuView, RebindKeysMenuModel>
     {
-
         private const string EllipsisPath = "Textures/Inputs/ellipsis";
 
-        private GameActions Actions => _model.GameActions;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RebindKeysMenuController"/> class.
+        /// </summary>
+        /// <param name="viewCreator">View creator.</param>
+        /// <param name="menusManager">Menus manager.</param>
+        /// <param name="model">Rebind keys menu model.</param>
+        /// <param name="popupsManager">Popups manager.</param>
         public RebindKeysMenuController(
-            IViewCreator<RebindKeysMenuView> viewCreator, 
-            IMenusManager menusManager, 
+            IViewCreator<RebindKeysMenuView> viewCreator,
+            IMenusManager menusManager,
             RebindKeysMenuModel model,
             IPopupsManager<PopupResult> popupsManager)
             : base(viewCreator, menusManager, model, popupsManager)
-        { }
+        {
+        }
 
+        private GameActions Actions => Model.GameActions;
+
+        /// <inheritdoc/>
         public override void OnReturnButtonDown()
         {
-            if (!_model.IsRebinding)
+            if (!Model.IsRebinding)
                 base.OnReturnButtonDown();
+        }
+
+        /// <inheritdoc/>
+        protected override void SetupElements()
+        {
+            View.ReturnButton.AddOnClickListener(OnReturnButtonDown);
+            View.ResetButton.AddOnClickListener(OnResetToDefaultButtonDown);
+
+            View.MoveLeft.AddOnClickListener(() =>
+            {
+                OnButtonDown(View.MoveLeft, Actions.Gameplay.Left, InputsData.KeyboardEventIndex);
+            });
+            View.MoveLeftJoystick.AddOnClickListener(() =>
+            {
+                OnButtonDown(View.MoveLeftJoystick, Actions.Gameplay.Left, InputsData.JoystickEventIndex);
+            });
+
+            View.MoveRight.AddOnClickListener(() =>
+            {
+                OnButtonDown(View.MoveRight, Actions.Gameplay.Right, InputsData.KeyboardEventIndex);
+            });
+            View.MoveRightJoystick.AddOnClickListener(() =>
+            {
+                OnButtonDown(View.MoveRightJoystick, Actions.Gameplay.Right, InputsData.JoystickEventIndex);
+            });
+
+            View.Jump.AddOnClickListener(() =>
+            {
+                OnButtonDown(View.Jump, Actions.Gameplay.Jump, InputsData.KeyboardEventIndex);
+            });
+            View.JumpJoystick.AddOnClickListener(() =>
+            {
+                OnButtonDown(View.JumpJoystick, Actions.Gameplay.Jump, InputsData.JoystickEventIndex);
+            });
+
+            UpdateAllButtonViews();
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateAllViewValues()
+        {
+            UpdateAllButtonViews();
         }
 
         private void UpdateButtonView(RebindableButtonView button, InputAction action, int index)
@@ -43,13 +96,12 @@ namespace UISystem.MenuSystem.Controllers
             Sprite sprite = null;
             if (index == InputsData.JoystickEventIndex)
             {
-                sprite = _model.IconsType switch
+                sprite = Model.IconsType switch
                 {
                     ControllerIconsType.Xbox => XboxIcons.GetIcon(path),
                     ControllerIconsType.Ps5 => PS5Icons.GetIcon(path),
-                    _ => XboxIcons.GetIcon(path)
+                    _ => XboxIcons.GetIcon(path),
                 };
-                
             }
             else if (index == InputsData.KeyboardEventIndex)
             {
@@ -62,18 +114,19 @@ namespace UISystem.MenuSystem.Controllers
                     sprite = MouseIcons.GetIcon(path);
                 }
             }
+
             button.Icon.sprite = sprite;
         }
 
         private void OnButtonDown(RebindableButtonView button, InputAction action, int index)
         {
-            if (_model.IsRebinding)
+            if (Model.IsRebinding)
                 return;
-            button.Icon.sprite = Resources.Load<Sprite>(EllipsisPath); ;
-            _view.SetLastSelectedElement(button.Button);
+            button.Icon.sprite = Resources.Load<Sprite>(EllipsisPath);
+            View.SetLastSelectedElement(button.Button);
             SwitchInteractability(false);
 
-            _model.StartRebinding(action, index, () =>
+            Model.StartRebinding(action, index, () =>
             {
                 SwitchRebindingButtonFocusability(button.Button, true);
                 UpdateButtonView(button, action, index);
@@ -86,49 +139,20 @@ namespace UISystem.MenuSystem.Controllers
             SwitchInteractability(allowFocus);
             if (allowFocus)
             {
-                _view.SetLastSelectedElement(button);
+                View.SetLastSelectedElement(button);
             }
-        }
-
-        protected override void SetupElements()
-        {
-            _view.ReturnButton.AddListener(OnReturnButtonDown);
-            _view.ResetButton.AddListener(OnResetToDefaultButtonDown);
-
-            _view.MoveLeft.AddListener(() => 
-            { OnButtonDown(_view.MoveLeft, Actions.Gameplay.Left, InputsData.KeyboardEventIndex); });
-            _view.MoveLeftJoystick.AddListener(() => 
-            { OnButtonDown(_view.MoveLeftJoystick, Actions.Gameplay.Left, InputsData.JoystickEventIndex); });
-
-            _view.MoveRight.AddListener(() =>
-            { OnButtonDown(_view.MoveRight, Actions.Gameplay.Right, InputsData.KeyboardEventIndex); });
-            _view.MoveRightJoystick.AddListener(() =>
-            { OnButtonDown(_view.MoveRightJoystick, Actions.Gameplay.Right, InputsData.JoystickEventIndex); });
-
-            _view.Jump.AddListener(() =>
-            { OnButtonDown(_view.Jump, Actions.Gameplay.Jump, InputsData.KeyboardEventIndex); });
-            _view.JumpJoystick.AddListener(() =>
-            { OnButtonDown(_view.JumpJoystick, Actions.Gameplay.Jump, InputsData.JoystickEventIndex); });
-
-            UpdateAllButtonViews();
         }
 
         private void UpdateAllButtonViews()
         {
-            UpdateButtonView(_view.MoveLeft, Actions.Gameplay.Left, InputsData.KeyboardEventIndex);
-            UpdateButtonView(_view.MoveLeftJoystick, Actions.Gameplay.Left, InputsData.JoystickEventIndex);
+            UpdateButtonView(View.MoveLeft, Actions.Gameplay.Left, InputsData.KeyboardEventIndex);
+            UpdateButtonView(View.MoveLeftJoystick, Actions.Gameplay.Left, InputsData.JoystickEventIndex);
 
-            UpdateButtonView(_view.MoveRight, Actions.Gameplay.Right, InputsData.KeyboardEventIndex);
-            UpdateButtonView(_view.MoveRightJoystick, Actions.Gameplay.Right, InputsData.JoystickEventIndex);
+            UpdateButtonView(View.MoveRight, Actions.Gameplay.Right, InputsData.KeyboardEventIndex);
+            UpdateButtonView(View.MoveRightJoystick, Actions.Gameplay.Right, InputsData.JoystickEventIndex);
 
-            UpdateButtonView(_view.Jump, Actions.Gameplay.Jump, InputsData.KeyboardEventIndex);
-            UpdateButtonView(_view.JumpJoystick, Actions.Gameplay.Jump, InputsData.JoystickEventIndex);
+            UpdateButtonView(View.Jump, Actions.Gameplay.Jump, InputsData.KeyboardEventIndex);
+            UpdateButtonView(View.JumpJoystick, Actions.Gameplay.Jump, InputsData.JoystickEventIndex);
         }
-
-        protected override void ResetViewToDefault()
-        {
-            UpdateAllButtonViews();
-        }
-
     }
 }

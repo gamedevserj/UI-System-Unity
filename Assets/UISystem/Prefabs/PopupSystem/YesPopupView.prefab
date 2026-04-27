@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f5c7f2b0d6dcbe43a165e2ad09bf8de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 267874291535618261}
+  _canvasGroup: {fileID: 267874291535618261}
   panel: {fileID: 481136731181098179}
   messageLabel: {fileID: 481136732004493186}
   yesButton: {fileID: 7034212690597866798}

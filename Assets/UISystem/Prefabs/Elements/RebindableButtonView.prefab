@@ -212,9 +212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81cbe528b532f244b5be25246438a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resizable: {fileID: 0}
-  label: {fileID: 0}
-  icon: {fileID: 665330763496753718}
+  _resizable: {fileID: 0}
+  _icon: {fileID: 665330763496753718}
 --- !u!1 &8448003532205554883
 GameObject:
   m_ObjectHideFlags: 0

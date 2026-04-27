@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7c59e0d6839bb34bacbb42bba3be957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resizable: {fileID: 8186516479431293935}
+  _resizable: {fileID: 8186516479431293935}
 --- !u!1 &9062141438831771969
 GameObject:
   m_ObjectHideFlags: 0

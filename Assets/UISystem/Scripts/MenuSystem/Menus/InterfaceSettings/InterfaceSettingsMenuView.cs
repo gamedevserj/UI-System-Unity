@@ -3,29 +3,38 @@ using UISystem.Core.Transitions;
 using UISystem.MenuSystem.SettingsMenu;
 using UISystem.Transitions;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.Views
 {
+    /// <summary>
+    /// Interface settings menu view.
+    /// </summary>
     public partial class InterfaceSettingsMenuView : SettingsMenuView
     {
+        [SerializeField] private DropdownView _controllerIconsDropdown;
+        [SerializeField] private ButtonView _saveSettingsButton;
+        [SerializeField] private RectTransform _panel;
 
-        [SerializeField] private DropdownView controllerIconsDropdown;
-        [SerializeField] private ButtonView saveSettingsButton;
-        [SerializeField] private RectTransform panel;
+        /// <summary>
+        /// Gets save settings button.
+        /// </summary>
+        public ButtonView SaveSettingsButton => _saveSettingsButton;
 
-        public ButtonView SaveSettingsButton => saveSettingsButton;
-        public DropdownView ControllerIconsDropdown => controllerIconsDropdown;
-        public RectTransform Panel => panel;
+        /// <summary>
+        /// Gets controller icons dropdown.
+        /// </summary>
+        public DropdownView ControllerIconsDropdown => _controllerIconsDropdown;
 
+        /// <inheritdoc/>
         protected override IViewTransition CreateTransition()
         {
-            return new PanelSizeTransition(FadeObjectsContainer, panel);
+            return new PanelSizeTransition(FadeObjectsContainer, _panel);
         }
+
+        /// <inheritdoc/>
         protected override void SetInteractableElements()
         {
-            _interactableElements = new IInteractableElement[] { ReturnButton, ControllerIconsDropdown, SaveSettingsButton, ResetButton };
+            InteractableElements = new IInteractableElement[] { ReturnButton, ControllerIconsDropdown, SaveSettingsButton, ResetButton };
         }
     }
-
 }

@@ -199,12 +199,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd1f33d4278edb478a55b7454144060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 4594926490695857909}
-  returnButton: {fileID: 823966494189250319}
-  resetButton: {fileID: 4410130222322831615}
-  controllerIconsDropdown: {fileID: 9137179150287105812}
-  saveSettingsButton: {fileID: 5395145017501667516}
-  panel: {fileID: 8261040539139967794}
+  _canvasGroup: {fileID: 4594926490695857909}
+  _returnButton: {fileID: 823966494189250319}
+  _resetButton: {fileID: 4410130222322831615}
+  _controllerIconsDropdown: {fileID: 9137179150287105812}
+  _saveSettingsButton: {fileID: 5395145017501667516}
+  _panel: {fileID: 8261040539139967794}
 --- !u!1 &6613656404316520952
 GameObject:
   m_ObjectHideFlags: 0

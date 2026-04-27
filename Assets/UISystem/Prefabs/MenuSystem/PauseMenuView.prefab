@@ -64,10 +64,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3e78d00a0b1a94297656c65e49a0c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 5153324140853557567}
-  resumeGameButton: {fileID: 8545065627170499092}
-  optionsButton: {fileID: 8681285165495131210}
-  returnToMainMenuButton: {fileID: 6915829043038746149}
+  _canvasGroup: {fileID: 5153324140853557567}
+  _resumeGameButton: {fileID: 8545065627170499092}
+  _optionsButton: {fileID: 8681285165495131210}
+  _returnToMainMenuButton: {fileID: 6915829043038746149}
 --- !u!1 &5153324141653559892
 GameObject:
   m_ObjectHideFlags: 0

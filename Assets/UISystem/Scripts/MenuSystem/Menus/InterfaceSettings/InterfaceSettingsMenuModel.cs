@@ -4,37 +4,52 @@ using UISystem.Core.MenuSystem;
 
 namespace UISystem.MenuSystem.Models
 {
+    /// <summary>
+    /// Interface settings menu model.
+    /// </summary>
     public class InterfaceSettingsMenuModel : ISettingsMenuModel
     {
-
-        private ControllerIconsType _lastIconsType;
         private readonly GameSettings _settings;
+        private ControllerIconsType _lastIconsType;
 
-        public bool HasUnappliedSettings => _settings.ControllerIconsType != _lastIconsType;
-        public ControllerIconsType ControllerIconsType { get => _settings.ControllerIconsType; set => _settings.ControllerIconsType = value; }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InterfaceSettingsMenuModel"/> class.
+        /// </summary>
+        /// <param name="settings">Game settings.</param>
         public InterfaceSettingsMenuModel(GameSettings settings)
         {
             _settings = settings;
             RememberLastSavedSettings();
         }
 
-        public void SelectIconType(int index)
-        {
-            ControllerIconsType = (ControllerIconsType)index;
-        }
+        /// <inheritdoc/>
+        public bool HasUnappliedSettings => _settings.ControllerIconsType != _lastIconsType;
 
+        /// <summary>
+        /// Gets or sets the type of icons for controller buttons.
+        /// </summary>
+        public ControllerIconsType ControllerIconsType { get => _settings.ControllerIconsType; set => _settings.ControllerIconsType = value; }
+
+        /// <summary>
+        /// Sets the type of controller icons.
+        /// </summary>
+        /// <param name="index">Index of type, is converted to <see cref="ControllerIconsType"/>.</param>
+        public void SelectIconType(int index) => ControllerIconsType = (ControllerIconsType)index;
+
+        /// <inheritdoc/>
         public void SaveSettings()
         {
             RememberLastSavedSettings();
             _settings.SaveInterfaceSettings();
         }
 
+        /// <inheritdoc/>
         public void DiscardChanges()
         {
             ControllerIconsType = _lastIconsType;
         }
 
+        /// <inheritdoc/>
         public void ResetToDefault()
         {
             ControllerIconsType = ConfigData.DefaultControllerIconsType;
@@ -45,7 +60,5 @@ namespace UISystem.MenuSystem.Models
         {
             _lastIconsType = ControllerIconsType;
         }
-
     }
-
 }

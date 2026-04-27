@@ -11,30 +11,44 @@ using UnityEngine;
 
 namespace UISystem.MenuSystem.Controllers
 {
+    /// <summary>
+    /// Main menu controller.
+    /// </summary>
     internal class MainMenuController : MenuControllerBase<IViewCreator<MainMenuView>, MainMenuView>
     {
-
         private readonly IPopupsManager<PopupResult> _popupsManager;
         private readonly MenuBackgroundController _menuBackgroundController;
         private readonly ScreenFadeManager _screenFadeManager;
 
-        public MainMenuController(IViewCreator<MainMenuView> viewCreator, IMenusManager menusManager,
-             IPopupsManager<PopupResult> popupsManager, ScreenFadeManager screenFadeManager, 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainMenuController"/> class.
+        /// </summary>
+        /// <param name="viewCreator">View creator.</param>
+        /// <param name="menusManager">Menus manager.</param>
+        /// <param name="popupsManager">Popups manager.</param>
+        /// <param name="screenFadeManager">Screen fade manager.</param>
+        /// <param name="menuBackgroundController">Background controller.</param>
+        public MainMenuController(
+            IViewCreator<MainMenuView> viewCreator,
+            IMenusManager menusManager,
+            IPopupsManager<PopupResult> popupsManager,
+            ScreenFadeManager screenFadeManager,
             MenuBackgroundController menuBackgroundController)
             : base(viewCreator, menusManager)
         {
-            
             _popupsManager = popupsManager;
             _screenFadeManager = screenFadeManager;
             _menuBackgroundController = menuBackgroundController;
         }
 
+        /// <inheritdoc/>
         public override async Task Show(Action onComplete = null, bool instant = false)
         {
             _menuBackgroundController.ShowBackground(instant);
             await base.Show(onComplete, instant);
         }
 
+        /// <inheritdoc/>
         public override async Task Hide(StackingType stackingType, Action onComplete = null, bool instant = false)
         {
             if (stackingType != StackingType.Add)
@@ -42,37 +56,39 @@ namespace UISystem.MenuSystem.Controllers
             await base.Hide(stackingType, onComplete, instant);
         }
 
-        protected override void SetupElements()
-        {
-            _view.PlayButton.AddListener(PressedPlay);
-            _view.OptionsButton.AddListener(PressedOptions);
-            _view.QuitButton.AddListener(PressedQuit);
-        }
-
+        /// <inheritdoc/>
         public override void OnReturnButtonDown()
         {
             if (CanReturnToPreviousMenu)
                 ShowQuitPopup();
         }
 
+        /// <inheritdoc/>
+        protected override void SetupElements()
+        {
+            View.PlayButton.AddOnClickListener(PressedPlay);
+            View.OptionsButton.AddOnClickListener(PressedOptions);
+            View.QuitButton.AddOnClickListener(PressedQuit);
+        }
+
         private void PressedPlay()
         {
-            _view.SetLastSelectedElement(_view.PlayButton.Button);
+            View.SetLastSelectedElement(View.PlayButton.Button);
             _screenFadeManager.FadeOut(() =>
             {
-                _menusManager.ShowMenu(typeof(InGameMenuView), StackingType.Clear, instant: true);
+                MenusManager.ShowMenu(typeof(InGameMenuView), StackingType.Clear, instant: true);
             });
         }
 
         private void PressedOptions()
         {
-            _view.SetLastSelectedElement(_view.OptionsButton.Button);
-            _menusManager.ShowMenu(typeof(OptionsMenuView));
+            View.SetLastSelectedElement(View.OptionsButton.Button);
+            MenusManager.ShowMenu(typeof(OptionsMenuView));
         }
 
         private void PressedQuit()
         {
-            _view.SetLastSelectedElement(_view.QuitButton.Button);
+            View.SetLastSelectedElement(View.QuitButton.Button);
             ShowQuitPopup();
         }
 

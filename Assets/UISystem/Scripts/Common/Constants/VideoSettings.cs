@@ -5,70 +5,116 @@ using UnityEngine;
 
 namespace UISystem.Constants
 {
+    /// <summary>
+    /// Class containing video settings.
+    /// </summary>
     public static class VideoSettings
     {
+        private static readonly Vector2Int[] _availableResolutions;
+        private static readonly List<string> _resolutionNames;
 
-        public static readonly Vector2Int[] AvailableResolutions;
-        public static readonly List<string> ResolutionNames;
+        private static readonly int[] _availableRefreshRates;
+        private static readonly List<string> _refreshRateNames;
 
-        public static readonly int[] AvailableRefreshRates;
-        public static readonly List<string> RefreshRateNames;
-
-        public static readonly FullScreenMode[] FullScreenModes = new FullScreenMode[]
+        private static readonly FullScreenMode[] _fullScreenModes = new FullScreenMode[]
         {
             FullScreenMode.ExclusiveFullScreen,
             FullScreenMode.FullScreenWindow,
             FullScreenMode.MaximizedWindow,
-            FullScreenMode.Windowed
+            FullScreenMode.Windowed,
         };
-        public static readonly List<string> FullScreenModeNames;
+
+        private static readonly List<string> _fullScreenModeNames;
 
         static VideoSettings()
         {
-            ResolutionNames = new List<string>();
-            RefreshRateNames = new List<string>();
-            Vector2Int previousResolution = Vector2Int.zero;
+            _resolutionNames = new List<string>();
+            _refreshRateNames = new List<string>();
+            var previousResolution = Vector2Int.zero;
             int previousRefreshRate = 0;
-            List<Vector2Int> availableResolutions = new List<Vector2Int>();
-            List<int> availableRefreshRates = new List<int>();
+            var availableResolutions = new List<Vector2Int>();
+            var availableRefreshRates = new List<int>();
             for (int i = 0; i < Screen.resolutions.Length; i++)
             {
                 // unity considers refresh rate when getting resolutions, this removes duplicates
                 if (!availableResolutions.Contains(new Vector2Int(Screen.resolutions[i].width, Screen.resolutions[i].height)))
                 {
-                    ResolutionNames.Add(ResolutionStringName(new Vector2Int(Screen.resolutions[i].width, Screen.resolutions[i].height)));
+                    _resolutionNames.Add(GetResolutionName(new Vector2Int(Screen.resolutions[i].width, Screen.resolutions[i].height)));
                     previousResolution.x = Screen.resolutions[i].width;
                     previousResolution.y = Screen.resolutions[i].height;
                     availableResolutions.Add(previousResolution);
                 }
+
                 if (!availableRefreshRates.Contains(Screen.resolutions[i].refreshRate))
                 {
                     previousRefreshRate = Screen.resolutions[i].refreshRate;
                     availableRefreshRates.Add(previousRefreshRate);
-                    RefreshRateNames.Add(previousRefreshRate.ToString());
+                    _refreshRateNames.Add(previousRefreshRate.ToString());
                 }
             }
-            AvailableResolutions = availableResolutions.ToArray();
-            AvailableRefreshRates = availableRefreshRates.ToArray();
 
-            FullScreenModeNames = new List<string>();
-            foreach (var item in FullScreenModes)
+            _availableResolutions = availableResolutions.ToArray();
+            _availableRefreshRates = availableRefreshRates.ToArray();
+
+            _fullScreenModeNames = new List<string>();
+            foreach (var item in _fullScreenModes)
             {
-                FullScreenModeNames.Add(ParseFullScreenMode(item));
+                _fullScreenModeNames.Add(ParseFullScreenMode(item));
             }
         }
 
-        public static string ResolutionStringName(Vector2Int resolution)
+        /// <summary>
+        /// Gets available resolutions.
+        /// </summary>
+        public static Vector2Int[] AvailableResolutions => _availableResolutions;
+
+        /// <summary>
+        /// Gets resolution names.
+        /// </summary>
+        public static List<string> ResolutionNames => _resolutionNames;
+
+        /// <summary>
+        /// Gets available refresh rates.
+        /// </summary>
+        public static int[] AvailableRefreshRates => _availableRefreshRates;
+
+        /// <summary>
+        /// Gets refresh rate names.
+        /// </summary>
+        public static List<string> RefreshRateNames => _refreshRateNames;
+
+        /// <summary>
+        /// Gets available full screen modes.
+        /// </summary>
+        public static FullScreenMode[] FullScreenModes => _fullScreenModes;
+
+        /// <summary>
+        /// Gets full screen mode names.
+        /// </summary>
+        public static List<string> FullScreenModeNames => _fullScreenModeNames;
+
+        /// <summary>
+        /// Gets resolution string name.
+        /// </summary>
+        /// <param name="resolution">Resolution.</param>
+        /// <returns>Name of the resolution.</returns>
+        public static string GetResolutionName(Vector2Int resolution)
         {
             return resolution.x + "x" + resolution.y;
         }
 
-        public static Vector2Int ResolutionFromString(string resolutionName)
+        /// <summary>
+        /// Gets the resolution from string.
+        /// </summary>
+        /// <param name="resolutionName">Resolution name.</param>
+        /// <returns>Resolution.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if <param name="resolutionName"/> can not be converted to resolution.</exception>
+        public static Vector2Int GetResolutionFromString(string resolutionName)
         {
             string[] names = resolutionName.Split('x');
-            if (!Int32.TryParse(names[0], out int width) || !Int32.TryParse(names[1], out int height))
+            if (!int.TryParse(names[0], out int width) || !int.TryParse(names[1], out int height))
             {
-                throw new Exception("Couldn't convert resolution name!");
+                throw new InvalidOperationException("Couldn't convert resolution name!");
             }
             else
             {

@@ -9,14 +9,16 @@ namespace UISystem.PopupSystem.Popups.Controllers
 
         public override PopupResult PressedReturnPopupResult => PopupResult.Cancel;
 
-        public YesNoCancelPopupController(IViewCreator<YesNoCancelPopupView> viewCreator, IPopupsManager<PopupResult> popupsManager) : base(viewCreator, popupsManager)
-        { }
+        public YesNoCancelPopupController(IViewCreator<YesNoCancelPopupView> viewCreator, IPopupsManager<PopupResult> popupsManager)
+            : base(viewCreator, popupsManager)
+        {
+        }
 
         protected override void SetupElements()
         {
-            _view.YesButton.onClick.AddListener(() => _popupsManager.HidePopup(PopupResult.Yes));
-            _view.NoButton.onClick.AddListener(() => _popupsManager.HidePopup(PopupResult.No));
-            _view.CancelButton.onClick.AddListener(() => _popupsManager.HidePopup(PopupResult.Cancel));
+            View.YesButton.onClick.AddListener(() => _popupsManager.HidePopup(PopupResult.Yes));
+            View.NoButton.onClick.AddListener(() => _popupsManager.HidePopup(PopupResult.No));
+            View.CancelButton.onClick.AddListener(() => _popupsManager.HidePopup(PopupResult.Cancel));
         }
 
     }
