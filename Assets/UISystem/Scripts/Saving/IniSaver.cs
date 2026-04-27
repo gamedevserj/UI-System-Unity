@@ -3,37 +3,55 @@ using UnityEngine;
 
 namespace UISystem.Saving
 {
+    /// <summary>
+    /// Saves to ini file.
+    /// </summary>
     internal class IniSaver : ISaver
     {
-
         private readonly INIParser _config;
         private readonly string _configLocation;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IniSaver"/> class.
+        /// </summary>
+        /// <param name="configLocation">Config location.</param>
         public IniSaver(string configLocation)
         {
             _configLocation = configLocation;
             _config = new INIParser();
         }
 
-        public void Save(string sectionName, string keyName, float value)
+        /// <inheritdoc/>
+        public void Save<T>(string sectionName, string keyName, T value)
         {
-            Save(sectionName, keyName, value.ToString("0.00"));
+            Save(sectionName, keyName, ConvertToString<T>(value));
         }
 
-        public void Save(string sectionName, string keyName, int value)
+        private static string ConvertToString<T>(T value)
         {
-            Save(sectionName, keyName, value.ToString());
+            if (value is float floatValue)
+            {
+                return floatValue.ToString("0.00");
+            }
+
+            return value.ToString();
         }
 
-        public void Save(string sectionName, string keyName, string value)
+        private void Save(string sectionName, string keyName, string value)
         {
             OpenConfig();
             _config.WriteValue(sectionName, keyName, value);
             CloseConfig();
         }
 
-        // if config didn't contain the key, saves and returns default value, otherwise returns saved value
-        // is used to save newly added keys
+        /// <summary>
+        /// Loads saved value, if config didn't contain the key, saves and returns default value.
+        /// Is used to save newly added keys.
+        /// </summary>
+        /// <param name="sectionName">Section name.</param>
+        /// <param name="keyName">Key name.</param>
+        /// <param name="defaultValue">Default value.</param>
+        /// <returns>Value that was loaded.</returns>
         public float Load(string sectionName, string keyName, float defaultValue)
         {
             OpenConfig();
@@ -46,6 +64,14 @@ namespace UISystem.Saving
             return value;
         }
 
+        /// <summary>
+        /// Loads saved value, if config didn't contain the key, saves and returns default value.
+        /// Is used to save newly added keys.
+        /// </summary>
+        /// <param name="sectionName">Section name.</param>
+        /// <param name="keyName">Key name.</param>
+        /// <param name="defaultValue">Default value.</param>
+        /// <returns>Value that was loaded.</returns>
         public int Load(string sectionName, string keyName, int defaultValue)
         {
             OpenConfig();
@@ -58,6 +84,14 @@ namespace UISystem.Saving
             return value;
         }
 
+        /// <summary>
+        /// Loads saved value, if config didn't contain the key, saves and returns default value.
+        /// Is used to save newly added keys.
+        /// </summary>
+        /// <param name="sectionName">Section name.</param>
+        /// <param name="keyName">Key name.</param>
+        /// <param name="defaultValue">Default value.</param>
+        /// <returns>Value that was loaded.</returns>
         public string Load(string sectionName, string keyName, string defaultValue)
         {
             OpenConfig();
@@ -70,7 +104,21 @@ namespace UISystem.Saving
             return value;
         }
 
-        public Vector2Int Load(string sectionName, string keyName, Vector2Int defaultValue, Func<Vector2Int, string> parserToString,
+        /// <summary>
+        /// Loads saved value, if config didn't contain the key, saves and returns default value.
+        /// Is used to save newly added keys.
+        /// </summary>
+        /// <param name="sectionName">Section name.</param>
+        /// <param name="keyName">Key name.</param>
+        /// <param name="defaultValue">Default value.</param>
+        /// <param name="parserToString">Func that will parse data to string.</param>
+        /// <param name="parserFromString">Func that will parse data from string.</param>
+        /// <returns>Value that was loaded.</returns>
+        public Vector2Int Load(
+            string sectionName,
+            string keyName,
+            Vector2Int defaultValue,
+            Func<Vector2Int, string> parserToString,
             Func<string, Vector2Int> parserFromString)
         {
             OpenConfig();
@@ -91,7 +139,7 @@ namespace UISystem.Saving
         }
 
         private void OpenConfig() => _config.Open(_configLocation);
-        private void CloseConfig() => _config.Close();
 
+        private void CloseConfig() => _config.Close();
     }
 }
