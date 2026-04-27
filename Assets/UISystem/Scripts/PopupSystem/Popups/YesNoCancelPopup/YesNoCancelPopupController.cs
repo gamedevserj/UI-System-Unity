@@ -4,22 +4,30 @@ using UISystem.PopupSystem.Popups.Views;
 
 namespace UISystem.PopupSystem.Popups.Controllers
 {
+    /// <summary>
+    /// Yes/No/Cancel popup controller.
+    /// </summary>
     internal class YesNoCancelPopupController : PopupControllerBase<IViewCreator<YesNoCancelPopupView>, YesNoCancelPopupView>
     {
-
-        public override PopupResult PressedReturnPopupResult => PopupResult.Cancel;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="YesNoCancelPopupController"/> class.
+        /// </summary>
+        /// <param name="viewCreator">View creator.</param>
+        /// <param name="popupsManager">Popups manager.</param>
         public YesNoCancelPopupController(IViewCreator<YesNoCancelPopupView> viewCreator, IPopupsManager<PopupResult> popupsManager)
             : base(viewCreator, popupsManager)
         {
         }
 
+        /// <inheritdoc/>
+        public override PopupResult PressedReturnPopupResult => PopupResult.Cancel;
+
+        /// <inheritdoc/>
         protected override void SetupElements()
         {
-            View.YesButton.onClick.AddListener(() => _popupsManager.HidePopup(PopupResult.Yes));
-            View.NoButton.onClick.AddListener(() => _popupsManager.HidePopup(PopupResult.No));
-            View.CancelButton.onClick.AddListener(() => _popupsManager.HidePopup(PopupResult.Cancel));
+            View.YesButton.onClick.AddListener(() => PopupsManager.HidePopup(PopupResult.Yes));
+            View.NoButton.onClick.AddListener(() => PopupsManager.HidePopup(PopupResult.No));
+            View.CancelButton.onClick.AddListener(() => PopupsManager.HidePopup(PopupResult.Cancel));
         }
-
     }
 }

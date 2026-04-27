@@ -66,9 +66,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvasGroup: {fileID: 267874291535618261}
-  panel: {fileID: 481136731181098179}
-  messageLabel: {fileID: 481136732004493186}
-  yesButton: {fileID: 7034212690597866798}
+  _panel: {fileID: 481136731181098179}
+  _messageLabel: {fileID: 481136732004493186}
+  _yesButton: {fileID: 7034212690597866798}
 --- !u!1 &267874291691901886
 GameObject:
   m_ObjectHideFlags: 0

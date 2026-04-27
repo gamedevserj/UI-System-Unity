@@ -342,11 +342,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvasGroup: {fileID: 1562753231777474939}
-  panel: {fileID: 1201047925987290477}
-  messageLabel: {fileID: 1201047925728554540}
-  yesButton: {fileID: 6615073752532233338}
-  noButton: {fileID: 7400976282406151662}
-  cancelButton: {fileID: 7924771416367749409}
+  _panel: {fileID: 1201047925987290477}
+  _messageLabel: {fileID: 1201047925728554540}
+  _yesButton: {fileID: 6615073752532233338}
+  _noButton: {fileID: 7400976282406151662}
+  _cancelButton: {fileID: 7924771416367749409}
 --- !u!1 &2066994106670161611
 GameObject:
   m_ObjectHideFlags: 0

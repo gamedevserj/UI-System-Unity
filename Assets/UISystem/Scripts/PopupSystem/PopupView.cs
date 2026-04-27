@@ -6,16 +6,20 @@ using UnityEngine.UI;
 
 namespace UISystem.PopupSystem
 {
+    /// <summary>
+    /// Base class for popup views.
+    /// </summary>
     public abstract partial class PopupView : ViewBase, IPopupView
     {
+        [SerializeField] private RectTransform _panel;
+        [SerializeField] private TextMeshProUGUI _messageLabel;
 
-        [SerializeField] protected RectTransform panel;
-        [SerializeField] private TextMeshProUGUI messageLabel;
-
-        public RectTransform Panel => panel;
-        public TextMeshProUGUI Message { set => messageLabel = value; }
+        /// <summary>
+        /// Gets the element that is focused by default when popup is shown for the first time.
+        /// </summary>
         public abstract Selectable DefaultSelectedElement { get; }
 
+        /// <inheritdoc/>
         public override void FocusElement()
         {
             if (DefaultSelectedElement != null)
@@ -24,9 +28,10 @@ namespace UISystem.PopupSystem
             }
         }
 
+        /// <inheritdoc/>
         public void SetMessage(string message)
         {
-            messageLabel.text = message;
+            _messageLabel.text = message;
         }
     }
 }
