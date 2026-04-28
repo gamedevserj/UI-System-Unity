@@ -159,13 +159,13 @@ namespace UISystem
                 ConfigData.VideoSectionName,
                 ConfigData.ResolutionKey,
                 ConfigData.DefaultResolution);
-            WindowMode = (FullScreenMode)_saver.Load(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)ConfigData.DefaultFullScreenMode);
+            WindowMode = _saver.Load(ConfigData.VideoSectionName, ConfigData.WindowModeKey, ConfigData.DefaultFullScreenMode);
             RefreshRate = _saver.Load(ConfigData.VideoSectionName, ConfigData.RefreshRateKey, ConfigData.DefaultRefreshRate);
 
-            ControllerIconsType = (ControllerIconsType)_saver.Load(
+            ControllerIconsType = _saver.Load(
                 ConfigData.InterfaceSectionName,
                 ConfigData.ControllerIconsKey,
-                (int)ConfigData.DefaultControllerIconsType);
+                ConfigData.DefaultControllerIconsType);
             LoadActions();
         }
 

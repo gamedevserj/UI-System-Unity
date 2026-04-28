@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UISystem.Saving
 {
@@ -55,5 +56,17 @@ namespace UISystem.Saving
         /// <param name="defaultValue">Default value.</param>
         /// <returns>Value that was loaded.</returns>
         Vector2Int Load(string sectionName, string keyName, Vector2Int defaultValue);
+
+        /// <summary>
+        /// Loads saved value, if config didn't contain the key, saves and returns default value.
+        /// Is used to save newly added keys.
+        /// </summary>
+        /// <typeparam name="TEnum">Type of enum.</typeparam>
+        /// <param name="sectionName">Section name.</param>
+        /// <param name="keyName">Key name.</param>
+        /// <param name="defaultValue">Default value.</param>
+        /// <returns>Value that was loaded.</returns>
+        TEnum Load<TEnum>(string sectionName, string keyName, TEnum defaultValue)
+            where TEnum : struct, Enum;
     }
 }

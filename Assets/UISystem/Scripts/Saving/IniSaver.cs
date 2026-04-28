@@ -25,7 +25,7 @@ namespace UISystem.Saving
         /// <inheritdoc/>
         public void Save<T>(string sectionName, string keyName, T value)
         {
-            Save(sectionName, keyName, ConvertToString<T>(value));
+            Save(sectionName, keyName, ConvertToString(value));
         }
 
         /// <inheritdoc/>
@@ -63,8 +63,20 @@ namespace UISystem.Saving
                 sectionName,
                 keyName,
                 defaultValue,
-                (v) => v.ToString(),
+                (value) => value.ToString(),
                 (stringValue) => ParsingHelpers.TryParseVector2Int(stringValue, out Vector2Int value) ? value : defaultValue);
+        }
+
+        /// <inheritdoc/>
+        public TEnum Load<TEnum>(string sectionName, string keyName, TEnum defaultValue)
+            where TEnum : struct, Enum
+        {
+            return Load(
+                sectionName,
+                keyName,
+                defaultValue,
+                (value) => value.ToString(),
+                (stringValue) => Enum.TryParse(stringValue, out TEnum value) ? value : defaultValue);
         }
 
         private static string ConvertToString<T>(T value)
