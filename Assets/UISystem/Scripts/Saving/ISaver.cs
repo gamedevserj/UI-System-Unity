@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UISystem.Saving
 {
@@ -54,14 +53,7 @@ namespace UISystem.Saving
         /// <param name="sectionName">Section name.</param>
         /// <param name="keyName">Key name.</param>
         /// <param name="defaultValue">Default value.</param>
-        /// <param name="parserToString">Func that will parse data to string.</param>
-        /// <param name="parserFromString">Func that will parse data from string.</param>
         /// <returns>Value that was loaded.</returns>
-        Vector2Int Load(
-            string sectionName,
-            string keyName,
-            Vector2Int defaultValue,
-            Func<Vector2Int, string> parserToString,
-            Func<string, Vector2Int> parserFromString);
+        Vector2Int Load(string sectionName, string keyName, Vector2Int defaultValue);
     }
 }

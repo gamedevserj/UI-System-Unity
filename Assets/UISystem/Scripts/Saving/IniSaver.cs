@@ -1,4 +1,5 @@
 ﻿using System;
+using UISystem.Helpers;
 using UnityEngine;
 
 namespace UISystem.Saving
@@ -27,6 +28,45 @@ namespace UISystem.Saving
             Save(sectionName, keyName, ConvertToString<T>(value));
         }
 
+        /// <inheritdoc/>
+        public float Load(string sectionName, string keyName, float defaultValue)
+        {
+            return Load(
+                sectionName,
+                keyName,
+                defaultValue,
+                (value) => value.ToString(),
+                (stringValue) => float.TryParse(stringValue, out float result) ? result : defaultValue);
+        }
+
+        /// <inheritdoc/>
+        public int Load(string sectionName, string keyName, int defaultValue)
+        {
+            return Load(
+                sectionName,
+                keyName,
+                defaultValue,
+                (value) => value.ToString(),
+                (stringValue) => int.TryParse(stringValue, out int result) ? result : defaultValue);
+        }
+
+        /// <inheritdoc/>
+        public string Load(string sectionName, string keyName, string defaultValue)
+        {
+            return Load(sectionName, keyName, defaultValue, (v) => v, (stringValue) => stringValue);
+        }
+
+        /// <inheritdoc/>
+        public Vector2Int Load(string sectionName, string keyName, Vector2Int defaultValue)
+        {
+            return Load(
+                sectionName,
+                keyName,
+                defaultValue,
+                (v) => v.ToString(),
+                (stringValue) => ParsingHelpers.TryParseVector2Int(stringValue, out Vector2Int value) ? value : defaultValue);
+        }
+
         private static string ConvertToString<T>(T value)
         {
             if (value is float floatValue)
@@ -35,73 +75,6 @@ namespace UISystem.Saving
             }
 
             return value.ToString();
-        }
-
-        private void Save(string sectionName, string keyName, string value)
-        {
-            OpenConfig();
-            _config.WriteValue(sectionName, keyName, value);
-            CloseConfig();
-        }
-
-        /// <summary>
-        /// Loads saved value, if config didn't contain the key, saves and returns default value.
-        /// Is used to save newly added keys.
-        /// </summary>
-        /// <param name="sectionName">Section name.</param>
-        /// <param name="keyName">Key name.</param>
-        /// <param name="defaultValue">Default value.</param>
-        /// <returns>Value that was loaded.</returns>
-        public float Load(string sectionName, string keyName, float defaultValue)
-        {
-            OpenConfig();
-            bool isNewSetting = CheckIfNewSetting(sectionName, keyName);
-
-            float value = _config.ReadValue(sectionName, keyName, defaultValue);
-            if (isNewSetting) _config.WriteValue(sectionName, keyName, value);
-
-            CloseConfig();
-            return value;
-        }
-
-        /// <summary>
-        /// Loads saved value, if config didn't contain the key, saves and returns default value.
-        /// Is used to save newly added keys.
-        /// </summary>
-        /// <param name="sectionName">Section name.</param>
-        /// <param name="keyName">Key name.</param>
-        /// <param name="defaultValue">Default value.</param>
-        /// <returns>Value that was loaded.</returns>
-        public int Load(string sectionName, string keyName, int defaultValue)
-        {
-            OpenConfig();
-            bool isNewSetting = CheckIfNewSetting(sectionName, keyName);
-
-            int value = _config.ReadValue(sectionName, keyName, defaultValue);
-            if (isNewSetting) _config.WriteValue(sectionName, keyName, value);
-
-            CloseConfig();
-            return value;
-        }
-
-        /// <summary>
-        /// Loads saved value, if config didn't contain the key, saves and returns default value.
-        /// Is used to save newly added keys.
-        /// </summary>
-        /// <param name="sectionName">Section name.</param>
-        /// <param name="keyName">Key name.</param>
-        /// <param name="defaultValue">Default value.</param>
-        /// <returns>Value that was loaded.</returns>
-        public string Load(string sectionName, string keyName, string defaultValue)
-        {
-            OpenConfig();
-            bool isNewSetting = CheckIfNewSetting(sectionName, keyName);
-
-            string value = _config.ReadValue(sectionName, keyName, defaultValue);
-            if (isNewSetting) _config.WriteValue(sectionName, keyName, value);
-
-            CloseConfig();
-            return value;
         }
 
         /// <summary>
@@ -114,21 +87,30 @@ namespace UISystem.Saving
         /// <param name="parserToString">Func that will parse data to string.</param>
         /// <param name="parserFromString">Func that will parse data from string.</param>
         /// <returns>Value that was loaded.</returns>
-        public Vector2Int Load(
+        private T Load<T>(
             string sectionName,
             string keyName,
-            Vector2Int defaultValue,
-            Func<Vector2Int, string> parserToString,
-            Func<string, Vector2Int> parserFromString)
+            T defaultValue,
+            Func<T, string> parserToString,
+            Func<string, T> parserFromString)
         {
             OpenConfig();
             bool isNewSetting = CheckIfNewSetting(sectionName, keyName);
 
-            Vector2Int value = parserFromString(_config.ReadValue(sectionName, keyName, parserToString(defaultValue)));
-            if (isNewSetting) _config.WriteValue(sectionName, keyName, parserToString(value));
+            var stringValue = _config.ReadValue(sectionName, keyName, parserToString(defaultValue));
+            T value = parserFromString(stringValue);
+            if (isNewSetting)
+                _config.WriteValue(sectionName, keyName, stringValue);
 
             CloseConfig();
             return value;
+        }
+
+        private void Save(string sectionName, string keyName, string value)
+        {
+            OpenConfig();
+            _config.WriteValue(sectionName, keyName, value);
+            CloseConfig();
         }
 
         private bool CheckIfNewSetting(string sectionName, string keyName)

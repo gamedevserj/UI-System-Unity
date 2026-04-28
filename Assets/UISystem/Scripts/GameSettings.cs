@@ -128,7 +128,7 @@ namespace UISystem
         /// </summary>
         public void SaveVideoSettings()
         {
-            _saver.Save(ConfigData.VideoSectionName, ConfigData.ResolutionKey, VideoSettings.GetResolutionName(Resolution));
+            _saver.Save(ConfigData.VideoSectionName, ConfigData.ResolutionKey, Resolution);
             _saver.Save(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)WindowMode);
             _saver.Save(ConfigData.VideoSectionName, ConfigData.RefreshRateKey, RefreshRate);
         }
@@ -158,9 +158,7 @@ namespace UISystem
             Resolution = _saver.Load(
                 ConfigData.VideoSectionName,
                 ConfigData.ResolutionKey,
-                ConfigData.DefaultResolution,
-                VideoSettings.GetResolutionName,
-                VideoSettings.GetResolutionFromString);
+                ConfigData.DefaultResolution);
             WindowMode = (FullScreenMode)_saver.Load(ConfigData.VideoSectionName, ConfigData.WindowModeKey, (int)ConfigData.DefaultFullScreenMode);
             RefreshRate = _saver.Load(ConfigData.VideoSectionName, ConfigData.RefreshRateKey, ConfigData.DefaultRefreshRate);
 

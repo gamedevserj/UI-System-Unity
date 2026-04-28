@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace Assets.UISystem.Scripts.Extensions
+namespace UISystem.Extensions
 {
     /// <summary>
-    /// Class containing extensions for IReadOnlyList.
+    /// Class containing IReadOnlyList extensions.
     /// </summary>
     internal static class ReadOnlyListExtensions
     {

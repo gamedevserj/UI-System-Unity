@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -101,25 +100,6 @@ namespace UISystem.Constants
         public static string GetResolutionName(Vector2Int resolution)
         {
             return resolution.x + "x" + resolution.y;
-        }
-
-        /// <summary>
-        /// Gets the resolution from string.
-        /// </summary>
-        /// <param name="resolutionName">Resolution name.</param>
-        /// <returns>Resolution.</returns>
-        /// <exception cref="InvalidOperationException">Thrown if <param name="resolutionName"/> can not be converted to resolution.</exception>
-        public static Vector2Int GetResolutionFromString(string resolutionName)
-        {
-            string[] names = resolutionName.Split('x');
-            if (!int.TryParse(names[0], out int width) || !int.TryParse(names[1], out int height))
-            {
-                throw new InvalidOperationException("Couldn't convert resolution name!");
-            }
-            else
-            {
-                return new Vector2Int(width, height);
-            }
         }
 
         private static string ParseFullScreenMode(FullScreenMode name)

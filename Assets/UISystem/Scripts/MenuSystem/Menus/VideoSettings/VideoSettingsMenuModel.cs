@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.UISystem.Scripts.Extensions;
 using UISystem.Constants;
 using UISystem.Core.MenuSystem;
+using UISystem.Extensions;
 using UnityEngine;
 
 namespace UISystem.MenuSystem.Models

@@ -621,15 +621,6 @@ public class INIParser
         return DefaultValue;
     }
 
-    // NOTE: wasn't in the asset
-    public float ReadValue(string SectionName, string Key, float DefaultValue)
-    {
-        string StringValue = ReadValue(SectionName, Key, DefaultValue.ToString(CultureInfo.InvariantCulture));
-        float Value;
-        if (float.TryParse(StringValue, NumberStyles.Any, CultureInfo.InvariantCulture, out Value)) return Value;
-        return DefaultValue;
-    }
-
     public byte[] ReadValue(string SectionName, string Key, byte[] DefaultValue)
     {
         string StringValue = ReadValue(SectionName, Key, EncodeByteArray(DefaultValue));
@@ -680,6 +671,11 @@ public class INIParser
     public void WriteValue(string SectionName, string Key, DateTime Value)
     {
         WriteValue(SectionName, Key, Value.ToString(CultureInfo.InvariantCulture));
+    }
+
+    public void WriteValue(string sectionName, string key, Vector2Int value)
+    {
+        WriteValue(sectionName, key, value.ToString());
     }
 
     #endregion
