@@ -54,9 +54,6 @@ dotnet_diagnostic.SA1101.severity = none
 # Each attribute should be placed on its own line of code
 dotnet_diagnostic.SA1134.severity = none
 
-# Field names must not begin with underscore
-dotnet_diagnostic.SA1309.severity = none
-
 # Using directive should appear within namespace declaration
 dotnet_diagnostic.SA1200.severity = none
 
@@ -64,11 +61,14 @@ dotnet_diagnostic.SA1200.severity = none
 # Declaration keywords must follow order
 dotnet_diagnostic.SA1206.severity = none
 
-# Enumeration items should be documented
-dotnet_diagnostic.SA1602.severity = none
+# Field names must not begin with underscore
+dotnet_diagnostic.SA1309.severity = none
 
 # Braces should not be ommited
 dotnet_diagnostic.SA1503.severity = none
+
+# Enumeration items should be documented
+dotnet_diagnostic.SA1602.severity = none
 
 # Reduced to suggestions to allow not documenting return value for methods that return Task
 # Element return value should be documented
