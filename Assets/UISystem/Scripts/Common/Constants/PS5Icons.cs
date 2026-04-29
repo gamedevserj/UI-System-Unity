@@ -18,7 +18,6 @@ namespace UISystem.Constants
                 { "buttonEast", "playstation_button_color_circle" },
                 { "buttonWest", "playstation_button_color_square" },
                 { "buttonNorth", "playstation_button_color_triangle" },
-
                 { "leftShoulder", "playstation_trigger_l1_alternative" }, // L1
                 { "rightShoulder", "playstation_trigger_r1_alternative" }, // R1
                 { "select", "playstation_button_create" }, // share
@@ -27,12 +26,10 @@ namespace UISystem.Constants
                 { "rightStickPress", "playstation_button_r3" }, // R3
                 { "leftTrigger", "playstation_trigger_l2_alternative" }, // L2
                 { "rightTrigger", "playstation_trigger_r2_alternative" }, // R2
-
                 { "leftStick/right", "playstation_stick_l_right" },
                 { "leftStick/down", "playstation_stick_l_down" },
                 { "leftStick/left", "playstation_stick_l_left" },
                 { "leftStick/up", "playstation_stick_l_up" },
-
                 { "rightStick/right", "playstation_stick_r_right" },
                 { "rightStick/down", "playstation_stick_r_down" },
                 { "rightStick/left", "playstation_stick_r_left" },

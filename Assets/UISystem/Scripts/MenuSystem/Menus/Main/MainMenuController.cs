@@ -76,14 +76,14 @@ namespace UISystem.MenuSystem.Controllers
         {
             View.SetLastSelectedElement(View.PlayButton.Button);
             await _screenFadeManager.FadeOut();
-            MenusManager.ShowMenu(typeof(InGameMenuView), StackingType.Clear, instant: true);
+            await MenusManager.ShowMenu(typeof(InGameMenuView), StackingType.Clear, instant: true);
             await _screenFadeManager.FadeIn();
         }
 
         private void PressedOptions()
         {
             View.SetLastSelectedElement(View.OptionsButton.Button);
-            MenusManager.ShowMenu(typeof(OptionsMenuView));
+            MenusManager.ShowMenu(typeof(OptionsMenuView)).SafeFireAndForget();
         }
 
         private void PressedQuit()
@@ -95,13 +95,15 @@ namespace UISystem.MenuSystem.Controllers
         private void ShowQuitPopup()
         {
             SwitchInteractability(false);
-            _popupsManager.ShowPopup(typeof(YesNoPopupView), PopupMessages.QuitGame, (result) =>
-            {
-                if (result == PopupResult.Yes)
-                    Application.Quit();
-                else if (result == PopupResult.No)
-                    SwitchInteractability(true);
-            });
+            _popupsManager
+                .ShowPopup(typeof(YesNoPopupView), PopupMessages.QuitGame, (result) =>
+                {
+                    if (result == PopupResult.Yes)
+                        Application.Quit();
+                    else if (result == PopupResult.No)
+                        SwitchInteractability(true);
+                })
+                .SafeFireAndForget();
         }
     }
 }

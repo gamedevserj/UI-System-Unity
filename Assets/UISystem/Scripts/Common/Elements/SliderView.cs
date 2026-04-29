@@ -9,7 +9,6 @@ namespace UISystem.Common.Elements
     /// </summary>
     public class SliderView : MonoBehaviour, IInteractableElement
     {
-
         private Slider _slider;
 
         /// <summary>

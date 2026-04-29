@@ -1,4 +1,5 @@
-﻿using UISystem.Core.MenuSystem;
+﻿using AsyncAwaitBestPractices;
+using UISystem.Core.MenuSystem;
 using UISystem.Core.PopupSystem;
 using UISystem.Core.Views;
 using UISystem.PopupSystem;
@@ -55,11 +56,13 @@ namespace UISystem.MenuSystem.SettingsMenu
                 View.SetLastSelectedElement(View.ReturnButton.Button);
                 CanReceivePhysicalInput = false;
                 SwitchInteractability(false);
-                PopupsManager.ShowPopup(typeof(YesNoCancelPopupView), PopupMessages.SaveChanges, (result) =>
-                {
-                    OnReturnToPreviousMenuPopupClosed(result);
-                    CanReceivePhysicalInput = true;
-                });
+                PopupsManager
+                    .ShowPopup(typeof(YesNoCancelPopupView), PopupMessages.SaveChanges, (result) =>
+                    {
+                        OnReturnToPreviousMenuPopupClosed(result);
+                        CanReceivePhysicalInput = true;
+                    })
+                    .SafeFireAndForget();
             }
             else
             {
@@ -111,16 +114,18 @@ namespace UISystem.MenuSystem.SettingsMenu
         {
             View.SetLastSelectedElement(View.ResetButton.Button);
             SwitchInteractability(false);
-            PopupsManager.ShowPopup(typeof(YesNoPopupView), PopupMessages.ResetToDefault, (result) =>
-            {
-                if (result == PopupResult.Yes)
+            PopupsManager
+                .ShowPopup(typeof(YesNoPopupView), PopupMessages.ResetToDefault, (result) =>
                 {
-                    Model.ResetToDefault();
-                    UpdateAllViewValues();
-                }
+                    if (result == PopupResult.Yes)
+                    {
+                        Model.ResetToDefault();
+                        UpdateAllViewValues();
+                    }
 
-                SwitchInteractability(true);
-            });
+                    SwitchInteractability(true);
+                })
+                .SafeFireAndForget();
         }
     }
 }

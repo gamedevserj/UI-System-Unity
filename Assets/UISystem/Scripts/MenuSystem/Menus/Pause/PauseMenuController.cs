@@ -69,7 +69,7 @@ namespace UISystem.MenuSystem.Controllers
         private void PressedOptions()
         {
             View.SetLastSelectedElement(View.OptionsButton.Button);
-            MenusManager.ShowMenu(typeof(OptionsMenuView));
+            MenusManager.ShowMenu(typeof(OptionsMenuView)).SafeFireAndForget();
         }
 
         private void PressedReturn()
@@ -77,19 +77,21 @@ namespace UISystem.MenuSystem.Controllers
             View.SetLastSelectedElement(View.ReturnToMainMenuButton.Button);
             SwitchInteractability(false);
 
-            _popupsManager.ShowPopup(typeof(YesNoPopupView), PopupMessages.QuitToMainMenu, async (result) =>
-            {
-                if (result == PopupResult.Yes)
+            _popupsManager
+                .ShowPopup(typeof(YesNoPopupView), PopupMessages.QuitToMainMenu, async (result) =>
                 {
-                    await _screenFadeManager.FadeOut();
-                    MenusManager.ShowMenu(typeof(MainMenuView), StackingType.Clear, null, true);
-                    await _screenFadeManager.FadeIn();
-                }
-                else if (result == PopupResult.No)
-                {
-                    SwitchInteractability(true);
-                }
-            });
+                    if (result == PopupResult.Yes)
+                    {
+                        await _screenFadeManager.FadeOut();
+                        await MenusManager.ShowMenu(typeof(MainMenuView), StackingType.Clear, null, true);
+                        await _screenFadeManager.FadeIn();
+                    }
+                    else if (result == PopupResult.No)
+                    {
+                        SwitchInteractability(true);
+                    }
+                })
+                .SafeFireAndForget();
         }
     }
 }

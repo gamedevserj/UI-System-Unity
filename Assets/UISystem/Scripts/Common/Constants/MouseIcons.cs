@@ -30,6 +30,5 @@ namespace UISystem.Constants
         {
             return Resources.Load<Sprite>(ItemsFolder + _buttons[button]);
         }
-
     }
 }

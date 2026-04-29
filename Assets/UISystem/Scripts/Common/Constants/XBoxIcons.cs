@@ -18,7 +18,6 @@ namespace UISystem.Constants
                 { "buttonEast", "xbox_button_color_b" },
                 { "buttonWest", "xbox_button_color_x" },
                 { "buttonNorth", "xbox_button_color_y" },
-
                 { "leftShoulder", "xbox_lb" }, // L1
                 { "rightShoulder", "xbox_rb" }, // R1
                 { "select", "xbox_button_share" }, // share
@@ -27,12 +26,10 @@ namespace UISystem.Constants
                 { "rightStickPress", "xbox_rs" }, // R3
                 { "leftTrigger", "xbox_lt" }, // L2
                 { "rightTrigger", "xbox_rt" }, // R2
-
                 { "leftStick/right", "xbox_stick_l_right" },
                 { "leftStick/down", "xbox_stick_l_down" },
                 { "leftStick/left", "xbox_stick_l_left" },
                 { "leftStick/up", "xbox_stick_l_up" },
-
                 { "rightStick/right", "xbox_stick_r_right" },
                 { "rightStick/down", "xbox_stick_r_down" },
                 { "rightStick/left", "xbox_stick_r_left" },

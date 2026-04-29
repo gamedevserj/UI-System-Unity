@@ -12,7 +12,7 @@ namespace UISystem.Views
     /// </summary>
     public abstract partial class ViewBase : MonoBehaviour, IView
     {
-        [SerializeField] protected CanvasGroup _canvasGroup;
+        [SerializeField] private CanvasGroup _canvasGroup;
 
         private IViewTransition _transition;
 

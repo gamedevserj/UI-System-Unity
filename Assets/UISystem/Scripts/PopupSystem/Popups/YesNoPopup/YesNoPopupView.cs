@@ -10,7 +10,6 @@ namespace UISystem.PopupSystem.Popups.Views
     /// </summary>
     internal partial class YesNoPopupView : PopupView
     {
-
         [SerializeField] private Button _yesButton;
         [SerializeField] private Button _noButton;
 

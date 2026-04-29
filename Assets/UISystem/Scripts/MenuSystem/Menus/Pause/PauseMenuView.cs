@@ -11,7 +11,6 @@ namespace UISystem.MenuSystem.Views
     /// </summary>
     public partial class PauseMenuView : MenuView
     {
-
         [SerializeField] private ButtonView _resumeGameButton;
         [SerializeField] private ButtonView _optionsButton;
         [SerializeField] private ButtonView _returnToMainMenuButton;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AsyncAwaitBestPractices;
 using UISystem.Core.MenuSystem;
 using UISystem.Core.PopupSystem;
 using UISystem.MenuSystem;
@@ -139,10 +140,11 @@ namespace UISystem
                         popupsManager)
                 },
             };
-            menusManager.Init(menus);
-            menusManager.ShowMenu(typeof(MainMenuView), StackingType.Clear);
 
             _ = new InputProcessor(_inputActions, menusManager, popupsManager);
+
+            menusManager.Init(menus);
+            menusManager.ShowMenu(typeof(MainMenuView), StackingType.Clear).SafeFireAndForget();
         }
 
         private void Awake()

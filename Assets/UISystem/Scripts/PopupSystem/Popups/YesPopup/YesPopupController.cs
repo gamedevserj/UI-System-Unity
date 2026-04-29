@@ -14,7 +14,7 @@ namespace UISystem.PopupSystem.Popups.Controllers
         /// </summary>
         /// <param name="viewCreator">View creator.</param>
         /// <param name="popupsManager">Popups manager.</param>
-        public YesPopupController(IViewCreator<YesPopupView> viewCreator, IPopupsManager<PopupResult> popupsManager) 
+        public YesPopupController(IViewCreator<YesPopupView> viewCreator, IPopupsManager<PopupResult> popupsManager)
             : base(viewCreator, popupsManager)
         {
         }
