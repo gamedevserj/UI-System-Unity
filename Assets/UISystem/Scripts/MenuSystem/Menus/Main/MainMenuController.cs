@@ -17,7 +17,7 @@ namespace UISystem.MenuSystem.Controllers
     /// </summary>
     internal class MainMenuController : MenuControllerBase<IViewCreator<MainMenuView>, MainMenuView>
     {
-        private readonly IPopupsManager<PopupResult> _popupsManager;
+        private readonly IPopupsManager _popupsManager;
         private readonly MenuBackgroundController _menuBackgroundController;
         private readonly ScreenFadeManager _screenFadeManager;
 
@@ -32,7 +32,7 @@ namespace UISystem.MenuSystem.Controllers
         public MainMenuController(
             IViewCreator<MainMenuView> viewCreator,
             IMenusManager menusManager,
-            IPopupsManager<PopupResult> popupsManager,
+            IPopupsManager popupsManager,
             ScreenFadeManager screenFadeManager,
             MenuBackgroundController menuBackgroundController)
             : base(viewCreator, menusManager)

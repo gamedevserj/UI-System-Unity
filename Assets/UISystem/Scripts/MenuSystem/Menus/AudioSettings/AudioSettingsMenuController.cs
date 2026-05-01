@@ -24,7 +24,7 @@ namespace UISystem.MenuSystem.Controllers
             IViewCreator<AudioSettingsMenuView> viewCreator,
             IMenusManager menusManager,
             AudioSettingsMenuModel model,
-            IPopupsManager<PopupResult> popupsManager)
+            IPopupsManager popupsManager)
             : base(viewCreator, menusManager, model, popupsManager)
         {
         }

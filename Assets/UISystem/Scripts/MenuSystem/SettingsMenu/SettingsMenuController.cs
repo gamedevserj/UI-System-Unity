@@ -31,7 +31,7 @@ namespace UISystem.MenuSystem.SettingsMenu
             TViewCreator viewCreator,
             IMenusManager menusManager,
             TModel model,
-            IPopupsManager<PopupResult> popupsManager)
+            IPopupsManager popupsManager)
             : base(viewCreator, menusManager)
         {
             Model = model;
@@ -46,7 +46,7 @@ namespace UISystem.MenuSystem.SettingsMenu
         /// <summary>
         /// Gets the popups manager.
         /// </summary>
-        protected IPopupsManager<PopupResult> PopupsManager { get; private set; }
+        protected IPopupsManager PopupsManager { get; private set; }
 
         /// <inheritdoc/>
         public override void OnReturnButtonDown()

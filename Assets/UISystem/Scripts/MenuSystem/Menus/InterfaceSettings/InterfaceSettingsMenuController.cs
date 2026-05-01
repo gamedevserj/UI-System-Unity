@@ -27,7 +27,7 @@ namespace UISystem.MenuSystem.Controllers
             IViewCreator<InterfaceSettingsMenuView> viewCreator,
             IMenusManager menusManager,
             InterfaceSettingsMenuModel model,
-            IPopupsManager<PopupResult> popupsManager)
+            IPopupsManager popupsManager)
             : base(viewCreator, menusManager, model, popupsManager)
         {
         }

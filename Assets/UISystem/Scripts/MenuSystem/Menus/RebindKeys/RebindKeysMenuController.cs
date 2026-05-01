@@ -33,7 +33,7 @@ namespace UISystem.MenuSystem.Controllers
             IViewCreator<RebindKeysMenuView> viewCreator,
             IMenusManager menusManager,
             RebindKeysMenuModel model,
-            IPopupsManager<PopupResult> popupsManager)
+            IPopupsManager popupsManager)
             : base(viewCreator, menusManager, model, popupsManager)
         {
         }

@@ -14,7 +14,7 @@ namespace UISystem.PhysicalInput
     internal class InputProcessor : IUIActions
     {
         private readonly IMenusManager _menusManager;
-        private readonly IPopupsManager<PopupResult> _popupsManager;
+        private readonly IPopupsManager _popupsManager;
 
         private IInputReceiver _menuInputReceiver;
         private IInputReceiver _activeReceiver;
@@ -25,7 +25,7 @@ namespace UISystem.PhysicalInput
         /// <param name="inputActions">Input actions.</param>
         /// <param name="menusManager">Menus manager.</param>
         /// <param name="popupsManager">Popups manager.</param>
-        public InputProcessor(UIInputActions inputActions, IMenusManager menusManager, IPopupsManager<PopupResult> popupsManager)
+        public InputProcessor(UIInputActions inputActions, IMenusManager menusManager, IPopupsManager popupsManager)
         {
             inputActions.UI.SetCallbacks(this);
             _menusManager = menusManager;

@@ -44,12 +44,12 @@ namespace UISystem
         /// <param name="settings">Game settings.</param>
         public void Init(GameSettings settings)
         {
-            var popupsManager = new PopupsManager<PopupResult>();
+            var popupsManager = new PopupsManager();
             var yesPopupViewCreator = new ViewCreator<YesPopupView>(GetPopupPrefab(typeof(YesPopupView)), _popupsParent);
             var yesNoPopupViewCreator = new ViewCreator<YesNoPopupView>(GetPopupPrefab(typeof(YesNoPopupView)), _popupsParent);
             var yesNoCancelPopupViewCreator = new ViewCreator<YesNoCancelPopupView>(GetPopupPrefab(typeof(YesNoCancelPopupView)), _popupsParent);
 
-            var popups = new Dictionary<Type, IPopupController<PopupResult>>
+            var popups = new Dictionary<Type, IPopupController>
             {
                 {
                     typeof(YesPopupView),

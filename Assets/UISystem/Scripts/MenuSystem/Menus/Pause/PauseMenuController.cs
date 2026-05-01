@@ -16,7 +16,7 @@ namespace UISystem.MenuSystem.Controllers
     /// </summary>
     internal class PauseMenuController : MenuControllerBase<IViewCreator<PauseMenuView>, PauseMenuView>
     {
-        private readonly IPopupsManager<PopupResult> _popupsManager;
+        private readonly IPopupsManager _popupsManager;
         private readonly ScreenFadeManager _screenFadeManager;
         private readonly MenuBackgroundController _menuBackgroundController;
 
@@ -31,7 +31,7 @@ namespace UISystem.MenuSystem.Controllers
         public PauseMenuController(
             IViewCreator<PauseMenuView> viewCreator,
             IMenusManager menusManager,
-            IPopupsManager<PopupResult> popupsManager,
+            IPopupsManager popupsManager,
             ScreenFadeManager screenFadeManager,
             MenuBackgroundController menuBackgroundController)
             : base(viewCreator, menusManager)
