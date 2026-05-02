@@ -4,7 +4,6 @@ using UISystem.Core.Views;
 using UISystem.MenuSystem.Models;
 using UISystem.MenuSystem.SettingsMenu;
 using UISystem.MenuSystem.Views;
-using UISystem.PopupSystem;
 
 namespace UISystem.MenuSystem.Controllers
 {
@@ -43,13 +42,13 @@ namespace UISystem.MenuSystem.Controllers
         {
             View.MusicSlider.SetValue(Model.MusicVolume);
             View.SfxSlider.SetValue(Model.SfxVolume);
-            View.SetLastSelectedElement(View.ResetButton.Button);
+            View.SetLastSelectedElement(View.ResetButton);
         }
 
         private void OnSaveSettingsButtonDown()
         {
             Model.SaveSettings();
-            View.SetLastSelectedElement(View.SaveSettingsButton.Button);
+            View.SetLastSelectedElement(View.SaveSettingsButton);
         }
 
         private void SetupMusicSlider()

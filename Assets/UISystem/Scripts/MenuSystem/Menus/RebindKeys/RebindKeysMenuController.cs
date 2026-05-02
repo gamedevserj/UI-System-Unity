@@ -1,6 +1,7 @@
 ﻿using UISystem.Common.Elements;
 using UISystem.Common.Enums;
 using UISystem.Constants;
+using UISystem.Core.Elements;
 using UISystem.Core.MenuSystem;
 using UISystem.Core.PopupSystem;
 using UISystem.Core.Views;
@@ -8,10 +9,8 @@ using UISystem.MenuSystem.Models;
 using UISystem.MenuSystem.SettingsMenu;
 using UISystem.MenuSystem.Views;
 using UISystem.PhysicalInput;
-using UISystem.PopupSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.Controllers
 {
@@ -123,18 +122,18 @@ namespace UISystem.MenuSystem.Controllers
             if (Model.IsRebinding)
                 return;
             button.Icon.sprite = Resources.Load<Sprite>(EllipsisPath);
-            View.SetLastSelectedElement(button.Button);
+            View.SetLastSelectedElement(button);
             SwitchInteractability(false);
 
             Model.StartRebinding(action, index, () =>
             {
-                SwitchRebindingButtonFocusability(button.Button, true);
+                SwitchRebindingButtonInteractability(button, true);
                 UpdateButtonView(button, action, index);
                 SwitchInteractability(true);
             });
         }
 
-        private void SwitchRebindingButtonFocusability(Button button, bool allowFocus)
+        private void SwitchRebindingButtonInteractability(IInteractableElement button, bool allowFocus)
         {
             SwitchInteractability(allowFocus);
             if (allowFocus)

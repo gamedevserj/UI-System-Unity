@@ -1,8 +1,8 @@
 using UISystem.Common.Elements;
+using UISystem.Core.Elements;
 using UISystem.Core.Transitions;
 using UISystem.Transitions;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.Views
 {
@@ -43,7 +43,7 @@ namespace UISystem.MenuSystem.Views
         public ButtonView RebindKeysButton => _rebindKeysButton;
 
         /// <inheritdoc/>
-        protected override Selectable DefaultSelectedElement => InterfaceSettingsButton.Button;
+        protected override IInteractableElement DefaultSelectedElement => InterfaceSettingsButton;
 
         /// <inheritdoc/>
         protected override IViewTransition CreateTransition()

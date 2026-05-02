@@ -8,7 +8,6 @@ using UISystem.MenuSystem.Controllers;
 using UISystem.MenuSystem.Models;
 using UISystem.MenuSystem.Views;
 using UISystem.PhysicalInput;
-using UISystem.PopupSystem;
 using UISystem.PopupSystem.Popups.Controllers;
 using UISystem.PopupSystem.Popups.Views;
 using UISystem.ScreenFade;

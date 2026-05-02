@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TMPro;
+using UISystem.Core.Elements;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -24,6 +25,9 @@ namespace UISystem.Common.Elements
                 return _dropdown;
             }
         }
+
+        /// <inheritdoc/>
+        public void Select() => Dropdown.Select();
 
         /// <inheritdoc/>
         public void SwitchInteractability(bool enable)

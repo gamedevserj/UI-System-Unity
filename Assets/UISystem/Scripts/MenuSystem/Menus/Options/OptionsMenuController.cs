@@ -8,7 +8,7 @@ namespace UISystem.MenuSystem.Controllers
     /// <summary>
     /// Options menu controller.
     /// </summary>
-    internal class OptionsMenuController : MenuControllerBase<IViewCreator<OptionsMenuView>, OptionsMenuView>
+    internal class OptionsMenuController : MenuController<IViewCreator<OptionsMenuView>, OptionsMenuView>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OptionsMenuController"/> class.
@@ -32,25 +32,25 @@ namespace UISystem.MenuSystem.Controllers
 
         private void OnAudioSettingsButtonDown()
         {
-            View.SetLastSelectedElement(View.AudioSettingsButton.Button);
+            View.SetLastSelectedElement(View.AudioSettingsButton);
             MenusManager.ShowMenu(typeof(AudioSettingsMenuView)).SafeFireAndForget();
         }
 
         private void OnVideoSettingsButtonDown()
         {
-            View.SetLastSelectedElement(View.VideoSettingsButton.Button);
+            View.SetLastSelectedElement(View.VideoSettingsButton);
             MenusManager.ShowMenu(typeof(VideoSettingsMenuView)).SafeFireAndForget();
         }
 
         private void OnRebindKeysButtonDown()
         {
-            View.SetLastSelectedElement(View.RebindKeysButton.Button);
+            View.SetLastSelectedElement(View.RebindKeysButton);
             MenusManager.ShowMenu(typeof(RebindKeysMenuView)).SafeFireAndForget();
         }
 
         private void OnInterfaceSettingsButtonDown()
         {
-            View.SetLastSelectedElement(View.InterfaceSettingsButton.Button);
+            View.SetLastSelectedElement(View.InterfaceSettingsButton);
             MenusManager.ShowMenu(typeof(InterfaceSettingsMenuView)).SafeFireAndForget();
         }
     }

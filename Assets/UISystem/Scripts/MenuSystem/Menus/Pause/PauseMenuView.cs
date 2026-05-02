@@ -1,8 +1,8 @@
 using UISystem.Common.Elements;
+using UISystem.Core.Elements;
 using UISystem.Core.Transitions;
 using UISystem.Transitions;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.Views
 {
@@ -31,7 +31,7 @@ namespace UISystem.MenuSystem.Views
         public ButtonView ReturnToMainMenuButton => _returnToMainMenuButton;
 
         /// <inheritdoc/>
-        protected override Selectable DefaultSelectedElement => ResumeGameButton.Button;
+        protected override IInteractableElement DefaultSelectedElement => ResumeGameButton;
 
         /// <inheritdoc/>
         protected override IViewTransition CreateTransition()

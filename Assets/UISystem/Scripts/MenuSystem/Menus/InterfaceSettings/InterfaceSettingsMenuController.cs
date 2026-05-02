@@ -7,7 +7,6 @@ using UISystem.Core.Views;
 using UISystem.MenuSystem.Models;
 using UISystem.MenuSystem.SettingsMenu;
 using UISystem.MenuSystem.Views;
-using UISystem.PopupSystem;
 
 namespace UISystem.MenuSystem.Controllers
 {
@@ -49,7 +48,7 @@ namespace UISystem.MenuSystem.Controllers
         private void OnSaveSettingsButtonDown()
         {
             Model.SaveSettings();
-            View.SetLastSelectedElement(View.SaveSettingsButton.Button);
+            View.SetLastSelectedElement(View.SaveSettingsButton);
         }
 
         private void SetupControllerIconsDropdown()
@@ -69,7 +68,7 @@ namespace UISystem.MenuSystem.Controllers
         private void SelectControllerIconsType(int index)
         {
             Model.SelectIconType(index);
-            View.SetLastSelectedElement(View.ControllerIconsDropdown.Dropdown);
+            View.SetLastSelectedElement(View.ControllerIconsDropdown);
         }
     }
 }

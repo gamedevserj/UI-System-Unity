@@ -1,3 +1,4 @@
+using UISystem.Core.Elements;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -42,6 +43,9 @@ namespace UISystem.Common.Elements
 
         /// <inheritdoc/>
         public RectTransform Resizable => _resizable;
+
+        /// <inheritdoc/>
+        public void Select() => Button.Select();
 
         /// <inheritdoc/>
         public void SwitchInteractability(bool enable) => Button.enabled = enable;

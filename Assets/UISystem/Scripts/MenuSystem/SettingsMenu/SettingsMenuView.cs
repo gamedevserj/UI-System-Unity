@@ -1,6 +1,6 @@
 ﻿using UISystem.Common.Elements;
+using UISystem.Core.Elements;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.SettingsMenu
 {
@@ -23,6 +23,6 @@ namespace UISystem.MenuSystem.SettingsMenu
         public ButtonView ResetButton => _resetButton;
 
         /// <inheritdoc/>
-        protected override Selectable DefaultSelectedElement => ReturnButton.Button;
+        protected override IInteractableElement DefaultSelectedElement => ReturnButton;
     }
 }

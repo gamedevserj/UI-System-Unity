@@ -15,7 +15,7 @@ namespace UISystem.MenuSystem.Controllers
     /// <summary>
     /// Main menu controller.
     /// </summary>
-    internal class MainMenuController : MenuControllerBase<IViewCreator<MainMenuView>, MainMenuView>
+    internal class MainMenuController : MenuController<IViewCreator<MainMenuView>, MainMenuView>
     {
         private readonly IPopupsManager _popupsManager;
         private readonly MenuBackgroundController _menuBackgroundController;
@@ -74,7 +74,7 @@ namespace UISystem.MenuSystem.Controllers
 
         private async Task PressedPlay()
         {
-            View.SetLastSelectedElement(View.PlayButton.Button);
+            View.SetLastSelectedElement(View.PlayButton);
             await _screenFadeManager.FadeOut();
             await MenusManager.ShowMenu(typeof(InGameMenuView), StackingType.Clear, instant: true);
             await _screenFadeManager.FadeIn();
@@ -82,13 +82,13 @@ namespace UISystem.MenuSystem.Controllers
 
         private void PressedOptions()
         {
-            View.SetLastSelectedElement(View.OptionsButton.Button);
+            View.SetLastSelectedElement(View.OptionsButton);
             MenusManager.ShowMenu(typeof(OptionsMenuView)).SafeFireAndForget();
         }
 
         private void PressedQuit()
         {
-            View.SetLastSelectedElement(View.QuitButton.Button);
+            View.SetLastSelectedElement(View.QuitButton);
             ShowQuitPopup();
         }
 

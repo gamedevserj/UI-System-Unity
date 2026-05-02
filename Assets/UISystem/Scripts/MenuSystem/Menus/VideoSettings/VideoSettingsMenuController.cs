@@ -5,7 +5,6 @@ using UISystem.Core.Views;
 using UISystem.MenuSystem.Models;
 using UISystem.MenuSystem.SettingsMenu;
 using UISystem.MenuSystem.Views;
-using UISystem.PopupSystem;
 
 namespace UISystem.MenuSystem.Controllers
 {

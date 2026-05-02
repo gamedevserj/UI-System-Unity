@@ -1,8 +1,6 @@
-﻿using System;
-using UISystem.Core.MenuSystem;
+﻿using UISystem.Core.MenuSystem;
 using UISystem.Core.PhysicalInput;
 using UISystem.Core.PopupSystem;
-using UISystem.PopupSystem;
 using UnityEngine.InputSystem;
 using static UISystem.PhysicalInput.UIInputActions;
 

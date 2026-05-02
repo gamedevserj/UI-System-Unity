@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UISystem.Core.Elements;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -23,6 +24,9 @@ namespace UISystem.Common.Elements
                 return _slider;
             }
         }
+
+        /// <inheritdoc/>
+        public void Select() => Slider.Select();
 
         /// <inheritdoc/>
         public void SwitchInteractability(bool enable) => Slider.enabled = enable;

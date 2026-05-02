@@ -14,7 +14,7 @@ namespace UISystem.MenuSystem.Controllers
     /// <summary>
     /// Pause menu controller.
     /// </summary>
-    internal class PauseMenuController : MenuControllerBase<IViewCreator<PauseMenuView>, PauseMenuView>
+    internal class PauseMenuController : MenuController<IViewCreator<PauseMenuView>, PauseMenuView>
     {
         private readonly IPopupsManager _popupsManager;
         private readonly ScreenFadeManager _screenFadeManager;
@@ -68,13 +68,13 @@ namespace UISystem.MenuSystem.Controllers
 
         private void PressedOptions()
         {
-            View.SetLastSelectedElement(View.OptionsButton.Button);
+            View.SetLastSelectedElement(View.OptionsButton);
             MenusManager.ShowMenu(typeof(OptionsMenuView)).SafeFireAndForget();
         }
 
         private void PressedReturn()
         {
-            View.SetLastSelectedElement(View.ReturnToMainMenuButton.Button);
+            View.SetLastSelectedElement(View.ReturnToMainMenuButton);
             SwitchInteractability(false);
 
             _popupsManager

@@ -1,6 +1,6 @@
+using UISystem.Core.Elements;
 using UISystem.Core.Transitions;
 using UISystem.Transitions;
-using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.Views
 {
@@ -10,7 +10,7 @@ namespace UISystem.MenuSystem.Views
     public class InGameMenuView : MenuView
     {
         /// <inheritdoc/>
-        protected override Selectable DefaultSelectedElement => null;
+        protected override IInteractableElement DefaultSelectedElement => null;
 
         /// <inheritdoc/>
         protected override IViewTransition CreateTransition()

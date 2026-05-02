@@ -4,7 +4,6 @@ using UISystem.Core.PopupSystem;
 using UISystem.Core.Views;
 using UISystem.PopupSystem;
 using UISystem.PopupSystem.Popups.Views;
-using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.SettingsMenu
 {
@@ -15,7 +14,7 @@ namespace UISystem.MenuSystem.SettingsMenu
     /// <typeparam name="TView">Type of view. Must be of type <see cref="SettingsMenuView"/>.</typeparam>
     /// <typeparam name="TModel">Type of model. Must implement <see cref="ISettingsMenuModel"/>.</typeparam>
     internal abstract class SettingsMenuController<TViewCreator, TView, TModel>
-        : MenuController<TViewCreator, TView, Selectable>
+        : MenuController<TViewCreator, TView>
         where TViewCreator : IViewCreator<TView>
         where TView : SettingsMenuView
         where TModel : ISettingsMenuModel
@@ -53,7 +52,7 @@ namespace UISystem.MenuSystem.SettingsMenu
         {
             if (Model.HasUnappliedSettings)
             {
-                View.SetLastSelectedElement(View.ReturnButton.Button);
+                View.SetLastSelectedElement(View.ReturnButton);
                 CanReceivePhysicalInput = false;
                 SwitchInteractability(false);
                 PopupsManager
@@ -112,7 +111,7 @@ namespace UISystem.MenuSystem.SettingsMenu
         /// </summary>
         protected virtual void OnResetToDefaultButtonDown()
         {
-            View.SetLastSelectedElement(View.ResetButton.Button);
+            View.SetLastSelectedElement(View.ResetButton);
             SwitchInteractability(false);
             PopupsManager
                 .ShowPopup(typeof(YesNoPopupView), PopupMessages.ResetToDefault, (result) =>

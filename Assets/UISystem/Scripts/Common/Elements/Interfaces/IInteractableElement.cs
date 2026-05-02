@@ -1,10 +1,15 @@
-﻿namespace UISystem.Common.Elements
+﻿namespace UISystem.Core.Elements
 {
     /// <summary>
-    /// Defines contract for interactable element.
+    /// Defines contract for interactable UI element in Unity.
     /// </summary>
-    public interface IInteractableElement
+    public partial interface IInteractableElement
     {
+        /// <summary>
+        /// Selects the element.
+        /// </summary>
+        void Select();
+
         /// <summary>
         /// Switches element's interactability.
         /// </summary>
