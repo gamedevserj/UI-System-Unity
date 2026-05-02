@@ -1,26 +1,44 @@
 ﻿using UISystem.Constants;
 using UISystem.Core.MenuSystem;
+using UnityEngine;
 
 namespace UISystem.MenuSystem.Models
 {
+    /// <summary>
+    /// Model for audio settings menu.
+    /// </summary>
     public class AudioSettingsMenuModel : ISettingsMenuModel
     {
+        private readonly GameSettings _settings;
 
         private float _lastMusicVolume;
         private float _lastSfxVolume;
 
-        private readonly GameSettings _settings;
-
-        public bool HasUnappliedSettings => MusicVolume != _lastMusicVolume || SfxVolume != _lastSfxVolume;
-        public float MusicVolume { get => _settings.MusicVolume; set => _settings.MusicVolume = value; }
-        public float SfxVolume { get => _settings.SfxVolume; set => _settings.SfxVolume = value; }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AudioSettingsMenuModel"/> class.
+        /// </summary>
+        /// <param name="settings">Game settings.</param>
         public AudioSettingsMenuModel(GameSettings settings)
         {
             _settings = settings;
             RememberLastSavedSettings();
         }
 
+        /// <inheritdoc/>
+        public bool HasUnappliedSettings => !Mathf.Approximately(MusicVolume, _lastMusicVolume)
+            || !Mathf.Approximately(SfxVolume, _lastSfxVolume);
+
+        /// <summary>
+        /// Gets or sets music volume.
+        /// </summary>
+        public float MusicVolume { get => _settings.MusicVolume; set => _settings.MusicVolume = value; }
+
+        /// <summary>
+        /// Gets or sets SFX volume.
+        /// </summary>
+        public float SfxVolume { get => _settings.SfxVolume; set => _settings.SfxVolume = value; }
+
+        /// <inheritdoc/>
         public void ResetToDefault()
         {
             MusicVolume = ConfigData.DefaultMusicVolume;
@@ -28,12 +46,14 @@ namespace UISystem.MenuSystem.Models
             SaveSettings();
         }
 
+        /// <inheritdoc/>
         public void SaveSettings()
         {
             RememberLastSavedSettings();
             _settings.SaveAudioSettings();
         }
 
+        /// <inheritdoc/>
         public void DiscardChanges()
         {
             MusicVolume = _lastMusicVolume;
@@ -45,6 +65,5 @@ namespace UISystem.MenuSystem.Models
             _lastMusicVolume = MusicVolume;
             _lastSfxVolume = SfxVolume;
         }
-
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AsyncAwaitBestPractices;
 using UISystem.Core.MenuSystem;
 using UISystem.Core.PopupSystem;
 using UISystem.MenuSystem;
@@ -7,7 +8,6 @@ using UISystem.MenuSystem.Controllers;
 using UISystem.MenuSystem.Models;
 using UISystem.MenuSystem.Views;
 using UISystem.PhysicalInput;
-using UISystem.PopupSystem;
 using UISystem.PopupSystem.Popups.Controllers;
 using UISystem.PopupSystem.Popups.Views;
 using UISystem.ScreenFade;
@@ -18,47 +18,37 @@ using UnityEngine.UI;
 
 namespace UISystem
 {
-    public partial class UiInstaller : MonoBehaviour
+    /// <summary>
+    /// UI installer.
+    /// </summary>
+    public class UiInstaller : MonoBehaviour
     {
+        [SerializeField] private Image _menuBackground;
+        [SerializeField] private Image _fade;
+        [SerializeField] private Transform _menusParent;
+        [SerializeField] private Transform _popupsParent;
+        [SerializeField] private MenuViewsDatabase _menuViewsDatabase;
+        [SerializeField] private PopupViewsDatabase _popupViewsDatabase;
 
-        public static UiInstaller Instance { get; private set; }
-
-        [SerializeField] private Image menuBackground;
-        [SerializeField] private Image fade;
-        [SerializeField] private Transform menusParent;
-        [SerializeField] private Transform popupsParent;
-        [SerializeField] private MenuViewsDatabase menuViewsDatabase;
-        [SerializeField] private PopupViewsDatabase popupViewsDatabase;
-        [SerializeField] private GameActions gameActions;
-
-        private InputProcessor _inputProcessor;
         private UIInputActions _inputActions;
 
-        private void Awake()
-        {
-            Instance ??= this;
-            _inputActions = new UIInputActions();
-            _inputProcessor = new InputProcessor(_inputActions);
-        }
+        /// <summary>
+        /// Gets the instance of the UiInstaller.
+        /// </summary>
+        public static UiInstaller Instance { get; private set; }
 
-        private void OnEnable()
-        {
-            _inputActions.Enable();
-        }
-
-        private void OnDisable()
-        {
-            _inputActions.Disable();
-        }
-
+        /// <summary>
+        /// Initialize UI.
+        /// </summary>
+        /// <param name="settings">Game settings.</param>
         public void Init(GameSettings settings)
         {
-            var popupsManager = new PopupsManager<PopupResult>();
-            var yesPopupViewCreator = new ViewCreator<YesPopupView>(GetPopupView(typeof(YesPopupView)), popupsParent);
-            var yesNoPopupViewCreator = new ViewCreator<YesNoPopupView>(GetPopupView(typeof(YesNoPopupView)), popupsParent);
-            var yesNoCancelPopupViewCreator = new ViewCreator<YesNoCancelPopupView>(GetPopupView(typeof(YesNoCancelPopupView)), popupsParent);
+            var popupsManager = new PopupsManager();
+            var yesPopupViewCreator = new ViewCreator<YesPopupView>(GetPopupPrefab(typeof(YesPopupView)), _popupsParent);
+            var yesNoPopupViewCreator = new ViewCreator<YesNoPopupView>(GetPopupPrefab(typeof(YesNoPopupView)), _popupsParent);
+            var yesNoCancelPopupViewCreator = new ViewCreator<YesNoCancelPopupView>(GetPopupPrefab(typeof(YesNoCancelPopupView)), _popupsParent);
 
-            var popups = new Dictionary<Type, IPopupController<PopupResult>>
+            var popups = new Dictionary<Type, IPopupController>
             {
                 {
                     typeof(YesPopupView),
@@ -76,86 +66,111 @@ namespace UISystem
 
             popupsManager.Init(popups);
 
-            var fadeManager = new ScreenFadeManager(fade);
-            var backgroundController = new MenuBackgroundController(menuBackground);
+            var fadeManager = new ScreenFadeManager(_fade);
+            var backgroundController = new MenuBackgroundController(_menuBackground);
 
             var menusManager = new MenusManager();
-            var mainMenuViewCreator = new ViewCreator<MainMenuView>(GetMenuView(typeof(MainMenuView)), menusParent);
-            var inGameMenuViewCreator = new ViewCreator<InGameMenuView>(GetMenuView(typeof(InGameMenuView)), menusParent);
-            var pauseViewCreator = new ViewCreator<PauseMenuView>(GetMenuView(typeof(PauseMenuView)), menusParent);
-            var optionsViewCreator = new ViewCreator<OptionsMenuView>(GetMenuView(typeof(OptionsMenuView)), menusParent);
-            var audioSettingsViewCreator = new ViewCreator<AudioSettingsMenuView>(GetMenuView(typeof(AudioSettingsMenuView)), menusParent);
-            var videoSettingsViewCreator = new ViewCreator<VideoSettingsMenuView>(GetMenuView(typeof(VideoSettingsMenuView)), menusParent);
-            var rebindKeysViewCreator = new ViewCreator<RebindKeysMenuView>(GetMenuView(typeof(RebindKeysMenuView)), menusParent);
-            var interfaceMenuViewCreator = new ViewCreator<InterfaceSettingsMenuView>(GetMenuView(typeof(InterfaceSettingsMenuView)), menusParent);
+            var mainMenuViewCreator = new ViewCreator<MainMenuView>(GetMenuPrefab(typeof(MainMenuView)), _menusParent);
+            var inGameMenuViewCreator = new ViewCreator<InGameMenuView>(GetMenuPrefab(typeof(InGameMenuView)), _menusParent);
+            var pauseViewCreator = new ViewCreator<PauseMenuView>(GetMenuPrefab(typeof(PauseMenuView)), _menusParent);
+            var optionsViewCreator = new ViewCreator<OptionsMenuView>(GetMenuPrefab(typeof(OptionsMenuView)), _menusParent);
+            var audioSettingsViewCreator = new ViewCreator<AudioSettingsMenuView>(GetMenuPrefab(typeof(AudioSettingsMenuView)), _menusParent);
+            var videoSettingsViewCreator = new ViewCreator<VideoSettingsMenuView>(GetMenuPrefab(typeof(VideoSettingsMenuView)), _menusParent);
+            var rebindKeysViewCreator = new ViewCreator<RebindKeysMenuView>(GetMenuPrefab(typeof(RebindKeysMenuView)), _menusParent);
+            var interfaceMenuViewCreator = new ViewCreator<InterfaceSettingsMenuView>(GetMenuPrefab(typeof(InterfaceSettingsMenuView)), _menusParent);
             var menus = new Dictionary<Type, IMenuController>
             {
                 {
-                    typeof(MainMenuView), 
+                    typeof(MainMenuView),
                     new MainMenuController(
-                        mainMenuViewCreator, 
-                        null, 
-                        menusManager, 
-                        popupsManager, 
-                        fadeManager, 
+                        mainMenuViewCreator,
+                        menusManager,
+                        popupsManager,
+                        fadeManager,
                         backgroundController)
                 },
                 {
                     typeof(InGameMenuView),
-                    new InGameMenuController(inGameMenuViewCreator, new InGameMenuModel(), menusManager)
+                    new InGameMenuController(inGameMenuViewCreator, menusManager)
                 },
                 {
                     typeof(PauseMenuView),
                     new PauseMenuController(
-                        pauseViewCreator, 
-                        null, 
-                        menusManager, 
-                        popupsManager, 
-                        fadeManager, 
+                        pauseViewCreator,
+                        menusManager,
+                        popupsManager,
+                        fadeManager,
                         backgroundController)
                 },
                 {
                     typeof(OptionsMenuView),
-                    new OptionsMenuController(optionsViewCreator, null, menusManager)
+                    new OptionsMenuController(optionsViewCreator, menusManager)
                 },
                 {
                     typeof(AudioSettingsMenuView),
                     new AudioSettingsMenuController(
-                        audioSettingsViewCreator, 
-                        new AudioSettingsMenuModel(settings), 
-                        menusManager, 
+                        audioSettingsViewCreator,
+                        menusManager,
+                        new AudioSettingsMenuModel(settings),
                         popupsManager)
                 },
                 {
                     typeof(VideoSettingsMenuView),
                     new VideoSettingsMenuController(
-                        videoSettingsViewCreator, 
-                        new VideoSettingsMenuModel(settings), 
-                        menusManager, 
+                        videoSettingsViewCreator,
+                        menusManager,
+                        new VideoSettingsMenuModel(settings),
                         popupsManager)
                 },
                 {
                     typeof(RebindKeysMenuView),
                     new RebindKeysMenuController(
-                        rebindKeysViewCreator, 
-                        new RebindKeysMenuModel(settings), 
-                        menusManager, 
+                        rebindKeysViewCreator,
+                        menusManager,
+                        new RebindKeysMenuModel(settings),
                         popupsManager)
                 },
                 {
                     typeof(InterfaceSettingsMenuView),
                     new InterfaceSettingsMenuController(
-                        interfaceMenuViewCreator, 
-                        new InterfaceSettingsMenuModel(settings), 
-                        menusManager, 
+                        interfaceMenuViewCreator,
+                        menusManager,
+                        new InterfaceSettingsMenuModel(settings),
                         popupsManager)
                 },
             };
+
+            _ = new InputProcessor(_inputActions, menusManager, popupsManager);
+
             menusManager.Init(menus);
-            menusManager.ShowMenu(typeof(MainMenuView), StackingType.Clear);
+            menusManager.ShowMenu(typeof(MainMenuView), StackingType.Clear).SafeFireAndForget();
         }
 
-        private ViewBase GetMenuView(Type type) => menuViewsDatabase.GetView(type);
-        private ViewBase GetPopupView(Type type) => popupViewsDatabase.GetView(type);
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+            _inputActions = new UIInputActions();
+            DontDestroyOnLoad(gameObject);
+        }
+
+        private void OnEnable()
+        {
+            _inputActions.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _inputActions.Disable();
+        }
+
+        private ViewBase GetMenuPrefab(Type type) => _menuViewsDatabase.GetPrefab(type);
+
+        private ViewBase GetPopupPrefab(Type type) => _popupViewsDatabase.GetPrefab(type);
     }
 }

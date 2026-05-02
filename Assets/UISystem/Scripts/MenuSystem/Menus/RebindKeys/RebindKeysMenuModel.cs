@@ -7,35 +7,54 @@ using UnityEngine.InputSystem;
 
 namespace UISystem.MenuSystem.Models
 {
+    /// <summary>
+    /// Rebind keys menu model.
+    /// </summary>
     public class RebindKeysMenuModel : ISettingsMenuModel
     {
-
-        private bool _isRebinding;
         private readonly GameSettings _settings;
+        private bool _isRebinding;
         private InputActionRebindingExtensions.RebindingOperation _rebindOperation;
 
-        public bool IsRebinding => _isRebinding;
-        public GameActions GameActions => _settings.Actions;
-        public ControllerIconsType IconsType => _settings.ControllerIconsType;
-
-        public bool HasUnappliedSettings => false;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RebindKeysMenuModel"/> class.
+        /// </summary>
+        /// <param name="settings">Game settings.</param>
         public RebindKeysMenuModel(GameSettings settings)
         {
             _settings = settings;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether rebinding is in progress.
+        /// </summary>
+        public bool IsRebinding => _isRebinding;
+
+        /// <summary>
+        /// Gets game actions.
+        /// </summary>
+        public GameActions GameActions => _settings.Actions;
+
+        /// <summary>
+        /// Gets the type of controller icons.
+        /// </summary>
+        public ControllerIconsType IconsType => _settings.ControllerIconsType;
+
+        /// <inheritdoc/>
+        public bool HasUnappliedSettings => false;
+
+        /// <inheritdoc/>
         public void ResetToDefault()
         {
             _settings.ResetInputMapToDefault();
         }
 
         /// <summary>
-        /// Starts the process of rebinding a key
+        /// Starts the process of rebinding a key.
         /// </summary>
-        /// <param name="action">Action to rebind</param>
-        /// <param name="index">0 - keyboard, 1 - joystick</param>
-        /// <param name="onFinishedRebinding"></param>
+        /// <param name="action">Action to rebind.</param>
+        /// <param name="index">0 - keyboard, 1 - joystick.</param>
+        /// <param name="onFinishedRebinding">Action to perform after rebinding is finished.</param>
         public void StartRebinding(InputAction action, int index = 0, Action onFinishedRebinding = null)
         {
             // the code for rebinding is taken from the official sample in input asset
@@ -51,6 +70,7 @@ namespace UISystem.MenuSystem.Models
             {
                 onFinishedRebinding?.Invoke();
                 CleanUp();
+
                 // need to delay if player presses return button
                 await Task.Delay(100);
                 _isRebinding = false;
@@ -58,7 +78,7 @@ namespace UISystem.MenuSystem.Models
 
             // Configure the rebind.
             _rebindOperation = action.PerformInteractiveRebinding(index)
-                .WithCancelingThrough("asdfg")// overwriting default cancel
+                .WithCancelingThrough("asdfg") // overwriting default cancel
                 .OnPotentialMatch(operation =>
                 {
                     // allows to cancel with either button
@@ -73,16 +93,17 @@ namespace UISystem.MenuSystem.Models
                     }
                 })
                 .OnCancel(operation => { FinishRebinding(); })
-                .OnComplete(operation => 
+                .OnComplete(operation =>
                 {
                     _settings.SaveInputKeys();
-                    FinishRebinding(); 
+                    FinishRebinding();
                 });
 
             _rebindOperation.Start();
             _isRebinding = true;
         }
 
+        /// <inheritdoc/>
         public void SaveSettings()
         {
             // is not implemented in this setup
@@ -90,6 +111,7 @@ namespace UISystem.MenuSystem.Models
             // if you want to change it - store the actions that player tried to rebind and save/discard them when the button is pressed
         }
 
+        /// <inheritdoc/>
         public void DiscardChanges()
         {
             // is not implemented in this setup

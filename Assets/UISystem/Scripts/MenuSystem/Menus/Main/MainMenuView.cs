@@ -1,33 +1,48 @@
 using UISystem.Common.Elements;
+using UISystem.Core.Elements;
 using UISystem.Core.Transitions;
 using UISystem.Transitions;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.Views
 {
+    /// <summary>
+    /// Main menu view.
+    /// </summary>
     public partial class MainMenuView : MenuView
     {
+        [SerializeField] private ButtonView _playButton;
+        [SerializeField] private ButtonView _optionsButton;
+        [SerializeField] private ButtonView _quitButton;
 
-        [SerializeField] private ButtonView playButton;
-        [SerializeField] private ButtonView optionsButton;
-        [SerializeField] private ButtonView quitButton;
+        /// <summary>
+        /// Gets play button.
+        /// </summary>
+        public ButtonView PlayButton => _playButton;
 
-        public ButtonView PlayButton => playButton;
-        public ButtonView OptionsButton => optionsButton;
-        public ButtonView QuitButton => quitButton;
+        /// <summary>
+        /// Gets options button.
+        /// </summary>
+        public ButtonView OptionsButton => _optionsButton;
 
-        protected override Selectable DefaultSelectedElement => PlayButton.Button;
+        /// <summary>
+        /// Gets quit button.
+        /// </summary>
+        public ButtonView QuitButton => _quitButton;
 
+        /// <inheritdoc/>
+        protected override IInteractableElement DefaultSelectedElement => PlayButton;
+
+        /// <inheritdoc/>
         protected override IViewTransition CreateTransition()
         {
             return new MainElementDropTransition(FadeObjectsContainer, PlayButton, new IResizableElement[] { OptionsButton, QuitButton });
         }
 
+        /// <inheritdoc/>
         protected override void SetInteractableElements()
         {
-            _interactableElements = new IInteractableElement[] { PlayButton, OptionsButton, QuitButton };
+            InteractableElements = new IInteractableElement[] { PlayButton, OptionsButton, QuitButton };
         }
-
     }
 }

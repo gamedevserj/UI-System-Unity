@@ -1,15 +1,22 @@
-﻿using UISystem.Core.MenuSystem;
+﻿using UISystem.Core.Elements;
+using UISystem.Core.MenuSystem;
 using UISystem.Views;
-using UnityEngine.UI;
 
 namespace UISystem.MenuSystem
 {
-    public abstract partial class MenuView : ViewBase, IMenuView<Selectable>
+    /// <summary>
+    /// Base class for menu views.
+    /// </summary>
+    public abstract partial class MenuView : ViewBase, IMenuView
     {
+        private IInteractableElement _lastSelectedElement;
 
-        private Selectable _lastSelectedElement;
-        protected abstract Selectable DefaultSelectedElement { get; }
+        /// <summary>
+        /// Gets the element that will have focus by default when menu is shown for the first time.
+        /// </summary>
+        protected abstract IInteractableElement DefaultSelectedElement { get; }
 
+        /// <inheritdoc/>
         public override void FocusElement()
         {
             if (_lastSelectedElement != null)
@@ -22,7 +29,8 @@ namespace UISystem.MenuSystem
             }
         }
 
-        public void SetLastSelectedElement(Selectable lastSelectedElement)
+        /// <inheritdoc/>
+        public void SetLastSelectedElement(IInteractableElement lastSelectedElement)
         {
             _lastSelectedElement = lastSelectedElement;
         }

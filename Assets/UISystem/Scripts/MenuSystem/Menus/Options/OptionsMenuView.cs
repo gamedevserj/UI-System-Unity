@@ -1,38 +1,70 @@
 using UISystem.Common.Elements;
+using UISystem.Core.Elements;
 using UISystem.Core.Transitions;
 using UISystem.Transitions;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.Views
 {
+    /// <summary>
+    /// Options menu view.
+    /// </summary>
     public partial class OptionsMenuView : MenuView
     {
+        [SerializeField] private ButtonView _interfaceSettingsButton;
+        [SerializeField] private ButtonView _audioSettingsButton;
+        [SerializeField] private ButtonView _videoSettingsButton;
+        [SerializeField] private ButtonView _rebindKeysButton;
+        [SerializeField] private ButtonView _returnButton;
 
-        [SerializeField] private ButtonView interfaceSettingsButton;
-        [SerializeField] private ButtonView audioSettingsButton;
-        [SerializeField] private ButtonView videoSettingsButton;
-        [SerializeField] private ButtonView rebindKeysButton;
-        [SerializeField] private ButtonView returnButton;
+        /// <summary>
+        /// Gets return button.
+        /// </summary>
+        public ButtonView ReturnButton => _returnButton;
 
-        public ButtonView ReturnButton => returnButton;
-        public ButtonView InterfaceSettingsButton => interfaceSettingsButton;
-        public ButtonView AudioSettingsButton => audioSettingsButton;
-        public ButtonView VideoSettingsButton => videoSettingsButton;
-        public ButtonView RebindKeysButton => rebindKeysButton;
+        /// <summary>
+        /// Gets interface settings button.
+        /// </summary>
+        public ButtonView InterfaceSettingsButton => _interfaceSettingsButton;
 
-        protected override Selectable DefaultSelectedElement => InterfaceSettingsButton.Button;
+        /// <summary>
+        /// Gets audio settings button.
+        /// </summary>
+        public ButtonView AudioSettingsButton => _audioSettingsButton;
 
+        /// <summary>
+        /// Gets video settings button.
+        /// </summary>
+        public ButtonView VideoSettingsButton => _videoSettingsButton;
+
+        /// <summary>
+        /// Gets rebind keys button.
+        /// </summary>
+        public ButtonView RebindKeysButton => _rebindKeysButton;
+
+        /// <inheritdoc/>
+        protected override IInteractableElement DefaultSelectedElement => InterfaceSettingsButton;
+
+        /// <inheritdoc/>
         protected override IViewTransition CreateTransition()
         {
-            return new MainElementDropTransition(FadeObjectsContainer, InterfaceSettingsButton, 
+            return new MainElementDropTransition(
+                FadeObjectsContainer,
+                InterfaceSettingsButton,
                 new IResizableElement[] { ReturnButton, AudioSettingsButton, VideoSettingsButton, RebindKeysButton });
         }
+
+        /// <inheritdoc/>
         protected override void SetInteractableElements()
         {
-            _interactableElements = new IInteractableElement[] { ReturnButton, AudioSettingsButton, VideoSettingsButton,
-            RebindKeysButton, InterfaceSettingsButton };
+            InteractableElements = new IInteractableElement[]
+            {
+                ReturnButton,
+                AudioSettingsButton,
+                VideoSettingsButton,
+                RebindKeysButton,
+                InterfaceSettingsButton,
+            };
         }
-
     }
 }

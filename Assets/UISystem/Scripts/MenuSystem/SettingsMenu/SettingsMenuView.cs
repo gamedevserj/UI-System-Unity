@@ -1,19 +1,28 @@
 ﻿using UISystem.Common.Elements;
+using UISystem.Core.Elements;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UISystem.MenuSystem.SettingsMenu
 {
+    /// <summary>
+    /// Base class for menu controlling game settings.
+    /// </summary>
     public abstract partial class SettingsMenuView : MenuView
     {
+        [SerializeField] private ButtonView _returnButton;
+        [SerializeField] private ButtonView _resetButton;
 
-        [SerializeField] private ButtonView returnButton;
-        [SerializeField] private ButtonView resetButton;
+        /// <summary>
+        /// Gets return button.
+        /// </summary>
+        public ButtonView ReturnButton => _returnButton;
 
-        public ButtonView ReturnButton => returnButton;
-        public ButtonView ResetButton => resetButton;
+        /// <summary>
+        /// Gets reset to default button.
+        /// </summary>
+        public ButtonView ResetButton => _resetButton;
 
-        protected override Selectable DefaultSelectedElement => ReturnButton.Button;
-
+        /// <inheritdoc/>
+        protected override IInteractableElement DefaultSelectedElement => ReturnButton;
     }
 }

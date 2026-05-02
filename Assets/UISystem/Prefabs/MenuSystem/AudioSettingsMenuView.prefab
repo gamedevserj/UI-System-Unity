@@ -289,13 +289,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d83dcee1dc70348be24e821624523e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 4594926490695857909}
-  returnButton: {fileID: 7236686578611716728}
-  resetButton: {fileID: 155039067672253584}
-  musicSlider: {fileID: 6276635182975994672}
-  sfxSlider: {fileID: 5979206990830106268}
-  saveSettingsButton: {fileID: 1727798802368387885}
-  panel: {fileID: 8217455577986696728}
+  _canvasGroup: {fileID: 4594926490695857909}
+  _returnButton: {fileID: 7236686578611716728}
+  _resetButton: {fileID: 155039067672253584}
+  _musicSlider: {fileID: 6276635182975994672}
+  _sfxSlider: {fileID: 5979206990830106268}
+  _saveSettingsButton: {fileID: 1727798802368387885}
+  _panel: {fileID: 8217455577986696728}
 --- !u!1 &5922673813435691118
 GameObject:
   m_ObjectHideFlags: 0

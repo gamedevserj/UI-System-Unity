@@ -64,12 +64,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66e79c67b5bbe9f45a2aba0d61170196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 267874291535618261}
-  interfaceSettingsButton: {fileID: 6021673606476195108}
-  audioSettingsButton: {fileID: 1335894818942729632}
-  videoSettingsButton: {fileID: 2204263340842999484}
-  rebindKeysButton: {fileID: 7475394059803134459}
-  returnButton: {fileID: 8015735141652586906}
+  _canvasGroup: {fileID: 267874291535618261}
+  _interfaceSettingsButton: {fileID: 6021673606476195108}
+  _audioSettingsButton: {fileID: 1335894818942729632}
+  _videoSettingsButton: {fileID: 2204263340842999484}
+  _rebindKeysButton: {fileID: 7475394059803134459}
+  _returnButton: {fileID: 8015735141652586906}
 --- !u!1 &267874291691901886
 GameObject:
   m_ObjectHideFlags: 0

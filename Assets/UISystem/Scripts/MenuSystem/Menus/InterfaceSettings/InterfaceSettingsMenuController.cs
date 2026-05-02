@@ -7,55 +7,68 @@ using UISystem.Core.Views;
 using UISystem.MenuSystem.Models;
 using UISystem.MenuSystem.SettingsMenu;
 using UISystem.MenuSystem.Views;
-using UISystem.PopupSystem;
 
 namespace UISystem.MenuSystem.Controllers
 {
+    /// <summary>
+    /// Interface settings menu controller.
+    /// </summary>
     internal class InterfaceSettingsMenuController : SettingsMenuController<IViewCreator<InterfaceSettingsMenuView>, InterfaceSettingsMenuView, InterfaceSettingsMenuModel>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InterfaceSettingsMenuController"/> class.
+        /// </summary>
+        /// <param name="viewCreator">View creator.</param>
+        /// <param name="menusManager">Menus manager.</param>
+        /// <param name="model">Interface settings menu model.</param>
+        /// <param name="popupsManager">Popups manager.</param>
+        public InterfaceSettingsMenuController(
+            IViewCreator<InterfaceSettingsMenuView> viewCreator,
+            IMenusManager menusManager,
+            InterfaceSettingsMenuModel model,
+            IPopupsManager popupsManager)
+            : base(viewCreator, menusManager, model, popupsManager)
+        {
+        }
 
-        public InterfaceSettingsMenuController(IViewCreator<InterfaceSettingsMenuView> viewCreator, InterfaceSettingsMenuModel model,
-            IMenusManager menusManager, IPopupsManager<PopupResult> popupsManager)
-            : base(viewCreator, model, menusManager, popupsManager)
-        { }
-
+        /// <inheritdoc/>
         protected override void SetupElements()
         {
             SetupControllerIconsDropdown();
             base.SetupElements();
-            _view.SaveSettingsButton.AddListener(OnSaveSettingsButtonDown);
+            View.SaveSettingsButton.AddOnClickListener(OnSaveSettingsButtonDown);
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateAllViewValues()
+        {
+            View.ControllerIconsDropdown.SetValue((int)Model.ControllerIconsType);
         }
 
         private void OnSaveSettingsButtonDown()
         {
-            _model.SaveSettings();
-            _view.SetLastSelectedElement(_view.SaveSettingsButton.Button);
+            Model.SaveSettings();
+            View.SetLastSelectedElement(View.SaveSettingsButton);
         }
 
         private void SetupControllerIconsDropdown()
         {
-            _view.ControllerIconsDropdown.Dropdown.ClearOptions();
+            View.ControllerIconsDropdown.Dropdown.ClearOptions();
             var options = new List<string>();
             foreach (var item in Enum.GetValues(typeof(ControllerIconsType)))
             {
                 options.Add(item.ToString());
             }
-            
-            _view.ControllerIconsDropdown.AddOptions(options);
-            _view.ControllerIconsDropdown.SetValue((int)_model.ControllerIconsType);
-            _view.ControllerIconsDropdown.AddListener(SelectControllerIconsType);
+
+            View.ControllerIconsDropdown.AddOptions(options);
+            View.ControllerIconsDropdown.SetValue((int)Model.ControllerIconsType);
+            View.ControllerIconsDropdown.AddOnValueChangedListener(SelectControllerIconsType);
         }
 
         private void SelectControllerIconsType(int index)
         {
-            _model.SelectIconType(index);
-            _view.SetLastSelectedElement(_view.ControllerIconsDropdown.Dropdown);
+            Model.SelectIconType(index);
+            View.SetLastSelectedElement(View.ControllerIconsDropdown);
         }
-
-        protected override void ResetViewToDefault()
-        {
-            _view.ControllerIconsDropdown.SetValue((int)_model.ControllerIconsType);
-        }
-
     }
 }

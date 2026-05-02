@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d7b30539456cd4ca26b34bd0d80e67, type: 3}
   m_Name: PopupViewsDatabase
   m_EditorClassIdentifier: 
-  yesPopupPrefab: {fileID: 2082051489736832666, guid: b4477f73ed2b1184d86e43a72d3819a0, type: 3}
-  yesNoPopupPrefab: {fileID: 1798598869478096647, guid: ac19c4945c24ca64fa0ccf2ef1ba7bc0, type: 3}
-  yesNoCancelPopupPrefab: {fileID: 1562753231777474937, guid: df0a59e9e21676b4f97772a67c7befc7, type: 3}
+  _yesPopupPrefab: {fileID: 2082051489736832666, guid: b4477f73ed2b1184d86e43a72d3819a0, type: 3}
+  _yesNoPopupPrefab: {fileID: 1798598869478096647, guid: ac19c4945c24ca64fa0ccf2ef1ba7bc0, type: 3}
+  _yesNoCancelPopupPrefab: {fileID: 1562753231777474937, guid: df0a59e9e21676b4f97772a67c7befc7, type: 3}

@@ -6,22 +6,29 @@ using UnityEngine;
 
 namespace UISystem.ScriptableObjects
 {
+    /// <summary>
+    /// Scriptable object containing menu view prefabs.
+    /// </summary>
     [CreateAssetMenu(fileName = "MenuViewsDatabase", menuName = "MenuViewsDatabase")]
     public class MenuViewsDatabase : ScriptableObject
     {
-
-        [SerializeField] private ViewBase mainMenuPrefab;
-        [SerializeField] private ViewBase inGameMenuPrefab;
-        [SerializeField] private ViewBase optionMenuPrefab;
-        [SerializeField] private ViewBase audioSettingsMenuPrefab;
-        [SerializeField] private ViewBase interfaceSettingsMenuPrefab;
-        [SerializeField] private ViewBase videoSettingsMenuPrefab;
-        [SerializeField] private ViewBase rebindKeysMenuPrefab;
-        [SerializeField] private ViewBase pauseMenuPrefab;
+        [SerializeField] private ViewBase _mainMenuPrefab;
+        [SerializeField] private ViewBase _inGameMenuPrefab;
+        [SerializeField] private ViewBase _optionMenuPrefab;
+        [SerializeField] private ViewBase _audioSettingsMenuPrefab;
+        [SerializeField] private ViewBase _interfaceSettingsMenuPrefab;
+        [SerializeField] private ViewBase _videoSettingsMenuPrefab;
+        [SerializeField] private ViewBase _rebindKeysMenuPrefab;
+        [SerializeField] private ViewBase _pauseMenuPrefab;
 
         private Dictionary<Type, ViewBase> _prefabs;
 
-        public ViewBase GetView(Type type)
+        /// <summary>
+        /// Gets the view prefab.
+        /// </summary>
+        /// <param name="type">Type of view.</param>
+        /// <returns>Prefab of the view.</returns>
+        public ViewBase GetPrefab(Type type)
         {
             if (_prefabs == null || _prefabs.Count == 0)
                 CreateDictionary();
@@ -29,20 +36,18 @@ namespace UISystem.ScriptableObjects
             return _prefabs[type];
         }
 
-        public void ClearDictionary() => _prefabs = null;
-
         private void CreateDictionary()
         {
             _prefabs = new Dictionary<Type, ViewBase>
             {
-                { typeof(MainMenuView), mainMenuPrefab },
-                { typeof(InGameMenuView), inGameMenuPrefab},
-                { typeof(OptionsMenuView), optionMenuPrefab},
-                { typeof(AudioSettingsMenuView), audioSettingsMenuPrefab},
-                { typeof(InterfaceSettingsMenuView), interfaceSettingsMenuPrefab},
-                { typeof(VideoSettingsMenuView), videoSettingsMenuPrefab},
-                { typeof(RebindKeysMenuView), rebindKeysMenuPrefab},
-                { typeof(PauseMenuView), pauseMenuPrefab},
+                { typeof(MainMenuView), _mainMenuPrefab },
+                { typeof(InGameMenuView), _inGameMenuPrefab },
+                { typeof(OptionsMenuView), _optionMenuPrefab },
+                { typeof(AudioSettingsMenuView), _audioSettingsMenuPrefab },
+                { typeof(InterfaceSettingsMenuView), _interfaceSettingsMenuPrefab },
+                { typeof(VideoSettingsMenuView), _videoSettingsMenuPrefab },
+                { typeof(RebindKeysMenuView), _rebindKeysMenuPrefab },
+                { typeof(PauseMenuView), _pauseMenuPrefab },
             };
         }
     }

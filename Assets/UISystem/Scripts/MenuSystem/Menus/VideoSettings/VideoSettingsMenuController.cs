@@ -5,67 +5,81 @@ using UISystem.Core.Views;
 using UISystem.MenuSystem.Models;
 using UISystem.MenuSystem.SettingsMenu;
 using UISystem.MenuSystem.Views;
-using UISystem.PopupSystem;
 
 namespace UISystem.MenuSystem.Controllers
 {
+    /// <summary>
+    /// Video settings menu controller.
+    /// </summary>
     internal class VideoSettingsMenuController : SettingsMenuController<IViewCreator<VideoSettingsMenuView>, VideoSettingsMenuView, VideoSettingsMenuModel>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VideoSettingsMenuController"/> class.
+        /// </summary>
+        /// <param name="viewCreator">View creator.</param>
+        /// <param name="menusManager">Menus manager.</param>
+        /// <param name="model">Video settings menu model.</param>
+        /// <param name="popupsManager">Popups manager.</param>
+        public VideoSettingsMenuController(
+            IViewCreator<VideoSettingsMenuView> viewCreator,
+            IMenusManager menusManager,
+            VideoSettingsMenuModel model,
+            IPopupsManager popupsManager)
+            : base(viewCreator, menusManager, model, popupsManager)
+        {
+        }
 
-
-        public VideoSettingsMenuController(IViewCreator<VideoSettingsMenuView> viewCreator, VideoSettingsMenuModel model,
-            IMenusManager menusManager, IPopupsManager<PopupResult> popupsManager) : base(viewCreator, model, menusManager, popupsManager)
-        { }
-
+        /// <inheritdoc/>
         protected override void SetupElements()
         {
             base.SetupElements();
             SetupWindowModeDropdown();
             SetupResolutionDropdown();
             SetupRefreshRateDropdown();
-            _view.SaveSettingsButton.AddListener(_model.SaveSettings);
+            View.SaveSettingsButton.AddOnClickListener(Model.SaveSettings);
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateAllViewValues()
+        {
+            View.WindowModeDropdown.SetValue(Model.CurrenWindowModeIndex);
+            View.ResolutionDropdown.SetValue(Model.CurrentResolutionIndex);
         }
 
         private void SetupWindowModeDropdown()
         {
-            _view.WindowModeDropdown.AddOptions(VideoSettings.FullScreenModeNames);
-            _view.WindowModeDropdown.SetValue(_model.CurrenWindowModeIndex);
-            _view.WindowModeDropdown.AddListener(OnWindowModeDropdownSelect);
+            View.WindowModeDropdown.AddOptions(VideoSettings.FullScreenModeNames);
+            View.WindowModeDropdown.SetValue(Model.CurrenWindowModeIndex);
+            View.WindowModeDropdown.AddOnValueChangedListener(OnWindowModeDropdownSelect);
         }
 
         private void SetupResolutionDropdown()
         {
-            _view.ResolutionDropdown.AddOptions(VideoSettings.ResolutionNames);
-            _view.ResolutionDropdown.SetValue(_model.CurrentResolutionIndex);
-            _view.ResolutionDropdown.AddListener(OnResolutionDropdownSelect);
+            View.ResolutionDropdown.AddOptions(VideoSettings.ResolutionNames);
+            View.ResolutionDropdown.SetValue(Model.CurrentResolutionIndex);
+            View.ResolutionDropdown.AddOnValueChangedListener(OnResolutionDropdownSelect);
         }
 
         private void SetupRefreshRateDropdown()
         {
-            _view.RefreshRateDropdown.AddOptions(VideoSettings.RefreshRateNames);
-            _view.RefreshRateDropdown.SetValue(_model.CurrentRefreshRate);
-            _view.RefreshRateDropdown.AddListener(OnRefreshRateDropdownSelect);
+            View.RefreshRateDropdown.AddOptions(VideoSettings.RefreshRateNames);
+            View.RefreshRateDropdown.SetValue(Model.CurrentRefreshRate);
+            View.RefreshRateDropdown.AddOnValueChangedListener(OnRefreshRateDropdownSelect);
         }
 
         private void OnResolutionDropdownSelect(int index)
         {
-            _model.SelectResolution(index);
+            Model.SelectResolution(index);
         }
 
         private void OnWindowModeDropdownSelect(int index)
         {
-            _model.SelectWindowMode(index);
+            Model.SelectWindowMode(index);
         }
 
         private void OnRefreshRateDropdownSelect(int index)
         {
-            _model.SelectRefreshRate(index);
-        }
-
-        protected override void ResetViewToDefault()
-        {
-            _view.WindowModeDropdown.SetValue(_model.CurrenWindowModeIndex);
-            _view.ResolutionDropdown.SetValue(_model.CurrentResolutionIndex);
+            Model.SelectRefreshRate(index);
         }
     }
 }

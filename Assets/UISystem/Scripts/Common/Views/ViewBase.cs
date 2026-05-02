@@ -1,5 +1,5 @@
-﻿using System;
-using UISystem.Common.Elements;
+﻿using System.Threading.Tasks;
+using UISystem.Core.Elements;
 using UISystem.Core.Transitions;
 using UISystem.Core.Views;
 using UnityEngine;
@@ -11,59 +11,77 @@ namespace UISystem.Views
     /// </summary>
     public abstract partial class ViewBase : MonoBehaviour, IView
     {
-
-        [SerializeField] protected CanvasGroup canvasGroup;
+        [SerializeField] private CanvasGroup _canvasGroup;
 
         private IViewTransition _transition;
-        protected IInteractableElement[] _interactableElements;
 
-        public CanvasGroup FadeObjectsContainer => canvasGroup;
+        /// <summary>
+        /// Gets CanvasGroup responsible for fading the whole view.
+        /// </summary>
+        public CanvasGroup FadeObjectsContainer => _canvasGroup;
 
+        /// <summary>
+        /// Gets or sets interactable elements.
+        /// </summary>
+        protected IInteractableElement[] InteractableElements { get; set; }
+
+        /// <inheritdoc/>
         public virtual void Init()
         {
             _transition = CreateTransition();
             SetInteractableElements();
         }
 
+        /// <inheritdoc/>
         public void SwitchInteractability(bool enable)
         {
-            if (canvasGroup == null)
+            if (_canvasGroup == null)
                 return;
-            // you can use this line instead of switching interactability for every element
-            // mind that it will cause your buttons to change to disabled state which will change their appearance during transitions
-            // canvasGroup.interactable = canvasGroup.blocksRaycasts = enable;
-            if (_interactableElements != null)
+
+            /* you can use this line instead of switching interactability for every element
+             * mind that it will cause your buttons to change to disabled state which will change their appearance during transitions
+             * canvasGroup.interactable = canvasGroup.blocksRaycasts = enable;
+            */
+
+            if (InteractableElements != null)
             {
-                for (int i = 0; i < _interactableElements.Length; i++)
+                for (int i = 0; i < InteractableElements.Length; i++)
                 {
-                    _interactableElements[i].SwitchInteractability(enable);
+                    InteractableElements[i].SwitchInteractability(enable);
                 }
             }
         }
 
-        public void Show(Action onShown, bool instant = false)
+        /// <inheritdoc/>
+        public async Task Show(bool instant = false)
         {
             SwitchInteractability(false);
-            _transition.Show(() =>
-            {
-                SwitchInteractability(true);
-                onShown?.Invoke();
-            }, instant);
+            await _transition.Show(instant);
+            SwitchInteractability(true);
         }
 
-        public void Hide(Action onHidden, bool instant = false)
+        /// <inheritdoc/>
+        public async Task Hide(bool instant = false)
         {
             SwitchInteractability(false);
-            _transition.Hide(() =>
-            {
-                onHidden?.Invoke();
-            }, instant);
+            await _transition.Hide(instant);
         }
 
+        /// <inheritdoc/>
         public void DestroyView() => Destroy(this.gameObject);
-        public abstract void FocusElement();
-        protected abstract void SetInteractableElements();
-        protected abstract IViewTransition CreateTransition();
 
+        /// <inheritdoc/>
+        public abstract void FocusElement();
+
+        /// <summary>
+        /// Sets interactable elements.
+        /// </summary>
+        protected abstract void SetInteractableElements();
+
+        /// <summary>
+        /// Creates transition.
+        /// </summary>
+        /// <returns>Instance of transition.</returns>
+        protected abstract IViewTransition CreateTransition();
     }
 }

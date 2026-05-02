@@ -3,21 +3,22 @@ using UnityEngine;
 
 namespace UISystem.Constants
 {
+    /// <summary>
+    /// Class containing paths to keyboard icons.
+    /// </summary>
     public static class KeyboardIcons
     {
-        private static string ItemsFolder => "Textures/Inputs/Keyboard/";
-
-        private static readonly Dictionary<string, string> _buttons;
-
-        static KeyboardIcons()
-        {
-            _buttons = new Dictionary<string, string>
+        /*
+         * Names are taken from here
+         * https://discussions.unity.com/t/list-of-all-inputcontrolpath/909946/10
+         */
+        private static readonly Dictionary<string, string> _buttons = new Dictionary<string, string>
             {
                 { "escape", "keyboard_escape" },
                 { "space", "keyboard_space" },
                 { "enter", "keyboard_enter" },
                 { "tab", "keyboard_tab_icon" },
-                { "backquote", "" },
+                { "backquote", string.Empty },
                 { "quote", "keyboard_quote" },
                 { "semicolon", "keyboard_semicolon" },
                 { "comma", "keyboard_comma" },
@@ -75,9 +76,9 @@ namespace UISystem.Constants
                 { "leftCtrl", "keyboard_ctrl" },
                 { "rightCtrl", "keyboard_ctrl" },
                 { "ctrl", "keyboard_ctrl" },
-                { "leftMeta", "" },
-                { "rightMeta", "" },
-                { "contextMenu", "" },
+                { "leftMeta", string.Empty },
+                { "rightMeta", string.Empty },
+                { "contextMenu", string.Empty },
                 { "backspace", "keyboard_backspace" },
                 { "pageDown", "keyboard_page_down" },
                 { "pageUp", "keyboard_page_up" },
@@ -88,8 +89,8 @@ namespace UISystem.Constants
                 { "capsLock", "keyboard_capslock" },
                 { "numLock", "keyboard_numlock" },
                 { "printScreen", "keyboard_printscreen" },
-                { "scrollLock", "" },
-                { "pause", "" },
+                { "scrollLock", string.Empty },
+                { "pause", string.Empty },
                 { "numpadEnter", "keyboard_numpad_enter" },
                 { "numpadDivide", "keyboard_slash_forward" },
                 { "numpadMultiply", "keyboard_asterisk" },
@@ -120,16 +121,17 @@ namespace UISystem.Constants
                 { "f11", "keyboard_f11" },
                 { "f12", "keyboard_f12" },
             };
-        }
 
+        private static string ItemsFolder => "Textures/Inputs/Keyboard/";
+
+        /// <summary>
+        /// Gets button sprite.
+        /// </summary>
+        /// <param name="button">Button name.</param>
+        /// <returns>Sprite.</returns>
         public static Sprite GetIcon(string button)
         {
             return Resources.Load<Sprite>(ItemsFolder + _buttons[button]);
         }
     }
 }
-
-/*
- * Names are taken from here
- * https://discussions.unity.com/t/list-of-all-inputcontrolpath/909946/10
- */
