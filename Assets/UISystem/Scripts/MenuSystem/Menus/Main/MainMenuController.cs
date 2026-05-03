@@ -43,18 +43,10 @@ namespace UISystem.MenuSystem.Controllers
         }
 
         /// <inheritdoc/>
-        public override async Task Show(Action onComplete = null, bool instant = false)
+        public override async Task Show(bool instant = false)
         {
             _menuBackgroundController.ShowBackground(instant).SafeFireAndForget();
-            await base.Show(onComplete, instant);
-        }
-
-        /// <inheritdoc/>
-        public override async Task Hide(StackingType stackingType, Action onComplete = null, bool instant = false)
-        {
-            if (stackingType != StackingType.Add)
-                _menuBackgroundController.HideBackground(instant).SafeFireAndForget();
-            await base.Hide(stackingType, onComplete, instant);
+            await base.Show(instant);
         }
 
         /// <inheritdoc/>
@@ -76,14 +68,14 @@ namespace UISystem.MenuSystem.Controllers
         {
             View.SetLastSelectedElement(View.PlayButton);
             await _screenFadeManager.FadeOut();
-            await MenusManager.ShowMenu(typeof(InGameMenuView), StackingType.Clear, instant: true);
+            await MenusManager.ShowMenu<InGameMenuView>(StackingType.Clear, instant: true);
             await _screenFadeManager.FadeIn();
         }
 
         private void PressedOptions()
         {
             View.SetLastSelectedElement(View.OptionsButton);
-            MenusManager.ShowMenu(typeof(OptionsMenuView)).SafeFireAndForget();
+            MenusManager.ShowMenu<OptionsMenuView>().SafeFireAndForget();
         }
 
         private void PressedQuit()
@@ -96,7 +88,7 @@ namespace UISystem.MenuSystem.Controllers
         {
             SwitchInteractability(false);
             _popupsManager
-                .ShowPopup(typeof(YesNoPopupView), PopupMessages.QuitGame, (result) =>
+                .ShowPopup<YesNoPopupView>(PopupMessages.QuitGame, (result) =>
                 {
                     if (result == PopupResult.Yes)
                         Application.Quit();

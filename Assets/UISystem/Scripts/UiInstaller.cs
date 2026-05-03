@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AsyncAwaitBestPractices;
 using UISystem.Core.MenuSystem;
 using UISystem.Core.PopupSystem;
+using UISystem.Core.Views;
 using UISystem.MenuSystem;
 using UISystem.MenuSystem.Controllers;
 using UISystem.MenuSystem.Models;
@@ -48,20 +49,11 @@ namespace UISystem
             var yesNoPopupViewCreator = new ViewCreator<YesNoPopupView>(GetPopupPrefab(typeof(YesNoPopupView)), _popupsParent);
             var yesNoCancelPopupViewCreator = new ViewCreator<YesNoCancelPopupView>(GetPopupPrefab(typeof(YesNoCancelPopupView)), _popupsParent);
 
-            var popups = new Dictionary<Type, IPopupController>
+            var popups = new IPopupController[]
             {
-                {
-                    typeof(YesPopupView),
-                    new YesPopupController(yesPopupViewCreator, popupsManager)
-                },
-                {
-                    typeof(YesNoPopupView),
-                    new YesNoPopupController(yesNoPopupViewCreator, popupsManager)
-                },
-                {
-                    typeof(YesNoCancelPopupView),
-                    new YesNoCancelPopupController(yesNoCancelPopupViewCreator, popupsManager)
-                },
+                new YesPopupController(yesPopupViewCreator, popupsManager),
+                new YesNoPopupController(yesNoPopupViewCreator, popupsManager),
+                new YesNoCancelPopupController(yesNoCancelPopupViewCreator, popupsManager),
             };
 
             popupsManager.Init(popups);
@@ -78,72 +70,22 @@ namespace UISystem
             var videoSettingsViewCreator = new ViewCreator<VideoSettingsMenuView>(GetMenuPrefab(typeof(VideoSettingsMenuView)), _menusParent);
             var rebindKeysViewCreator = new ViewCreator<RebindKeysMenuView>(GetMenuPrefab(typeof(RebindKeysMenuView)), _menusParent);
             var interfaceMenuViewCreator = new ViewCreator<InterfaceSettingsMenuView>(GetMenuPrefab(typeof(InterfaceSettingsMenuView)), _menusParent);
-            var menus = new Dictionary<Type, IMenuController>
+            var menus = new IMenuController[]
             {
-                {
-                    typeof(MainMenuView),
-                    new MainMenuController(
-                        mainMenuViewCreator,
-                        menusManager,
-                        popupsManager,
-                        fadeManager,
-                        backgroundController)
-                },
-                {
-                    typeof(InGameMenuView),
-                    new InGameMenuController(inGameMenuViewCreator, menusManager)
-                },
-                {
-                    typeof(PauseMenuView),
-                    new PauseMenuController(
-                        pauseViewCreator,
-                        menusManager,
-                        popupsManager,
-                        fadeManager,
-                        backgroundController)
-                },
-                {
-                    typeof(OptionsMenuView),
-                    new OptionsMenuController(optionsViewCreator, menusManager)
-                },
-                {
-                    typeof(AudioSettingsMenuView),
-                    new AudioSettingsMenuController(
-                        audioSettingsViewCreator,
-                        menusManager,
-                        new AudioSettingsMenuModel(settings),
-                        popupsManager)
-                },
-                {
-                    typeof(VideoSettingsMenuView),
-                    new VideoSettingsMenuController(
-                        videoSettingsViewCreator,
-                        menusManager,
-                        new VideoSettingsMenuModel(settings),
-                        popupsManager)
-                },
-                {
-                    typeof(RebindKeysMenuView),
-                    new RebindKeysMenuController(
-                        rebindKeysViewCreator,
-                        menusManager,
-                        new RebindKeysMenuModel(settings),
-                        popupsManager)
-                },
-                {
-                    typeof(InterfaceSettingsMenuView),
-                    new InterfaceSettingsMenuController(
-                        interfaceMenuViewCreator,
-                        menusManager,
-                        new InterfaceSettingsMenuModel(settings),
-                        popupsManager)
-                },
+                new MainMenuController(mainMenuViewCreator, menusManager, popupsManager, fadeManager, backgroundController),
+                new InGameMenuController(inGameMenuViewCreator, menusManager, backgroundController),
+                new PauseMenuController(pauseViewCreator, menusManager, popupsManager, fadeManager, backgroundController),
+                new OptionsMenuController(optionsViewCreator, menusManager),
+                new AudioSettingsMenuController(audioSettingsViewCreator, menusManager, new AudioSettingsMenuModel(settings), popupsManager),
+                new VideoSettingsMenuController(videoSettingsViewCreator, menusManager, new VideoSettingsMenuModel(settings), popupsManager),
+                new RebindKeysMenuController(rebindKeysViewCreator, menusManager, new RebindKeysMenuModel(settings), popupsManager),
+                new InterfaceSettingsMenuController(interfaceMenuViewCreator, menusManager, new InterfaceSettingsMenuModel(settings), popupsManager),
             };
 
             _ = new InputProcessor(_inputActions, menusManager, popupsManager);
 
             menusManager.Init(menus);
-            menusManager.ShowMenu(typeof(MainMenuView), StackingType.Clear).SafeFireAndForget();
+            menusManager.ShowMenu<MainMenuView>(StackingType.Clear).SafeFireAndForget();
         }
 
         private void Awake()

@@ -10,7 +10,10 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 
+// TODO: clean thi up after.
+#pragma warning disable
 public class INIParser
+
 {
     #region "Declarations"
 
@@ -181,7 +184,6 @@ public class INIParser
 
                 // *** String Reader ***
                 sr = new StringReader(m_iniString);
-
 
                 // *** Read up the file content ***
                 Dictionary<string, string> CurrentSection = null;
@@ -680,5 +682,3 @@ public class INIParser
 
     #endregion
 }
-
-

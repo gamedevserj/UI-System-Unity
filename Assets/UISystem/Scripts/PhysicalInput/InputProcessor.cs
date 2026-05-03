@@ -27,9 +27,9 @@ namespace UISystem.PhysicalInput
         {
             inputActions.UI.SetCallbacks(this);
             _menusManager = menusManager;
-            _menusManager.OnControllerSwitch += OnMenuControllerSwitch;
+            _menusManager.ControllerSwitched += OnMenuControllerSwitch;
             _popupsManager = popupsManager;
-            _popupsManager.OnControllerSwitch += OnPopupControllerSwitch;
+            _popupsManager.ControllerSwitched += OnPopupControllerSwitch;
         }
 
         /// <summary>
@@ -37,8 +37,8 @@ namespace UISystem.PhysicalInput
         /// </summary>
         ~InputProcessor()
         {
-            _menusManager.OnControllerSwitch -= OnMenuControllerSwitch;
-            _popupsManager.OnControllerSwitch -= OnPopupControllerSwitch;
+            _menusManager.ControllerSwitched -= OnMenuControllerSwitch;
+            _popupsManager.ControllerSwitched -= OnPopupControllerSwitch;
         }
 
         private bool CanProcessActions => _activeReceiver != null && _activeReceiver.CanReceivePhysicalInput;
