@@ -10,7 +10,7 @@ namespace UISystem.MenuSystem
     /// </summary>
     public class MenuBackgroundController
     {
-        private const float Duration = 3.1f;
+        private const float Duration = 0.1f;
         private readonly Image _background;
 
         private Tween _tween;
