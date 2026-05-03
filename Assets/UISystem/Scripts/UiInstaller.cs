@@ -54,18 +54,6 @@ namespace UISystem
                 new YesPopupController(yesPopupViewCreator, popupsManager),
                 new YesNoPopupController(yesNoPopupViewCreator, popupsManager),
                 new YesNoCancelPopupController(yesNoCancelPopupViewCreator, popupsManager),
-                //{
-                //    typeof(YesPopupView),
-                    
-                //},
-                //{
-                //    typeof(YesNoPopupView),
-                    
-                //},
-                //{
-                //    typeof(YesNoCancelPopupView),
-                //    new YesNoCancelPopupController(yesNoCancelPopupViewCreator, popupsManager)
-                //},
             };
 
             popupsManager.Init(popups);
@@ -93,67 +81,6 @@ namespace UISystem
                 new RebindKeysMenuController(rebindKeysViewCreator, menusManager, new RebindKeysMenuModel(settings), popupsManager),
                 new InterfaceSettingsMenuController(interfaceMenuViewCreator, menusManager, new InterfaceSettingsMenuModel(settings), popupsManager),
             };
-
-            //{
-            //    {
-            //        typeof(MainMenuView),
-            //        new MainMenuController(
-            //            mainMenuViewCreator,
-            //            menusManager,
-            //            popupsManager,
-            //            fadeManager,
-            //            backgroundController)
-            //    },
-            //    {
-            //        typeof(InGameMenuView),
-            //        new InGameMenuController(inGameMenuViewCreator, menusManager)
-            //    },
-            //    {
-            //        typeof(PauseMenuView),
-            //        new PauseMenuController(
-            //            pauseViewCreator,
-            //            menusManager,
-            //            popupsManager,
-            //            fadeManager,
-            //            backgroundController)
-            //    },
-            //    {
-            //        typeof(OptionsMenuView),
-            //        new OptionsMenuController(optionsViewCreator, menusManager)
-            //    },
-            //    {
-            //        typeof(AudioSettingsMenuView),
-            //        new AudioSettingsMenuController(
-            //            audioSettingsViewCreator,
-            //            menusManager,
-            //            new AudioSettingsMenuModel(settings),
-            //            popupsManager)
-            //    },
-            //    {
-            //        typeof(VideoSettingsMenuView),
-            //        new VideoSettingsMenuController(
-            //            videoSettingsViewCreator,
-            //            menusManager,
-            //            new VideoSettingsMenuModel(settings),
-            //            popupsManager)
-            //    },
-            //    {
-            //        typeof(RebindKeysMenuView),
-            //        new RebindKeysMenuController(
-            //            rebindKeysViewCreator,
-            //            menusManager,
-            //            new RebindKeysMenuModel(settings),
-            //            popupsManager)
-            //    },
-            //    {
-            //        typeof(InterfaceSettingsMenuView),
-            //        new InterfaceSettingsMenuController(
-            //            interfaceMenuViewCreator,
-            //            menusManager,
-            //            new InterfaceSettingsMenuModel(settings),
-            //            popupsManager)
-            //    },
-            //};
 
             _ = new InputProcessor(_inputActions, menusManager, popupsManager);
 
