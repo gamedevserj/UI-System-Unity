@@ -73,7 +73,7 @@ namespace UISystem
             var menus = new IMenuController[]
             {
                 new MainMenuController(mainMenuViewCreator, menusManager, popupsManager, fadeManager, backgroundController),
-                new InGameMenuController(inGameMenuViewCreator, menusManager),
+                new InGameMenuController(inGameMenuViewCreator, menusManager, backgroundController),
                 new PauseMenuController(pauseViewCreator, menusManager, popupsManager, fadeManager, backgroundController),
                 new OptionsMenuController(optionsViewCreator, menusManager),
                 new AudioSettingsMenuController(audioSettingsViewCreator, menusManager, new AudioSettingsMenuModel(settings), popupsManager),

@@ -10,8 +10,10 @@ namespace UISystem.MenuSystem
     /// </summary>
     public class MenuBackgroundController
     {
-        private const float Duration = 0.1f;
+        private const float Duration = 3.1f;
         private readonly Image _background;
+
+        private Tween _tween;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MenuBackgroundController"/> class.
@@ -28,6 +30,11 @@ namespace UISystem.MenuSystem
         /// <param name="instant">Whether transition should happen instantly.</param>
         public async Task ShowBackground(bool instant = false)
         {
+            if (_tween.isAlive)
+            {
+                _tween.Stop();
+            }
+
             _background.enabled = true;
             if (Mathf.Approximately(_background.color.a, 1))
                 return;
@@ -38,7 +45,8 @@ namespace UISystem.MenuSystem
                 return;
             }
 
-            await Tween.Alpha(_background, 1, Duration);
+            _tween = Tween.Alpha(_background, 1, Duration, ease: Ease.Linear);
+            await _tween;
         }
 
         /// <summary>
@@ -47,6 +55,11 @@ namespace UISystem.MenuSystem
         /// <param name="instant">Whether transition should happen instantly.</param>
         public async Task HideBackground(bool instant = false)
         {
+            if (_tween.isAlive)
+            {
+                _tween.Stop();
+            }
+
             if (instant)
             {
                 _background.color = new Color(_background.color.r, _background.color.g, _background.color.b, 0);
@@ -54,8 +67,8 @@ namespace UISystem.MenuSystem
                 return;
             }
 
-            await Tween.Alpha(_background, 0, Duration);
-            _background.enabled = false;
+            _tween = Tween.Alpha(_background, 0, Duration, ease: Ease.Linear).OnComplete(() => _background.enabled = false);
+            await _tween;
         }
     }
 }
