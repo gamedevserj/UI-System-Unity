@@ -51,7 +51,7 @@ namespace UISystem.MenuSystem.Controllers
         /// <inheritdoc/>
         public override async Task Hide(StackingType stackingType, Action onComplete = null, bool instant = false)
         {
-            await base.Hide(stackingType, () => { }, instant);
+            await base.Hide(stackingType, null, instant);
             onComplete?.Invoke();
 
             if (stackingType != StackingType.Add)
@@ -69,7 +69,7 @@ namespace UISystem.MenuSystem.Controllers
         private void PressedOptions()
         {
             View.SetLastSelectedElement(View.OptionsButton);
-            MenusManager.ShowMenu(typeof(OptionsMenuView)).SafeFireAndForget();
+            MenusManager.ShowMenu<OptionsMenuView>().SafeFireAndForget();
         }
 
         private void PressedReturn()
@@ -78,12 +78,12 @@ namespace UISystem.MenuSystem.Controllers
             SwitchInteractability(false);
 
             _popupsManager
-                .ShowPopup(typeof(YesNoPopupView), PopupMessages.QuitToMainMenu, async (result) =>
+                .ShowPopup<YesNoPopupView>(PopupMessages.QuitToMainMenu, async (result) =>
                 {
                     if (result == PopupResult.Yes)
                     {
                         await _screenFadeManager.FadeOut();
-                        await MenusManager.ShowMenu(typeof(MainMenuView), StackingType.Clear, null, true);
+                        await MenusManager.ShowMenu<MainMenuView>(StackingType.Clear, instant: true);
                         await _screenFadeManager.FadeIn();
                     }
                     else if (result == PopupResult.No)

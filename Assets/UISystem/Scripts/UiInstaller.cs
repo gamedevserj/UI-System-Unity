@@ -158,7 +158,7 @@ namespace UISystem
             _ = new InputProcessor(_inputActions, menusManager, popupsManager);
 
             menusManager.Init(menus);
-            menusManager.ShowMenu(typeof(MainMenuView), StackingType.Clear).SafeFireAndForget();
+            menusManager.ShowMenu<MainMenuView>(StackingType.Clear).SafeFireAndForget();
         }
 
         private void Awake()
